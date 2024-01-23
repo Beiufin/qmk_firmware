@@ -130,7 +130,22 @@ enum desktop_usages {
 
 // clang-format on
 
-#define NKRO_REPORT_BITS 30
+
+#define NKRO_SHARED_EP
+/* key report size(NKRO or boot mode) */
+#if defined(NKRO_ENABLE)
+#    if defined(PROTOCOL_LUFA) || defined(PROTOCOL_CHIBIOS)
+#        include "protocol/usb_descriptor.h"
+#        define NKRO_REPORT_BITS (SHARED_EPSIZE - 2)
+#    elif defined(PROTOCOL_ARM_ATSAM)
+#        include "protocol/arm_atsam/usb/udi_device_epsize.h"
+#        define NKRO_REPORT_BITS (NKRO_EPSIZE - 1)
+#        undef NKRO_SHARED_EP
+#        undef MOUSE_SHARED_EP
+#    else
+#        define NKRO_REPORT_BITS 30
+#    endif
+#endif
 
 #ifdef KEYBOARD_SHARED_EP
 #    define KEYBOARD_REPORT_SIZE 9
@@ -174,7 +189,9 @@ typedef struct {
 } PACKED report_keyboard_t;
 
 typedef struct {
+#ifdef NKRO_SHARED_EP
     uint8_t report_id;
+#endif
     uint8_t mods;
     uint8_t bits[NKRO_REPORT_BITS];
 } PACKED report_nkro_t;
