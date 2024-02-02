@@ -205,7 +205,7 @@ void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
     if (pressed)
 #    endif // defined(RGB_MATRIX_KEYRELEASES)
     {
-        if (rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP) {
+        if (rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP || rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON || rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_SOLID) {
             process_rgb_matrix_typing_heatmap(row, col);
         }
     }
@@ -213,6 +213,7 @@ void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
 }
 
 void rgb_matrix_test(void) {
+    // Mask out bits 4 and 5
     // Mask out bits 4 and 5
     // Increase the factor to make the test animation slower (and reduce to make it faster)
     uint8_t factor = 10;
