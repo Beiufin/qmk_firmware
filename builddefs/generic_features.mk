@@ -52,6 +52,8 @@ GENERIC_FEATURES = \
     VIA \
     VIRTSER \
     WPM \
+	TAP_REPEAT \
+	KEY_LOCK_TOGGLE \
 
 define HANDLE_GENERIC_FEATURE
     # $$(info "Processing: $1_ENABLE $2.c")

@@ -1,4 +1,4 @@
-/* Copyright 2017 Fredric Silberberg
+/* Copyright 2024 Ben Cortina
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,33 @@
 
 #pragma once
 
-#include "quantum.h"
-#include <stdlib.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include "action.h"
 
 #ifndef TAP_REPEAT_INTERVAL
-#    define TAP_REPEAT_INTERVAL 100
+#   define TAP_REPEAT_INTERVAL 100
 #endif
 
 #ifndef TAP_REPEAT_MAX
-#    define TAP_REPEAT_MAX 16
+#   define TAP_REPEAT_MAX 16
 #endif
 
-bool process_tap_repeat(uint16_t *keycode, keyrecord_t *record, bool *lockToggled);
+// define TAP_REPEAT_RGB if you want the leds indicators when the TR_TOGG key is pressed
+#ifdef TAP_REPEAT_RGB
+#   ifndef TAP_REPEAT_HSV
+#       define TAP_REPEAT_HSV HSV_RED
+#   endif //TAP_REPEAT_HSV
 
-void process_tap_repeat_step(void);
+bool rgb_matrix_indicators_tap_repeat(int tr_togg_idx);
+#endif //TAP_REPEAT_RGB
+
+bool is_tap_repeat_watching(void);
+
+void toggle_key_tap_repeat(uint16_t translated_keycode, keyrecord_t *record);
+
+bool toggle_tap_repeat_watching(void);
+
+void tap_repeat_task(void);
+
+void clear_tap_repeat_keys(void);

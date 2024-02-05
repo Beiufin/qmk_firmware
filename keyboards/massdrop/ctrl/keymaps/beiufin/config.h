@@ -33,9 +33,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define NO_ACTION_TAPPING
 #define NO_ACTION_ONESHOT
 
-// #define ENABLE_TAP_REPEAT // Enable Tap Repeat.
-// #define TAP_REPEAT_INTERVAL 200  // Frequency of taps. Default 200
-// #define TAP_REPEAT_MAX 16  // Max keys to allow tap repeating at once. Default 16. More requires more memory and processing time.
+/* Tap Repeat Settings */
+// #define TAP_REPEAT_INTERVAL 200          // Frequency of taps. Default 200
+// #define TAP_REPEAT_MAX 16                // Max keys to allow tap repeating at once. Default 16. More requires more memory and processing time.
+#define TAP_REPEAT_RGB                   // Enables RGB indicators for tap repeat
+// #define TAP_REPEAT_HSV HSV_RED           // Color for the repeating keys
+
+/* Key Lock Settings */
+#define KEY_LOCK_TOGGLE_RGB              // Enables RGB indicators for key lock
 
 /* QMK features, see docs\config_options.md for full list */
 #define FORCE_NKRO                     // NKRO by default requires to be turned on, this forces it on during keyboard DEFAULT regardless of EEPROM setting. NKRO can still be turned off but will be turned on again if the keyboard reboots.

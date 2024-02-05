@@ -135,6 +135,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef WPM_ENABLE
 #    include "wpm.h"
 #endif
+#ifdef TAP_REPEAT_ENABLE
+#    include "tap_repeat.h"
+#endif
 
 static uint32_t last_input_modification_time = 0;
 uint32_t        last_input_activity_time(void) {
@@ -629,6 +632,11 @@ void quantum_task(void) {
 #ifdef SECURE_ENABLE
     secure_task();
 #endif
+
+#ifdef TAP_REPEAT_ENABLE
+        tap_repeat_task();
+#endif // TAP_REPEAT_ENABLE
+
 }
 
 /** \brief Main task that is repeatedly called as fast as possible. */
