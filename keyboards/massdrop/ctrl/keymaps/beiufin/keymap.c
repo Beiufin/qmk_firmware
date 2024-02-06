@@ -101,7 +101,6 @@ enum ctrl_keycodes {
     DBG_MTRX,               // DEBUG Toggle Matrix Prints
     DBG_KBD,                // DEBUG Toggle Keyboard Prints
     DBG_MOU,                // DEBUG Toggle Mouse Prints
-    MD_BOOT,                // Restart into bootloader after hold timeout
     MAS_CRM,
     MAS_PRP,
     MAS_RED,
@@ -113,10 +112,6 @@ enum ctrl_keycodes {
     MAS_KEY,
     MAS_WHT,
 };
-
-#ifndef KRLKEY
-#    define KRLKEY _______
-#endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_KL] = LAYOUT(
@@ -132,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_MSTP, KC_MPLY, KC_VOLU,
         _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, MAS_MGT, MAS_BLU, MAS_WHT, RGB_RMOD,RGB_MOD, _______,   KC_MPRV, KC_MNXT, KC_VOLD,
         TR_TOGG, RGB_RMOD,RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, MAS_RED, MAS_KEY, MAS_CYN, MAS_PRP, _______, _______,
-        _______, RGB_TOG, _______, _______, _______, MD_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
+        _______, RGB_TOG, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
         _______, _______, _______,                   DBG_TOG,                            _______, _______, _______, _______,            RGB_SPD, RGB_VAD, RGB_SPI
     ),
     /*
@@ -167,6 +162,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         50,      51,      52,      53,      54,      55,      56,      57,      58,      59,      60,      61,      62,
         63,      64,      65,      66,      67,      68,      69,      70,      71,      72,      73,      74,                                   75,
         76,      77,      78,                        79,                                 80,      81,      82,      83,                 84,      85,      86
+        //UnderGlow
+        103,    104,    105,    106,    107,    108,    109,    110,    111,    112,    113,    114,    115,
+        102,                                                                                            116,
+        101,                                                                                            117,
+        100,                                                                                            118,
+        99,     98,     97,     96,     95,     94,     93,     92,     91,     90,     89,     88,     87,
     ),
     */
 };
@@ -201,7 +202,7 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_MSTP, KC_MPLY, KC_VOLU,
         _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, MAS_MGT, MAS_BLU, MAS_WHT, RGB_RMOD,RGB_MOD, _______,   KC_MPRV, KC_MNXT, KC_VOLD,
         TR_TOGG, RGB_RMOD,RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, MAS_RED, MAS_KEY, MAS_CYN, MAS_PRP, _______, _______,
-        _______, RGB_TOG, _______, _______, _______, MD_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
+        _______, RGB_TOG, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
         _______, _______, _______,                   _______,                            _______, _LAYER_, _______, _______,            RGB_SPD, RGB_VAD, RGB_SPI
     ),
     */
@@ -218,37 +219,25 @@ void keyboard_post_init_user(void) {
     rgb_matrix_enable();
 }
 
-
 #define MODS_SHIFT  (get_mods() & MOD_MASK_SHIFT)
 #define MODS_CTRL   (get_mods() & MOD_MASK_CTRL)
 #define MODS_ALT    (get_mods() & MOD_MASK_ALT)
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    static uint32_t key_timer;
-    switch (keycode) {
-        case U_T_AUTO:
-            if (record->event.pressed && MODS_SHIFT && MODS_CTRL) {
-                TOGGLE_FLAG_AND_PRINT(usb_extra_manual, "USB extra port manual mode");
-            }
-            return false;
-        case U_T_AGCR:
-            if (record->event.pressed && MODS_SHIFT && MODS_CTRL) {
-                TOGGLE_FLAG_AND_PRINT(usb_gcr_auto, "USB GCR auto mode");
-            }
-            return false;
-        case MD_BOOT:
-            if (record->event.pressed) {
-                key_timer = timer_read32();
-            } else {
-                if (timer_elapsed32(key_timer) >= 500) {
-                    reset_keyboard();
-                }
-            }
-            return false;
-    }
-
-    if (record->event.pressed) {
+    // The only custom processing is for non-standard keys. So avoid any extra processing
+    // for codes in the standard/basic range.
+    if (record->event.pressed && keycode > QK_BASIC_MAX) {
         switch (keycode) {
+            case U_T_AUTO:
+                if (MODS_SHIFT && MODS_CTRL) {
+                    TOGGLE_FLAG_AND_PRINT(usb_extra_manual, "USB extra port manual mode");
+                }
+                return false;
+            case U_T_AGCR:
+                if (MODS_SHIFT && MODS_CTRL) {
+                    TOGGLE_FLAG_AND_PRINT(usb_gcr_auto, "USB GCR auto mode");
+                }
+                return false;
             case DBG_TOG:
                 TOGGLE_FLAG_AND_PRINT(debug_enable, "Debug mode");
                 return false;
@@ -320,9 +309,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-void set_layer_color(int layer) {
+bool set_layer_color(int layer) {
     if (layer == _KL) {
-        return;
+        return true;
     }
     for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
         HSV hsv = {
@@ -396,6 +385,7 @@ void set_layer_color(int layer) {
             }
         }
     }
+    return false;
 }
 
 bool rgb_matrix_indicators_user(void) {
@@ -412,10 +402,9 @@ bool rgb_matrix_indicators_user(void) {
 #if defined(TAP_REPEAT_RGB) && defined(TAP_REPEAT_ENABLE)
         rgb_matrix_indicators_tap_repeat(50) &&
 #endif
-        true)
+        set_layer_color(get_highest_layer(layer_state)))
     ) {
         return false;
     }
-    set_layer_color(get_highest_layer(layer_state));
-    return false;
+    return true;
 }

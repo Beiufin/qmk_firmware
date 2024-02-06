@@ -19,7 +19,7 @@
 #include "process_key_lock_toggle.h"
 #include "key_lock_toggle.h"
 
-#define IS_STANDARD_KEYCODE(code) ((code) <= 0xFF)
+#define IS_STANDARD_KEYCODE(code) ((code) <= QK_BASIC_MAX)
 
 // Translate any OSM keycodes back to their unmasked versions.
 static inline uint16_t translate_keycode(uint16_t keycode) {
