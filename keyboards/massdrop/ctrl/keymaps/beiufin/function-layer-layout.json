@@ -1,0 +1,447 @@
+[
+  [
+    {
+      "a": 5,
+      "d": true
+    },
+    "Esc",
+    {
+      "x": 1,
+      "d": true
+    },
+    "F1",
+    {
+      "d": true
+    },
+    "F2",
+    {
+      "d": true
+    },
+    "F3",
+    {
+      "d": true
+    },
+    "F4",
+    {
+      "x": 0.5,
+      "d": true
+    },
+    "F5",
+    {
+      "d": true
+    },
+    "F6",
+    {
+      "d": true
+    },
+    "F7",
+    {
+      "d": true
+    },
+    "F8",
+    {
+      "x": 0.5,
+      "c": "#ff0000",
+      "t": "#ffffff\n#000000",
+      "a": 4,
+      "f": 2
+    },
+    "\nDebug Toggle\n\n\n\n\n\n\nF9",
+    "\nDbgKbd Toggle\n\n\n\n\n\n\nF10",
+    "\nEEPROM Clear\n\n\n\n\n\n\nF11",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 5,
+      "f": 3,
+      "d": true
+    },
+    "F12",
+    {
+      "x": 0.25,
+      "c": "#ff0000",
+      "t": "#ffffff\n#000000",
+      "a": 4,
+      "f": 2
+    },
+    "\nMute\n\n\n\n\n\n\nPrtSc",
+    {
+      "c": "#00ff00",
+      "t": "#000000\n#b50000"
+    },
+    "\nMedia Player\n\n\n\n\n\n\nScrLk",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 5,
+      "f": 3,
+      "d": true
+    },
+    "Pause"
+  ],
+  [
+    {
+      "y": 0.5,
+      "d": true
+    },
+    "` ~",
+    {
+      "d": true
+    },
+    "1 !",
+    {
+      "d": true
+    },
+    "2 @",
+    {
+      "d": true
+    },
+    "3 #",
+    {
+      "d": true
+    },
+    "4 $",
+    {
+      "d": true
+    },
+    "5 %",
+    {
+      "d": true
+    },
+    "6 ^",
+    {
+      "d": true
+    },
+    "7 &",
+    {
+      "d": true
+    },
+    "8 *",
+    {
+      "d": true
+    },
+    "9 (",
+    {
+      "d": true
+    },
+    "0 )",
+    {
+      "d": true
+    },
+    "- _",
+    {
+      "d": true
+    },
+    "= +",
+    {
+      "w": 2,
+      "d": true
+    },
+    "Backspace",
+    {
+      "x": 0.25,
+      "c": "#ff0000",
+      "t": "#ffffff\n#000000",
+      "a": 4,
+      "f": 2
+    },
+    "\nMedia Stop\n\n\n\n\n\n\nIns",
+    {
+      "c": "#00ff00",
+      "t": "#000000\n#b50000"
+    },
+    "\nMedia Play\n\n\n\n\n\n\nHome",
+    {
+      "c": "#c3e1e3"
+    },
+    "\nVol +\n\n\n\n\n\n\nPgUp"
+  ],
+  [
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 5,
+      "f": 3,
+      "w": 1.5,
+      "d": true
+    },
+    "Tab",
+    {
+      "c": "#ffd500",
+      "t": "#000000\n#b50000",
+      "a": 4,
+      "f": 2
+    },
+    "\nRGB Mode +\n\n\n\n\n\n\nQ",
+    {
+      "c": "#000000",
+      "t": "#cccccc\n#b50000"
+    },
+    "\nRGB Spd +\n\n\n\n\n\n\nW",
+    "\nRGB Hue +\n\n\n\n\n\n\nE",
+    "\nRGB Sat +\n\n\n\n\n\n\nR",
+    "\nRGB Val +\n\n\n\n\n\n\nT",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 5,
+      "f": 3,
+      "d": true
+    },
+    "Y",
+    {
+      "d": true
+    },
+    "U",
+    {
+      "c": "#ff00ff",
+      "t": "#000000\n#c6f500",
+      "a": 4,
+      "f": 2
+    },
+    "\nMagenta\n\n\n\n\n\n\nI",
+    {
+      "c": "#0000ff",
+      "t": "#ffffff\n#ffb800"
+    },
+    "\nBlue\n\n\n\n\n\n\nO",
+    {
+      "c": "#cccccc",
+      "t": "#000000\n#b50000"
+    },
+    "\nWhite\n\n\n\n\n\n\nP",
+    {
+      "c": "#ffd500"
+    },
+    "\nRGB Mode -\n\n\n\n\n\n\n[ {",
+    "\nRGB Mode +\n\n\n\n\n\n\n] }",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 5,
+      "f": 3,
+      "w": 1.5,
+      "d": true
+    },
+    "\\ |",
+    {
+      "x": 0.25,
+      "c": "#fca700",
+      "t": "#000000\n#b50000",
+      "a": 4,
+      "f": 2
+    },
+    "\nMedia Prev\n\n\n\n\n\n\nDel",
+    "\nMedia Next\n\n\n\n\n\n\nEnd",
+    {
+      "c": "#c3e1e3"
+    },
+    "\nVol -\n\n\n\n\n\n\nPgDn"
+  ],
+  [
+    {
+      "c": "#ff0000",
+      "t": "#ffffff\n#000000",
+      "w": 1.75
+    },
+    "\nTap Repeat Toggle\n\n\n\n\n\n\nCaps Lock",
+    {
+      "c": "#ffd500",
+      "t": "#000000\n#b50000"
+    },
+    "\nRGB Mode -\n\n\n\n\n\n\nA",
+    {
+      "c": "#000000",
+      "t": "#cccccc\n#b50000"
+    },
+    "\nRGB Spd -\n\n\n\n\n\n\nS",
+    "\nRGB Hue -\n\n\n\n\n\n\nD",
+    "\nRGB Sat -\n\n\n\n\n\n\nF",
+    "\nRGB Val -\n\n\n\n\n\n\nG",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 5,
+      "f": 3,
+      "d": true
+    },
+    "H",
+    {
+      "c": "#ff0000",
+      "t": "#ffffff\n#06ff00",
+      "a": 4,
+      "f": 2
+    },
+    "\nRed\n\n\n\n\n\n\nJ",
+    {
+      "c": "#949494",
+      "t": "#000000\n#b50000"
+    },
+    "\nClear\n\n\n\n\n\n\nK",
+    {
+      "c": "#00ffff"
+    },
+    "\nCyan\n\n\n\n\n\n\nL",
+    {
+      "c": "#9B59B5",
+      "t": "#fffffff\n#f8ff00"
+    },
+    "\nPurp\n\n\n\n\n\n\n; :",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 5,
+      "f": 3,
+      "d": true
+    },
+    "' \"",
+    {
+      "w": 2.25,
+      "d": true
+    },
+    "Enter"
+  ],
+  [
+    {
+      "w": 2.25,
+      "d": true
+    },
+    "Shift",
+    {
+      "c": "#ff0000",
+      "t": "#ffffff\n#000000",
+      "a": 4,
+      "f": 2
+    },
+    "\nToggle LEDs\n\n\n\n\n\n\nZ",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 5,
+      "f": 3,
+      "d": true
+    },
+    "X",
+    {
+      "d": true
+    },
+    "C",
+    {
+      "d": true
+    },
+    "V",
+    {
+      "c": "#ff0000",
+      "t": "#ffffff\n#000000",
+      "a": 4,
+      "f": 2
+    },
+    "\nBoot\n\n\n\n\n\n\nB",
+    {
+      "c": "#ffa8dc",
+      "t": "#000000\n#b50000"
+    },
+    "\nNKRO Toggle\n\n\n\n\n\n\nN",
+    {
+      "c": "#ffff00",
+      "t": "#000000\n#870dff"
+    },
+    "\nYellow\n\n\n\n\n\n\nM",
+    {
+      "c": "#00ff00",
+      "t": "#000000\n#ff0000"
+    },
+    "\nGreen\n\n\n\n\n\n\n, <",
+    {
+      "c": "#f5c651",
+      "t": "#000000\n#0547f2"
+    },
+    "\nCream\n\n\n\n\n\n\n. >",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 5,
+      "f": 3,
+      "d": true
+    },
+    "/ ?",
+    {
+      "w": 2.75,
+      "d": true
+    },
+    "Shift",
+    {
+      "x": 1.25,
+      "c": "#000000",
+      "t": "#cccccc\n#b50000",
+      "a": 4,
+      "f": 2
+    },
+    "\nRGB Val +\n\n\n\n\n\n\n↑"
+  ],
+  [
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 5,
+      "f": 3,
+      "w": 1.25,
+      "d": true
+    },
+    "Ctrl",
+    {
+      "w": 1.25,
+      "d": true
+    },
+    "Win",
+    {
+      "w": 1.25,
+      "d": true
+    },
+    "Alt",
+    {
+      "a": 7,
+      "f": 2,
+      "w": 6.25,
+      "d": true
+    },
+    "",
+    {
+      "a": 5,
+      "f": 3,
+      "w": 1.25,
+      "d": true
+    },
+    "Alt",
+    {
+      "c": "#000000",
+      "t": "#cccccc",
+      "f": 2,
+      "w": 1.25
+    },
+    "Fn",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "f": 3,
+      "w": 1.25,
+      "d": true
+    },
+    "Menu",
+    {
+      "w": 1.25,
+      "d": true
+    },
+    "Ctrl",
+    {
+      "x": 0.25,
+      "c": "#000000",
+      "t": "#cccccc\n#b50000",
+      "a": 4,
+      "f": 2
+    },
+    "\nRGB Spd -\n\n\n\n\n\n\n←",
+    "\nRGB Val -\n\n\n\n\n\n\n↓",
+    "\nRGB Spd +\n\n\n\n\n\n\n→"
+  ]
+]

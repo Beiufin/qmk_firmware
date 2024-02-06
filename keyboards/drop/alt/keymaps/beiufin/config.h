@@ -18,13 +18,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#define RGB_MATRIX_FRAMEBUFFER_EFFECTS    // enables more advances RBG effects
-#define ENABLE_RGB_MATRIX_TYPING_HEATMAP  // How hot is your WPM!
+/* RGB Matrix Settings*/
 #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_TYPING_HEATMAP_LEDON  // Sets the default mode, if none has been set
-
 #define RGB_MATRIX_DEFAULT_SPD 127
 #define RGB_MATRIX_SPD_STEP 8
 #define RGB_MATRIX_DEFAULT_HUE 112
+
+/* Additional Animations (these will be added to the ones in info.json) */
+#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID      // Typing heatmap where the leds remain a solid color, brighten
+#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON      // Typing heatmap where the leds remain on and just shift color.
 
 // Allows for leds outside of the g_led_config.matrix_co to be used in the framebuffer effects.
 #define RGB_MATRIX_EXTRA_LED_START 67       // The first led index of the "extra" leds
