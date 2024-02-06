@@ -1,23 +1,6 @@
-#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP)
+#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID)
 RGB_MATRIX_EFFECT(TYPING_HEATMAP_SOLID)
 #    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
-#        ifndef RGB_MATRIX_TYPING_HEATMAP_INCREASE_STEP
-#            define RGB_MATRIX_TYPING_HEATMAP_INCREASE_STEP 32
-#        endif
-
-#        ifndef RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS
-#            define RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS 25
-#        endif
-
-#        ifndef RGB_MATRIX_TYPING_HEATMAP_SPREAD
-#            define RGB_MATRIX_TYPING_HEATMAP_SPREAD 40
-#        endif
-
-#        ifndef RGB_MATRIX_TYPING_HEATMAP_AREA_LIMIT
-#            define RGB_MATRIX_TYPING_HEATMAP_AREA_LIMIT 16
-#        endif
-
-
 // A timer to track the last time we decremented all heatmap values.
 static uint16_t heatmap_decrease_timer;
 // Whether we should decrement the heatmap values during the next update.
@@ -69,7 +52,7 @@ bool TYPING_HEATMAP_SOLID(effect_params_t* params) {
             }
         }
     }
-#   if RGB_MATRIX_EXTRA_LED_COUNT > 0
+#        if RGB_MATRIX_EXTRA_LED_COUNT > 0
     // This assumes extra leds always go from RGB_MATRIX_EXTRA_LED_START -> RGB_MATRIX_EXTRA_LED_COUNT
     if (led_max > RGB_MATRIX_EXTRA_LED_START) {
         // starting led, also used to keep a current led_idx
@@ -78,10 +61,10 @@ bool TYPING_HEATMAP_SOLID(effect_params_t* params) {
             anim_heatmap_solid(&g_rgb_frame_buffer_extra[buf_i], led_i, v_min, params);
         }
     }
-#   endif // RGB_MATRIX_EXTRA_LED_COUNT > 0
+#        endif // RGB_MATRIX_EXTRA_LED_COUNT > 0
 
     return rgb_matrix_check_finished_leds(led_max);
 }
 
-#endif  // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
-#endif      // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP)
+#    endif  // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
+#endif      // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID)

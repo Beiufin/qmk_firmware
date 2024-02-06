@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* Tap Repeat Settings */
 // #define TAP_REPEAT_INTERVAL 200          // Frequency of taps. Default 200
 // #define TAP_REPEAT_MAX 16                // Max keys to allow tap repeating at once. Default 16. More requires more memory and processing time.
-#define TAP_REPEAT_RGB                   // Enables RGB indicators for tap repeat
+#define TAP_REPEAT_RGB                      // Enables RGB indicators for tap repeat
 // #define TAP_REPEAT_HSV HSV_RED           // Color for the repeating keys
 
 /* Key Lock Settings */
@@ -97,6 +97,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS       // Randomly changes a single key's hue and saturation
 // =================================================== Requires RGB_MATRIX_FRAMEBUFFER_EFFECTS =============================================================
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP            // How hot is your WPM!
+#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID      // Typing heatmap where the leds remain a solid color, brighten
+#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON      // Typing heatmap where the leds remain on and just shift color.
 #define ENABLE_RGB_MATRIX_DIGITAL_RAIN              // That famous computer simulation
 // =================================================== RGB_MATRIX_KEYPRESSES OR RGB_MATRIX_KEYRELEASES =====================================================
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE            // Static single hue, pulses keys hit to shifted hue then fades to current hue

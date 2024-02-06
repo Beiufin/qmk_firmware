@@ -47,6 +47,11 @@ __attribute__((weak)) RGB rgb_matrix_hsv_to_rgb(HSV hsv) {
 #define RGB_MATRIX_EFFECT(name)
 #define RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
+#ifdef RGB_MATRIX_PROCESS_HEATMAP
+// if any heatmaps are enabled, this is used to process them
+#    include "process_rgb_matrix_typing_heatmap.h"
+#endif
+
 #include "rgb_matrix_effects.inc"
 #ifdef RGB_MATRIX_CUSTOM_KB
 #    include "rgb_matrix_kb.inc"
@@ -201,7 +206,7 @@ void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
     }
 #endif // RGB_MATRIX_KEYREACTIVE_ENABLED
 
-#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP)
+#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(RGB_MATRIX_PROCESS_HEATMAP)
 #    if defined(RGB_MATRIX_KEYRELEASES)
     if (!pressed)
 #    else
@@ -212,7 +217,7 @@ void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
             process_rgb_matrix_typing_heatmap(row, col);
         }
     }
-#endif // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP)
+#endif // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(RGB_MATRIX_PROCESS_HEATMAP)
 }
 
 void rgb_matrix_test(void) {
