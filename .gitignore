@@ -36,9 +36,7 @@ quantum/version.h
 *.uf2
 
 # DD config at wrong location
-# Commenting this out to avoid having to mix keymap specific rules.mk/config.h with info.json
-# This is technically not supported, but is also currently works.
-# /keyboards/**/keymaps/*/info.json
+/keyboards/**/keymaps/*/info.json
 
 # Old-style QMK Makefiles
 /keyboards/**/Makefile
