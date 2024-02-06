@@ -5,10 +5,19 @@
 
 // clang-format off
 
+// heatmap
+#if defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP) || defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON) || defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID)
+// if any of the typing heatmaps are enabled, the process function should be called
+#    define RGB_MATRIX_PROCESS_HEATMAP
+#endif
+
 // framebuffer
-#if defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP) || \
+#if defined(RGB_MATRIX_PROCESS_HEATMAP) || \
     defined(ENABLE_RGB_MATRIX_DIGITAL_RAIN)
 #    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
+#    if defined(RGB_MATRIX_EXTRA_LED_START)
+#        define RGB_MATRIX_EXTRA_LED_COUNT (RGB_MATRIX_LED_COUNT - RGB_MATRIX_EXTRA_LED_START)
+#    endif
 #endif
 
 // reactive

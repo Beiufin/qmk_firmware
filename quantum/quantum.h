@@ -135,6 +135,14 @@ extern layer_state_t layer_state;
 #    include "process_key_lock.h"
 #endif
 
+#ifdef KEY_LOCK_TOGGLE_ENABLE
+#    include "process_key_lock_toggle.h"
+#endif
+
+#ifdef TAP_REPEAT_ENABLE
+#   include "process_tap_repeat.h"
+#endif
+
 #ifdef SPACE_CADET_ENABLE
 #    include "process_space_cadet.h"
 #endif

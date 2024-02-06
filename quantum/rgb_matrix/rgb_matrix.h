@@ -306,4 +306,7 @@ extern last_hit_t g_last_hit_tracker;
 #endif
 #ifdef RGB_MATRIX_FRAMEBUFFER_EFFECTS
 extern uint8_t g_rgb_frame_buffer[MATRIX_ROWS][MATRIX_COLS];
+#   if defined(RGB_MATRIX_EXTRA_LED_START)
+extern uint8_t g_rgb_frame_buffer_extra[RGB_MATRIX_EXTRA_LED_COUNT];
+#   endif
 #endif

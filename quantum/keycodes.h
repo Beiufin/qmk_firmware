@@ -1366,6 +1366,9 @@ enum qk_keycode_defines {
     TL_UPPR    = QK_TRI_LAYER_UPPER,
     QK_REP     = QK_REPEAT_KEY,
     QK_AREP    = QK_ALT_REPEAT_KEY,
+    // My stuff
+    TR_TOGG    = QK_USER_0,
+    KL_TOGG    = QK_USER_1,
 };
 
 // Range Helpers

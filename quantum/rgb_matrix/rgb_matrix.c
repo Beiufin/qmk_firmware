@@ -47,6 +47,11 @@ __attribute__((weak)) RGB rgb_matrix_hsv_to_rgb(HSV hsv) {
 #define RGB_MATRIX_EFFECT(name)
 #define RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
+#ifdef RGB_MATRIX_PROCESS_HEATMAP
+// if any heatmaps are enabled, this is used to process them
+#    include "process_rgb_matrix_typing_heatmap.h"
+#endif
+
 #include "rgb_matrix_effects.inc"
 #ifdef RGB_MATRIX_CUSTOM_KB
 #    include "rgb_matrix_kb.inc"
@@ -65,6 +70,9 @@ rgb_config_t rgb_matrix_config; // TODO: would like to prefix this with g_ for g
 uint32_t     g_rgb_timer;
 #ifdef RGB_MATRIX_FRAMEBUFFER_EFFECTS
 uint8_t g_rgb_frame_buffer[MATRIX_ROWS][MATRIX_COLS] = {{0}};
+#   if RGB_MATRIX_EXTRA_LED_COUNT > 0
+uint8_t g_rgb_frame_buffer_extra[RGB_MATRIX_EXTRA_LED_COUNT] = {0};
+#   endif
 #endif // RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #ifdef RGB_MATRIX_KEYREACTIVE_ENABLED
 last_hit_t g_last_hit_tracker;
@@ -198,21 +206,22 @@ void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
     }
 #endif // RGB_MATRIX_KEYREACTIVE_ENABLED
 
-#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP)
+#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(RGB_MATRIX_PROCESS_HEATMAP)
 #    if defined(RGB_MATRIX_KEYRELEASES)
     if (!pressed)
 #    else
     if (pressed)
 #    endif // defined(RGB_MATRIX_KEYRELEASES)
     {
-        if (rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP) {
+        if (rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP || rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON || rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_SOLID) {
             process_rgb_matrix_typing_heatmap(row, col);
         }
     }
-#endif // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP)
+#endif // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(RGB_MATRIX_PROCESS_HEATMAP)
 }
 
 void rgb_matrix_test(void) {
+    // Mask out bits 4 and 5
     // Mask out bits 4 and 5
     // Increase the factor to make the test animation slower (and reduce to make it faster)
     uint8_t factor = 10;

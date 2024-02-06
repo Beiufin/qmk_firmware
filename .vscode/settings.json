@@ -18,7 +18,22 @@
         "xstddef": "c",
         "type_traits": "c",
         "utility": "c",
-        "ranges": "c"
+        "ranges": "c",
+        "random": "c",
+        "xlocale": "c",
+        "algorithm": "c",
+        "iterator": "c",
+        "xhash": "c",
+        "xmemory": "c",
+        "xtree": "c",
+        "xutility": "c",
+        "chrono": "c",
+        "variant": "c",
+        "future": "c",
+        "regex": "c",
+        "system_error": "c",
+        "xiosbase": "c",
+        "ostream": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,
@@ -28,7 +43,5 @@
     "[json]": {
         "editor.formatOnSave": false
     },
-    "clangd.arguments": [
-        "--header-insertion=never"
-    ]
+    "clangd.arguments": ["--header-insertion=never"]
 }
