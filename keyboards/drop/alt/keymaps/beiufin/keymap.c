@@ -18,6 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 #include <lib/lib8tion/lib8tion.h>
 
+#ifdef TAP_REPEAT_RGB
+#    include "tap_repeat.h"
+#endif
+
+#ifdef KEY_LOCK_TOGGLE_RGB
+#    include "key_lock_toggle.h"
+#endif
+
 // HID has not yet been implemented for this keyboard
 // #include "raw_hid.h"
 
@@ -73,7 +81,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 //========================================================== CONFIGURABLE DEFAULTS ==========================================================
-extern bool         g_suspend_state;
 extern rgb_config_t rgb_matrix_config;
 bool                disable_layer_color;
 
@@ -95,13 +102,7 @@ enum alt_keycodes {
     MAS_YEL,
     MAS_KEY,
     MAS_WHT,
-    TR_LOCK                 // Tap Repeat Lock
 };
-
-#ifdef ENABLE_TAP_REPEAT
-#    include "process_tap_repeat.h"
-#    define TRLHSV {HSV_RED}
-#endif
 
 // clang-format off
 
@@ -116,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_FL] = LAYOUT_65_ansi_blocker(
         KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, KC_MUTE,
         _______, RGB_RMOD,RGB_VAI, RGB_MOD, RGB_HUI, RGB_SAI, _______, MAS_MGT, MAS_BLU, MAS_WHT, KC_PSCR, KC_SCRL, KC_PAUS, _______, KC_END,
-        TR_LOCK, RGB_SPD, RGB_VAD, RGB_SPI, RGB_HUD, RGB_SAD, _______, MAS_RED, MAS_CYN, MAS_PRP, _______, _______,          _______, KC_VOLU,
+        TR_TOGG, RGB_SPD, RGB_VAD, RGB_SPI, RGB_HUD, RGB_SAD, _______, MAS_RED, MAS_CYN, MAS_PRP, _______, _______,          KL_TOGG, KC_VOLU,
         _______, RGB_TOG, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,          KC_MPLY, KC_VOLD,
         _______, _______, _______,                            EE_CLR,                             KC_APP,  _______, KC_MPRV, KC_MSTP, KC_MNXT
     ),
@@ -163,6 +164,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
 };
 
+#ifdef TAP_REPEAT_ENABLE
+#   define TRHSV RED
+#else
+#   define TRHSV _______
+#endif
+
+#ifdef KEY_LOCK_TOGGLE_ENABLE
+#   define KLHSV RED
+#else
+#   define KLHSV _______
+#endif
+
 # undef _______
 # define _______ {0,0,0}
 
@@ -175,7 +188,7 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     [_FL] = {
         WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   _______, AZURE,
         _______, GOLD,    CUSTHSV, GOLD,    CUSTHSV, CUSTHSV, _______, MAGENT,  BLUE,    WHITE,   GREEN,   BLUE,    ORANGE,  _______, ORANGE,
-        _______, CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, RED,     CYAN,    PURPLE,  _______, _______,          _______, AZURE,
+        TRHSV,   CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, RED,     CYAN,    PURPLE,  _______, _______,          KLHSV,   AZURE,
         _______, TEAL,    _______, _______, _______, RED,     _______, YELLOW,  GREEN,   CREAM,   _______, _______,          GREEN,   AZURE,
         _______, _______, _______,                            _______,                            _______, _______, YELLOW,  RED,     YELLOW,
         // UnderGlow
@@ -190,7 +203,7 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     [_FL] = LAYOUT(
         KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, KC_MUTE,
         _______, RGB_RMOD,RGB_VAI, RGB_MOD, RGB_HUI, RGB_SAI, _______, MAS_MGT, MAS_BLU, MAS_WHT, KC_PSCR, KC_SCRL, KC_PAUS, _______, KC_END,
-        TR_LOCK, RGB_SPD, RGB_VAD, RGB_SPI, RGB_HUD, RGB_SAD, _______, MAS_RED, MAS_CYN, MAS_PRP, _______, _______,          _______, KC_VOLU,
+        TR_TOGG, RGB_SPD, RGB_VAD, RGB_SPI, RGB_HUD, RGB_SAD, _______, MAS_RED, MAS_CYN, MAS_PRP, _______, _______,          KL_TOGG, KC_VOLU,
         _______, RGB_TOG, _______, _______, _______, MD_BOOT, _______, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,          KC_MPLY, KC_VOLD,
         _______, _______, _______,                            _______,                            _______, _______, KC_MPRV, KC_MSTP, KC_MNXT
     ),
@@ -201,69 +214,10 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 # define _______ KC_TRNS
 // clang-format on
 
-
-#ifdef ENABLE_TAP_REPEAT
-uint16_t tr_key_indicies[TAP_REPEAT_MAX] = {};
-uint8_t tr_key_count = 0;
-
-void add_tr_key(keyrecord_t *record) {
-    if (tr_key_count >= TAP_REPEAT_MAX) {
-        return;
-    }
-    uint8_t index = LAYOUT_INDEX(record->event.key.row, record->event.key.col);
-    tr_key_indicies[tr_key_count++] = index;
-}
-
-void remove_tr_key(keyrecord_t *record) {
-    uint8_t index = LAYOUT_INDEX(record->event.key.row, record->event.key.col);
-    uint8_t i = 0;
-    while ( i < tr_key_count && tr_key_indicies[i] != index ) ++i;
-
-    if ( i == tr_key_count) return;
-    tr_key_indicies[i] = tr_key_indicies[--tr_key_count];
-}
-
-bool process_tap_repeat_user(uint16_t keycode, keyrecord_t *record) {
-    bool trToggled = false;
-    if (!process_tap_repeat(&keycode, record, &trToggled)) {
-        if (trToggled) add_tr_key(record);
-        return false;
-    }
-    if (trToggled) remove_tr_key(record);
-    return true;
-}
-
-void set_tr_color(void) {
-    if (tr_key_count == 0) {
-        return;
-    }
-    uint8_t i = 0;
-    while (i < tr_key_count) rgb_matrix_set_color(tr_key_indicies[i++], RGB_RED);
-}
-#endif
-
-// Runs just one time when the keyboard initializes.
-void matrix_init_user(void) {
-    rgb_enabled_flag = true;  // Initially, keyboard RGB is enabled. Change to false config.h initializes RGB disabled.
-};
-
-void keyboard_post_init_user(void) { rgb_matrix_enable(); }
-
-// Runs constantly in the background, in a loop.
-#ifdef ENABLE_TAP_REPEAT
-void matrix_scan_user(void){
-    process_tap_repeat_step();
-};
-#endif //ENABLE_TAP_REPEAT
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-#ifdef ENABLE_TAP_REPEAT
-    if (!process_tap_repeat_user(keycode, record)) {
-        return false;
-    }
-#endif
-
-    if (record->event.pressed) {
+    // The only custom processing is for non-standard keys. So avoid any extra processing
+    // for codes in the standard/basic range.
+    if (record->event.pressed && keycode > QK_BASIC_MAX) {
         switch (keycode) {
             // ======================================================== CUSTOM KEYCODES BELOW ========================================================
             case MAS_CRM:
@@ -303,12 +257,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-void set_layer_color(int layer) {
+bool set_layer_color(int layer) {
     if (layer == _KL) {
-#ifdef ENABLE_TAP_REPEAT
-        set_tr_color();
-#endif
-        return;
+        return true;
     }
     // Non default layers
     for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
@@ -381,6 +332,7 @@ void set_layer_color(int layer) {
             }
         }
     }
+    return false;
 }
 
 #ifdef LOCK_INDICATOR_INVERT_COLOR_ENABLE
@@ -416,16 +368,27 @@ bool rgb_matrix_indicators_user(void) {
         rgb_matrix_get_flags() == LED_FLAG_UNDERGLOW
     ) {
         // Let rgb_matrix_indicators_kb do whatever it wants
-        return true;
+        return false;
     }
-    set_layer_color(get_highest_layer(layer_state));
+
+    if (!(
+#if defined(KEY_LOCK_TOGGLE_RGB) && defined(KEY_LOCK_TOGGLE_ENABLE)
+        rgb_matrix_indicators_key_lock_toggle(-1) &&
+#endif
+#if defined(TAP_REPEAT_RGB) && defined(TAP_REPEAT_ENABLE)
+        rgb_matrix_indicators_tap_repeat(30) &&
+#endif
+        set_layer_color(get_highest_layer(layer_state)))
+    ) {
+        return false;
+    }
+
 #ifdef LOCK_INDICATOR_INVERT_COLOR_ENABLE
 # if RGB_MATRIX_CAPS_LOCK_INDEX
     if (host_keyboard_led_state().caps_lock && (rgb_matrix_get_flags() & LED_FLAG_INDICATOR)) {
         invert_led_rgb_one(RGB_MATRIX_CAPS_LOCK_INDEX);
     }
 # endif // RGB_MATRIX_CAPS_LOCK_INDEX
-    // This will handle rgb_matrix_indicators_kb doesnt override this color change
     return false;
 #else
     return true;
