@@ -6,14 +6,14 @@ static uint16_t heatmap_decrease_timer;
 // Whether we should decrement the heatmap values during the next update.
 static bool decrease_heatmap_values;
 
-static inline void anim_heatmap_ledon(uint8_t *buffer_val, uint8_t led_idx, uint8_t v_min, effect_params_t* params) {
+static inline void anim_heatmap_ledon(uint8_t *buffer_val, uint8_t led_idx, effect_params_t* params) {
     uint8_t val = *buffer_val;
     if (!HAS_ANY_FLAGS(g_led_config.flags[led_idx], params->flags)) return;
 
     // Orig: {170 to 0, s, 0 + val*3}
     // HSV hsv = {170 - qsub8(val, 85), rgb_matrix_config.hsv.s, scale8((qadd8(170, val) - 170) * 3, rgb_matrix_config.hsv.v)};
-    // {170 to 0, s, v_min + val*3} Yes V is over simplified, but it gets the point across
-    HSV hsv = {rgb_matrix_config.hsv.h - qsub8(val, 85), rgb_matrix_config.hsv.s, qadd8(scale8((qadd8(170, val) - 170) * 3, qsub8(rgb_matrix_config.hsv.v, v_min)), rgb_matrix_config.hsv.v)};
+    // {h to h-170, s, v}
+    HSV hsv = {rgb_matrix_config.hsv.h - qsub8(val, 85), rgb_matrix_config.hsv.s, rgb_matrix_config.hsv.v};
     RGB rgb = rgb_matrix_hsv_to_rgb(hsv);
     rgb_matrix_set_color(led_idx, rgb.r, rgb.g, rgb.b);
 
@@ -24,10 +24,9 @@ static inline void anim_heatmap_ledon(uint8_t *buffer_val, uint8_t led_idx, uint
 
 bool TYPING_HEATMAP_LEDON(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
-    uint8_t v_min = rgb_matrix_config.speed;
 
     if (params->init) {
-        HSV hsv = {rgb_matrix_config.hsv.h, rgb_matrix_config.hsv.s, v_min};
+        HSV hsv = {rgb_matrix_config.hsv.h, rgb_matrix_config.hsv.s, rgb_matrix_config.hsv.v};
         RGB rgb = rgb_matrix_hsv_to_rgb(hsv);
         rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
         memset(g_rgb_frame_buffer, 0, sizeof g_rgb_frame_buffer);
@@ -51,7 +50,7 @@ bool TYPING_HEATMAP_LEDON(effect_params_t* params) {
         for (uint8_t col = 0; col < MATRIX_COLS && count < RGB_MATRIX_LED_PROCESS_LIMIT; col++) {
             if (g_led_config.matrix_co[row][col] >= led_min && g_led_config.matrix_co[row][col] < led_max) {
                 count++;
-                anim_heatmap_ledon(&g_rgb_frame_buffer[row][col], g_led_config.matrix_co[row][col], v_min, params);
+                anim_heatmap_ledon(&g_rgb_frame_buffer[row][col], g_led_config.matrix_co[row][col], params);
             }
         }
     }
@@ -61,7 +60,7 @@ bool TYPING_HEATMAP_LEDON(effect_params_t* params) {
         // starting led, also used to keep a current led_idx
         uint8_t led_i = led_min < RGB_MATRIX_EXTRA_LED_START ? RGB_MATRIX_EXTRA_LED_START : led_min;
         for (uint8_t buf_i = led_i - RGB_MATRIX_EXTRA_LED_START; led_i < led_max; buf_i++, led_i++) {
-            anim_heatmap_ledon(&g_rgb_frame_buffer_extra[buf_i], led_i, v_min, params);
+            anim_heatmap_ledon(&g_rgb_frame_buffer_extra[buf_i], led_i, params);
         }
     }
 #        endif // RGB_MATRIX_EXTRA_LED_COUNT > 0
