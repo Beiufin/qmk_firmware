@@ -23,6 +23,19 @@ static uint16_t heatmap_decrease_timer;
 // Whether we should decrement the heatmap values during the next update.
 static bool decrease_heatmap_values;
 
+static inline void anim_heatmap_solid(uint8_t *buffer_val, uint8_t led_idx, uint8_t v_min, effect_params_t* params) {
+    uint8_t val = *buffer_val;
+    if (!HAS_ANY_FLAGS(g_led_config.flags[led_idx], params->flags)) return;
+
+    HSV hsv = {rgb_matrix_config.hsv.h, rgb_matrix_config.hsv.s, qadd8(v_min, scale8(val, qsub8(rgb_matrix_config.hsv.v, v_min)))};
+    RGB rgb = rgb_matrix_hsv_to_rgb(hsv);
+    rgb_matrix_set_color(led_idx, rgb.r, rgb.g, rgb.b);
+
+    if (decrease_heatmap_values) {
+        *buffer_val = qsub8(val, 1);
+    }
+}
+
 bool TYPING_HEATMAP_SOLID(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
     uint8_t v_min = rgb_matrix_config.speed;
@@ -49,22 +62,23 @@ bool TYPING_HEATMAP_SOLID(effect_params_t* params) {
     // Render heatmap & decrease
     uint8_t count = 0;
     for (uint8_t row = 0; row < MATRIX_ROWS && count < RGB_MATRIX_LED_PROCESS_LIMIT; row++) {
-        for (uint8_t col = 0; col < MATRIX_COLS && RGB_MATRIX_LED_PROCESS_LIMIT; col++) {
+        for (uint8_t col = 0; col < MATRIX_COLS && count < RGB_MATRIX_LED_PROCESS_LIMIT; col++) {
             if (g_led_config.matrix_co[row][col] >= led_min && g_led_config.matrix_co[row][col] < led_max) {
                 count++;
-                uint8_t val = g_rgb_frame_buffer[row][col];
-                if (!HAS_ANY_FLAGS(g_led_config.flags[g_led_config.matrix_co[row][col]], params->flags)) continue;
-
-                HSV hsv = {rgb_matrix_config.hsv.h, rgb_matrix_config.hsv.s, qadd8(v_min, scale8(val, qsub8(rgb_matrix_config.hsv.v, v_min)))};
-                RGB rgb = rgb_matrix_hsv_to_rgb(hsv);
-                rgb_matrix_set_color(g_led_config.matrix_co[row][col], rgb.r, rgb.g, rgb.b);
-
-                if (decrease_heatmap_values) {
-                    g_rgb_frame_buffer[row][col] = qsub8(val, 1);
-                }
+                anim_heatmap_solid(&g_rgb_frame_buffer[row][col], g_led_config.matrix_co[row][col], v_min, params);
             }
         }
     }
+#   if RGB_MATRIX_EXTRA_LED_COUNT > 0
+    // This assumes extra leds always go from RGB_MATRIX_EXTRA_LED_START -> RGB_MATRIX_EXTRA_LED_COUNT
+    if (led_max > RGB_MATRIX_EXTRA_LED_START) {
+        // starting led, also used to keep a current led_idx
+        uint8_t led_i = led_min < RGB_MATRIX_EXTRA_LED_START ? RGB_MATRIX_EXTRA_LED_START : led_min;
+        for (uint8_t buf_i = led_i - RGB_MATRIX_EXTRA_LED_START; led_i < led_max; buf_i++, led_i++) {
+            anim_heatmap_solid(&g_rgb_frame_buffer_extra[buf_i], led_i, v_min, params);
+        }
+    }
+#   endif // RGB_MATRIX_EXTRA_LED_COUNT > 0
 
     return rgb_matrix_check_finished_leds(led_max);
 }

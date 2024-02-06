@@ -17,6 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#define MATRIX_ROWS 11
+#define MATRIX_COLS 8
+
 //Define number of ISSI3733 drivers being used (1...16)
 #define ISSI3733_DRIVER_COUNT 2
 #define RGB_MATRIX_LED_COUNT ISSI3733_LED_COUNT

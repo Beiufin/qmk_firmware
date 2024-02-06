@@ -31,7 +31,9 @@
         "variant": "c",
         "future": "c",
         "regex": "c",
-        "system_error": "c"
+        "system_error": "c",
+        "xiosbase": "c",
+        "ostream": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,
