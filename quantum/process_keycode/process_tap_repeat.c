@@ -32,10 +32,10 @@ static inline uint16_t translate_keycode(uint16_t keycode) {
 static bool process_translated_keycode(uint16_t translated_keycode, keyrecord_t *record) {
     // We start by categorizing the keypress event. In the event of a down
     // event, there are several possibilities (processed in order):
-    // 1. The key is TR_TOGG. In this case, toggle the watching state.
-    // 2. We are not watching and the key is and not TR_TOGG. In this case,
+    // 1. The key is BN_TRTG. In this case, toggle the watching state.
+    // 2. We are not watching and the key is and not BN_TRTG. In this case,
     //    ignore it (processed normally).
-    // 2. The key is NOT a standard key (keycode > 0xFF) and not TR_TOGG. In
+    // 2. The key is NOT a standard key (keycode > 0xFF) and not BN_TRTG. In
     //    this case, ignore it (processed normally).
     // 3. We are watching and the key is a standard key (keycode <= 0xFF) that is
     //    not currently tapping. In this case, add it to the tapping keys.
@@ -44,19 +44,19 @@ static bool process_translated_keycode(uint16_t translated_keycode, keyrecord_t 
     //
     // This does nothing for release events.
     if (record->event.pressed) {
-        // Toggle watching on TR_TOGG press.
-        if (translated_keycode == TR_TOGG) {
+        // Toggle watching on BN_TRTG press.
+        if (translated_keycode == BN_TRTG) {
             if (!is_tap_repeat_watching()) {
                 clear_tap_repeat_keys();
             };
             toggle_tap_repeat_watching();
             return false;
         } else if (!is_tap_repeat_watching()) {
-            // Not watching and the key is and not TR_TOGG. In this case,
+            // Not watching and the key is and not BN_TRTG. In this case,
             // it gets processed normally.
             return true;
         } else if (!(IS_STANDARD_KEYCODE(translated_keycode))) {
-            // Non-standard keycode (ant not TR_TOGG) while watching, it gets processed normally.
+            // Non-standard keycode (ant not BN_TRTG) while watching, it gets processed normally.
             return true;
         } else {
             // Watching and it is a standard keycode, toggle its tapping state.

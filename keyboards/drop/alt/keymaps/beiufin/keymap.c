@@ -117,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_FL] = LAYOUT_65_ansi_blocker(
         KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, KC_MUTE,
         _______, RGB_RMOD,RGB_VAI, RGB_MOD, RGB_HUI, RGB_SAI, _______, MAS_MGT, MAS_BLU, MAS_WHT, KC_PSCR, KC_SCRL, KC_PAUS, _______, KC_END,
-        TR_TOGG, RGB_SPD, RGB_VAD, RGB_SPI, RGB_HUD, RGB_SAD, _______, MAS_RED, MAS_CYN, MAS_PRP, _______, _______,          KL_TOGG, KC_VOLU,
+        BN_TRTG, RGB_SPD, RGB_VAD, RGB_SPI, RGB_HUD, RGB_SAD, _______, MAS_RED, MAS_CYN, MAS_PRP, _______, _______,          BN_KLTG, KC_VOLU,
         _______, RGB_TOG, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,          KC_MPLY, KC_VOLD,
         _______, _______, _______,                            EE_CLR,                             KC_APP,  _______, KC_MPRV, KC_MSTP, KC_MNXT
     ),
@@ -203,7 +203,7 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     [_FL] = LAYOUT(
         KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, KC_MUTE,
         _______, RGB_RMOD,RGB_VAI, RGB_MOD, RGB_HUI, RGB_SAI, _______, MAS_MGT, MAS_BLU, MAS_WHT, KC_PSCR, KC_SCRL, KC_PAUS, _______, KC_END,
-        TR_TOGG, RGB_SPD, RGB_VAD, RGB_SPI, RGB_HUD, RGB_SAD, _______, MAS_RED, MAS_CYN, MAS_PRP, _______, _______,          KL_TOGG, KC_VOLU,
+        BN_TRTG, RGB_SPD, RGB_VAD, RGB_SPI, RGB_HUD, RGB_SAD, _______, MAS_RED, MAS_CYN, MAS_PRP, _______, _______,          BN_KLTG, KC_VOLU,
         _______, RGB_TOG, _______, _______, _______, MD_BOOT, _______, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,          KC_MPLY, KC_VOLD,
         _______, _______, _______,                            _______,                            _______, _______, KC_MPRV, KC_MSTP, KC_MNXT
     ),

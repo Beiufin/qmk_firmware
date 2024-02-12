@@ -317,6 +317,8 @@ enum qk_keycode_defines {
     QK_SWAP_HANDS_OFF = 0x56F4,
     QK_SWAP_HANDS_ON = 0x56F5,
     QK_SWAP_HANDS_ONE_SHOT = 0x56F6,
+    QK_TAP_REPEAT_TOGGLE = 0x5800,
+    QK_KEY_LOCK_TOGGLE = 0x5801,
     QK_MAGIC_SWAP_CONTROL_CAPS_LOCK = 0x7000,
     QK_MAGIC_UNSWAP_CONTROL_CAPS_LOCK = 0x7001,
     QK_MAGIC_TOGGLE_CONTROL_CAPS_LOCK = 0x7002,
@@ -945,6 +947,8 @@ enum qk_keycode_defines {
     SH_OFF     = QK_SWAP_HANDS_OFF,
     SH_ON      = QK_SWAP_HANDS_ON,
     SH_OS      = QK_SWAP_HANDS_ONE_SHOT,
+    BN_TRTG    = QK_TAP_REPEAT_TOGGLE,
+    BN_KLTG    = QK_KEY_LOCK_TOGGLE,
     CL_SWAP    = QK_MAGIC_SWAP_CONTROL_CAPS_LOCK,
     CL_NORM    = QK_MAGIC_UNSWAP_CONTROL_CAPS_LOCK,
     CL_TOGG    = QK_MAGIC_TOGGLE_CONTROL_CAPS_LOCK,
@@ -1366,9 +1370,6 @@ enum qk_keycode_defines {
     TL_UPPR    = QK_TRI_LAYER_UPPER,
     QK_REP     = QK_REPEAT_KEY,
     QK_AREP    = QK_ALT_REPEAT_KEY,
-    // My stuff
-    TR_TOGG    = QK_USER_0,
-    KL_TOGG    = QK_USER_1,
 };
 
 // Range Helpers
@@ -1410,6 +1411,7 @@ enum qk_keycode_defines {
 #define IS_MOUSE_KEYCODE(code) ((code) >= KC_MS_UP && (code) <= KC_MS_ACCEL2)
 #define IS_MODIFIER_KEYCODE(code) ((code) >= KC_LEFT_CTRL && (code) <= KC_RIGHT_GUI)
 #define IS_SWAP_HANDS_KEYCODE(code) ((code) >= QK_SWAP_HANDS_TOGGLE && (code) <= QK_SWAP_HANDS_ONE_SHOT)
+#define IS_BEIUFIN_KEYCODE(code) ((code) >= QK_TAP_REPEAT_TOGGLE && (code) <= QK_KEY_LOCK_TOGGLE)
 #define IS_MAGIC_KEYCODE(code) ((code) >= QK_MAGIC_SWAP_CONTROL_CAPS_LOCK && (code) <= QK_MAGIC_TOGGLE_ESCAPE_CAPS_LOCK)
 #define IS_MIDI_KEYCODE(code) ((code) >= QK_MIDI_ON && (code) <= QK_MIDI_PITCH_BEND_UP)
 #define IS_SEQUENCER_KEYCODE(code) ((code) >= QK_SEQUENCER_ON && (code) <= QK_SEQUENCER_STEPS_CLEAR)
@@ -1432,6 +1434,7 @@ enum qk_keycode_defines {
 #define MOUSE_KEYCODE_RANGE                 KC_MS_UP ... KC_MS_ACCEL2
 #define MODIFIER_KEYCODE_RANGE              KC_LEFT_CTRL ... KC_RIGHT_GUI
 #define SWAP_HANDS_KEYCODE_RANGE            QK_SWAP_HANDS_TOGGLE ... QK_SWAP_HANDS_ONE_SHOT
+#define BEIUFIN_KEYCODE_RANGE               QK_TAP_REPEAT_TOGGLE ... QK_KEY_LOCK_TOGGLE
 #define MAGIC_KEYCODE_RANGE                 QK_MAGIC_SWAP_CONTROL_CAPS_LOCK ... QK_MAGIC_TOGGLE_ESCAPE_CAPS_LOCK
 #define MIDI_KEYCODE_RANGE                  QK_MIDI_ON ... QK_MIDI_PITCH_BEND_UP
 #define SEQUENCER_KEYCODE_RANGE             QK_SEQUENCER_ON ... QK_SEQUENCER_STEPS_CLEAR
@@ -1445,3 +1448,4 @@ enum qk_keycode_defines {
 #define QUANTUM_KEYCODE_RANGE               QK_BOOTLOADER ... QK_ALT_REPEAT_KEY
 #define KB_KEYCODE_RANGE                    QK_KB_0 ... QK_KB_31
 #define USER_KEYCODE_RANGE                  QK_USER_0 ... QK_USER_31
+

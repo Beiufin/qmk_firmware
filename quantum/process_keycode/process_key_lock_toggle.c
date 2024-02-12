@@ -33,11 +33,11 @@ static inline uint16_t translate_keycode(uint16_t keycode) {
 static bool process_translated_keycode(uint16_t translated_keycode, keyrecord_t *record) {
     // We start by categorizing the keypress event. In the event of a down
     // event, there are several possibilities (processed in order):
-    // 1. The key is KL_TOGG. In this case, turn on the watching state
-    // 2. We are not watching and the key is not locked and not KL_TOGG. In this case,
+    // 1. The key is BN_KLTG. In this case, turn on the watching state
+    // 2. We are not watching and the key is not locked and not BN_KLTG. In this case,
     //    ignore it (processed normally).
-    // 3. The key is locked and not KL_TOGG. In this case, unlock it.
-    // 4. The key is NOT a standard key (keycode > 0xFF) and not KL_TOGG. In
+    // 3. The key is locked and not BN_KLTG. In this case, unlock it.
+    // 4. The key is NOT a standard key (keycode > 0xFF) and not BN_KLTG. In
     //    this case, ignore it (processed normally).
     // 5. We are watching and the key is a standard key (keycode <= 0xFF) that is
     //    not locked. In this case, lock the key.
@@ -45,7 +45,7 @@ static bool process_translated_keycode(uint16_t translated_keycode, keyrecord_t 
     //    locked. In this case, unlock the key
     //
     // In the event of an up event, there are these possibilities:
-    // 1. The key is KL_TOGG. In this case, turn off the watching state
+    // 1. The key is BN_KLTG. In this case, turn off the watching state
     // 2. The key is not being locked. In this case, we return true and bail
     //    immediately. This is the common case.
     // 3. The key is being locked. In this case, we will mask the up event
@@ -58,7 +58,8 @@ static bool process_translated_keycode(uint16_t translated_keycode, keyrecord_t 
         // If we're already watching, turn off the watch.
         if (translated_keycode == KL_TOGG) {
             set_klt_watching(true);
-            return false;
+            // return true as long as it is not BN_KLTG so that a custom KL_TOGG can still be handled normally
+            return translated_keycode != BN_KLTG;
         } else if (!(IS_STANDARD_KEYCODE(translated_keycode))) {
             // Non-standard keycode and not KL_TOGG, ignore it
             return true;
@@ -83,7 +84,8 @@ static bool process_translated_keycode(uint16_t translated_keycode, keyrecord_t 
     } else {
         if (translated_keycode == KL_TOGG) {
             set_klt_watching(false);
-            return false;
+            // return true as long as it is not BN_KLTG so that a custom KL_TOGG can still be handled normally
+            return translated_keycode != BN_KLTG;
         }
         // Stop processing if it's a standard key and we're masking up.
         return !(IS_STANDARD_KEYCODE(translated_keycode) && is_key_locked(translated_keycode));

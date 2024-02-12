@@ -41,6 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Key Lock Settings */
 #define KEY_LOCK_TOGGLE_RGB              // Enables RGB indicators for key lock
+#define KL_TOGG KC_SCRL                  // Allows for using any key as the Key lock toggle. If not set, defaults to BN_KLTG
 
 /* QMK features, see docs\config_options.md for full list */
 #define FORCE_NKRO                     // NKRO by default requires to be turned on, this forces it on during keyboard DEFAULT regardless of EEPROM setting. NKRO can still be turned off but will be turned on again if the keyboard reboots.
