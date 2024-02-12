@@ -20,7 +20,12 @@
 #include <stdbool.h>
 #include "action.h"
 
-// define KEY_LOCK_TOGGLE_RGB if you want the leds indicators when the KL_TOGG key is pressed
+// Allow for choosing any key to use as the toggle key.
+#ifndef KL_TOGG
+#    define KL_TOGG BN_KLTG
+#endif
+
+// define KEY_LOCK_TOGGLE_RGB if you want the leds indicators when the BN_KLTG key is pressed
 #ifdef KEY_LOCK_TOGGLE_RGB
 #   ifndef KEY_LOCK_TOGGLE_HSV
 #       define KEY_LOCK_TOGGLE_HSV HSV_GREEN

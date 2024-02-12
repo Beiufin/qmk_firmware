@@ -1,0 +1,18 @@
+{
+    "keycodes": {
+       "0x5800": {
+            "group": "beiufin",
+            "key": "QK_TAP_REPEAT_TOGGLE",
+            "aliases": [
+                "BN_TRTG"
+            ]
+        },
+        "0x5801": {
+            "group": "beiufin",
+            "key": "QK_KEY_LOCK_TOGGLE",
+            "aliases": [
+                "BN_KLTG"
+            ]
+        }
+    }
+}

@@ -28,7 +28,7 @@
 #   define TAP_REPEAT_MAX 16
 #endif
 
-// define TAP_REPEAT_RGB if you want the leds indicators when the TR_TOGG key is pressed
+// define TAP_REPEAT_RGB if you want the leds indicators when the BN_TRTG key is pressed
 #ifdef TAP_REPEAT_RGB
 #   ifndef TAP_REPEAT_HSV
 #       define TAP_REPEAT_HSV HSV_RED
