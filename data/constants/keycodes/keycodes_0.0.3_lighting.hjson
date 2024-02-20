@@ -1,0 +1,32 @@
+{
+    "keycodes": {
+        "0x7835": {
+            "group": "rgb",
+            "key": "RGB_CYCLE_MODIFIERS",
+            "aliases": [
+                "RGB_C_M"
+            ]
+        },
+        "0x7836": {
+            "group": "rgb",
+            "key": "RGB_CYCLE_UNDERGLOW",
+            "aliases": [
+                "RGB_C_U"
+            ]
+        },
+        "0x7837": {
+            "group": "rgb",
+            "key": "RGB_CYCLE_KEYLIGHTS",
+            "aliases": [
+                "RGB_C_K"
+            ]
+        },
+        "0x7838": {
+            "group": "rgb",
+            "key": "RGB_CYCLE_INDICATORS",
+            "aliases": [
+                "RGB_C_I"
+            ]
+        },
+    }
+}

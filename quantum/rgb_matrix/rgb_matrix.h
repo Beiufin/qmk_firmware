@@ -99,6 +99,30 @@
 #    define RGB_MATRIX_DEFAULT_SPD UINT8_MAX / 2
 #endif
 
+#ifndef RGB_MATRIX_SECONDARY_DEFAULT_ON
+#    define RGB_MATRIX_SECONDARY_DEFAULT_ON false
+#endif
+
+#ifndef RGB_MATRIX_SECONDARY_DEFAULT_MODE
+#    define RGB_MATRIX_SECONDARY_DEFAULT_MODE RGB_MATRIX_DEFAULT_MODE
+#endif
+
+#ifndef RGB_MATRIX_SECONDARY_DEFAULT_HUE
+#    define RGB_MATRIX_SECONDARY_DEFAULT_HUE RGB_MATRIX_DEFAULT_HUE
+#endif
+
+#ifndef RGB_MATRIX_SECONDARY_DEFAULT_SAT
+#    define RGB_MATRIX_SECONDARY_DEFAULT_SAT RGB_MATRIX_DEFAULT_SAT
+#endif
+
+#ifndef RGB_MATRIX_SECONDARY_DEFAULT_VAL
+#    define RGB_MATRIX_SECONDARY_DEFAULT_VAL RGB_MATRIX_DEFAULT_VAL
+#endif
+
+#ifndef RGB_MATRIX_SECONDARY_DEFAULT_SPD
+#    define RGB_MATRIX_SECONDARY_DEFAULT_SPD RGB_MATRIX_DEFAULT_SPD
+#endif
+
 #ifndef RGB_MATRIX_LED_FLUSH_LIMIT
 #    define RGB_MATRIX_LED_FLUSH_LIMIT 16
 #endif
@@ -184,15 +208,24 @@ void rgb_matrix_init(void);
 
 void rgb_matrix_reload_from_eeprom(void);
 
+// stuff that affects both primary and secondary
 void        rgb_matrix_set_suspend_state(bool state);
 bool        rgb_matrix_get_suspend_state(void);
+uint8_t     rgb_matrix_is_enabled(void);
 void        rgb_matrix_toggle(void);
 void        rgb_matrix_toggle_noeeprom(void);
+void        rgb_matrix_disable_all(void);
+void        rgb_matrix_disable_all_noeeprom(void);
+void        rgb_matrix_cycle_flags(led_flags_t flags);
+void        rgb_matrix_cycle_flags_noeeprom(led_flags_t flags);
+
+void        rgb_matrix_toggle_main(void);
+void        rgb_matrix_toggle_main_noeeprom(void);
 void        rgb_matrix_enable(void);
 void        rgb_matrix_enable_noeeprom(void);
 void        rgb_matrix_disable(void);
 void        rgb_matrix_disable_noeeprom(void);
-uint8_t     rgb_matrix_is_enabled(void);
+uint8_t     rgb_matrix_main_is_enabled(void);
 void        rgb_matrix_mode(uint8_t mode);
 void        rgb_matrix_mode_noeeprom(uint8_t mode);
 uint8_t     rgb_matrix_get_mode(void);
@@ -228,51 +261,53 @@ void        rgb_matrix_decrease_speed_noeeprom(void);
 led_flags_t rgb_matrix_get_flags(void);
 void        rgb_matrix_set_flags(led_flags_t flags);
 void        rgb_matrix_set_flags_noeeprom(led_flags_t flags);
+void        rgb_matrix_toggle_flags(led_flags_t flags);
+void        rgb_matrix_toggle_flags_noeeprom(led_flags_t flags);
 
-void        rgb_matrix_two_set_suspend_state(bool rgb_two, bool state);
-bool        rgb_matrix_two_get_suspend_state(bool rgb_two);
-void        rgb_matrix_two_toggle(bool rgb_two);
-void        rgb_matrix_two_toggle_noeeprom(bool rgb_two);
-void        rgb_matrix_two_enable(bool rgb_two);
-void        rgb_matrix_two_enable_noeeprom(bool rgb_two);
-void        rgb_matrix_two_disable(bool rgb_two);
-void        rgb_matrix_two_disable_noeeprom(bool rgb_two);
-uint8_t     rgb_matrix_two_is_enabled(bool rgb_two);
-void        rgb_matrix_two_mode(bool rgb_two, uint8_t mode);
-void        rgb_matrix_two_mode_noeeprom(bool rgb_two, uint8_t mode);
-uint8_t     rgb_matrix_two_get_mode(bool rgb_two);
-void        rgb_matrix_two_step(bool rgb_two);
-void        rgb_matrix_two_step_noeeprom(bool rgb_two);
-void        rgb_matrix_two_step_reverse(bool rgb_two);
-void        rgb_matrix_two_step_reverse_noeeprom(bool rgb_two);
-void        rgb_matrix_two_sethsv(bool rgb_two, uint16_t hue, uint8_t sat, uint8_t val);
-void        rgb_matrix_two_sethsv_noeeprom(bool rgb_two, uint16_t hue, uint8_t sat, uint8_t val);
-HSV         rgb_matrix_two_get_hsv(bool rgb_two);
-uint8_t     rgb_matrix_two_get_hue(bool rgb_two);
-uint8_t     rgb_matrix_two_get_sat(bool rgb_two);
-uint8_t     rgb_matrix_two_get_val(bool rgb_two);
-void        rgb_matrix_two_increase_hue(bool rgb_two);
-void        rgb_matrix_two_increase_hue_noeeprom(bool rgb_two);
-void        rgb_matrix_two_decrease_hue(bool rgb_two);
-void        rgb_matrix_two_decrease_hue_noeeprom(bool rgb_two);
-void        rgb_matrix_two_increase_sat(bool rgb_two);
-void        rgb_matrix_two_increase_sat_noeeprom(bool rgb_two);
-void        rgb_matrix_two_decrease_sat(bool rgb_two);
-void        rgb_matrix_two_decrease_sat_noeeprom(bool rgb_two);
-void        rgb_matrix_two_increase_val(bool rgb_two);
-void        rgb_matrix_two_increase_val_noeeprom(bool rgb_two);
-void        rgb_matrix_two_decrease_val(bool rgb_two);
-void        rgb_matrix_two_decrease_val_noeeprom(bool rgb_two);
-void        rgb_matrix_two_set_speed(bool rgb_two, uint8_t speed);
-void        rgb_matrix_two_set_speed_noeeprom(bool rgb_two, uint8_t speed);
-uint8_t     rgb_matrix_two_get_speed(bool rgb_two);
-void        rgb_matrix_two_increase_speed(bool rgb_two);
-void        rgb_matrix_two_increase_speed_noeeprom(bool rgb_two);
-void        rgb_matrix_two_decrease_speed(bool rgb_two);
-void        rgb_matrix_two_decrease_speed_noeeprom(bool rgb_two);
-led_flags_t rgb_matrix_two_get_flags(bool rgb_two);
-void        rgb_matrix_two_set_flags(bool rgb_two, led_flags_t flags);
-void        rgb_matrix_two_set_flags_noeeprom(bool rgb_two, led_flags_t flags);
+void        rgb_matrix_secondary_toggle(void);
+void        rgb_matrix_secondary_toggle_noeeprom(void);
+void        rgb_matrix_secondary_enable(void);
+void        rgb_matrix_secondary_enable_noeeprom(void);
+void        rgb_matrix_secondary_disable(void);
+void        rgb_matrix_secondary_disable_noeeprom(void);
+uint8_t     rgb_matrix_secondary_is_enabled(void);
+void        rgb_matrix_secondary_mode(uint8_t mode);
+void        rgb_matrix_secondary_mode_noeeprom(uint8_t mode);
+uint8_t     rgb_matrix_secondary_get_mode(void);
+void        rgb_matrix_secondary_step(void);
+void        rgb_matrix_secondary_step_noeeprom(void);
+void        rgb_matrix_secondary_step_reverse(void);
+void        rgb_matrix_secondary_step_reverse_noeeprom(void);
+void        rgb_matrix_secondary_sethsv(uint16_t hue, uint8_t sat, uint8_t val);
+void        rgb_matrix_secondary_sethsv_noeeprom(uint16_t hue, uint8_t sat, uint8_t val);
+HSV         rgb_matrix_secondary_get_hsv(void);
+uint8_t     rgb_matrix_secondary_get_hue(void);
+uint8_t     rgb_matrix_secondary_get_sat(void);
+uint8_t     rgb_matrix_secondary_get_val(void);
+void        rgb_matrix_secondary_increase_hue(void);
+void        rgb_matrix_secondary_increase_hue_noeeprom(void);
+void        rgb_matrix_secondary_decrease_hue(void);
+void        rgb_matrix_secondary_decrease_hue_noeeprom(void);
+void        rgb_matrix_secondary_increase_sat(void);
+void        rgb_matrix_secondary_increase_sat_noeeprom(void);
+void        rgb_matrix_secondary_decrease_sat(void);
+void        rgb_matrix_secondary_decrease_sat_noeeprom(void);
+void        rgb_matrix_secondary_increase_val(void);
+void        rgb_matrix_secondary_increase_val_noeeprom(void);
+void        rgb_matrix_secondary_decrease_val(void);
+void        rgb_matrix_secondary_decrease_val_noeeprom(void);
+void        rgb_matrix_secondary_set_speed(uint8_t speed);
+void        rgb_matrix_secondary_set_speed_noeeprom(uint8_t speed);
+uint8_t     rgb_matrix_secondary_get_speed(void);
+void        rgb_matrix_secondary_increase_speed(void);
+void        rgb_matrix_secondary_increase_speed_noeeprom(void);
+void        rgb_matrix_secondary_decrease_speed(void);
+void        rgb_matrix_secondary_decrease_speed_noeeprom(void);
+led_flags_t rgb_matrix_secondary_get_flags(void);
+void        rgb_matrix_secondary_set_flags(led_flags_t flags);
+void        rgb_matrix_secondary_set_flags_noeeprom(led_flags_t flags);
+void        rgb_matrix_secondary_toggle_flags(led_flags_t flags);
+void        rgb_matrix_secondary_toggle_flags_noeeprom(led_flags_t flags);
 
 
 #ifndef RGBLIGHT_ENABLE
@@ -345,7 +380,7 @@ static inline bool rgb_matrix_check_finished_leds(uint8_t led_idx) {
 extern const rgb_matrix_driver_t rgb_matrix_driver;
 
 extern rgb_config_t rgb_matrix_config;
-extern rgb_config_t rgb_matrix_two_config;
+extern rgb_config_t rgb_matrix_secondary_config;
 
 extern uint32_t     g_rgb_timer;
 extern led_config_t g_led_config;

@@ -48,6 +48,7 @@ typedef struct PACKED {
     uint8_t     iter;
     led_flags_t flags;
     bool        init;
+    bool        rgb_secondary;
 } effect_params_t;
 
 typedef struct PACKED {
