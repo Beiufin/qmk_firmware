@@ -27,7 +27,16 @@
 #    define APM_SAMPLE_PERIODS 25
 #endif
 
-uint8_t get_current_apm(void);
-void    increment_apm();
+#if APM_MAX_VAL > UINT16_MAX
+#    undef APM_MAX_VAL
+#endif
+
+#ifndef APM_MAX_VAL
+#    define APM_MAX_VAL 500
+#endif
+
+uint16_t get_current_apm(void);
+uint8_t  get_relative_apm(void);
+void     increment_apm(void);
 
 void decay_apm(void);

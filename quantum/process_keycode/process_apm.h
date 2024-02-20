@@ -20,4 +20,4 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-bool process_apm(uint16_t keycode);
+void process_apm(uint16_t keycode);

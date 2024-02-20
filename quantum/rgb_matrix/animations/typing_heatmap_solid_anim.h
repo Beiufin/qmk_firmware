@@ -2,10 +2,9 @@
 RGB_MATRIX_EFFECT(TYPING_HEATMAP_SOLID)
 #    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
-HSV anim_heatmap_solid(uint8_t *buffer_val, uint8_t led_idx, bool decrease_heatmap_values, effect_params_t* params) {
+HSV anim_heatmap_solid(uint8_t *buffer_val, bool decrease_heatmap_values, effect_params_t* params) {
     uint8_t val = *buffer_val;
     uint8_t v_min = rgb_matrix_config.speed;
-    if (!HAS_ANY_FLAGS(g_led_config.flags[led_idx], params->flags)) return;
 
     HSV hsv = {rgb_matrix_config.hsv.h, rgb_matrix_config.hsv.s, qadd8(v_min, scale8(val, qsub8(rgb_matrix_config.hsv.v, v_min)))};
 

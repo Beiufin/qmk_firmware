@@ -16,12 +16,12 @@
  */
 #include "apm.h"
 #include "timer.h"
-#include <math.h>
+#include <lib/lib8tion/lib8tion.h>
 
 // This is basically a simplified version of the WPM feature.
 
 // APM Stuff
-static uint8_t  current_apm = 0;
+static uint16_t current_apm = 0;
 static uint32_t apm_timer   = 0;
 
 /* The APM calculation works by specifying a certain number of 'periods' inside
@@ -35,36 +35,32 @@ static uint32_t apm_timer   = 0;
 #define APM_MAX_PERIODS (APM_SAMPLE_PERIODS)
 #define APM_PERIOD_DURATION (1000 * APM_SAMPLE_SECONDS / APM_MAX_PERIODS)
 
-static int16_t period_presses[APM_MAX_PERIODS] = {0};
-static uint8_t current_period              = 0;
-static uint8_t periods                     = 1;
+// This limits the number of actions per period so that a single period of extreme
+// APM doesnt result in the APM staying high until that period goes away
+// then suddenly dropping. Essentially, this makes for a smoother APM.
+#define MAX_ACTIONS_PER_PERIOD ((APM_MAX_VAL * APM_PERIOD_DURATION)/60000)+1
 
-/* APM_LATENCY is used as part of filtering, and controls how quickly the reported
- * APM trails behind our actual instantaneous measured APM value, and is
- * defined in milliseconds. So for APM_LATENCY == 100, the displayed APM is
- * smoothed out over periods of 0.1 seconds. This results in a nice,
- * smoothly-moving reported APM value which nevertheless is never more than
- * 0.1 seconds behind the user's actual current APM.
- */
-#define APM_LATENCY (100)
-static uint32_t smoothing_timer = 0;
-static uint8_t  prev_apm        = 0;
-static uint8_t  next_apm        = 0;
+static uint16_t period_presses[APM_MAX_PERIODS] = {0};
+static uint8_t  current_period                  = 0;
+static uint8_t  periods                         = 1;
 
-
-uint8_t get_current_apm(void) {
+uint16_t get_current_apm(void) {
     return current_apm;
 }
 
-void increment_apm() {
-    if (period_presses[current_period] > INT16_MIN) {
-        period_presses[current_period]--;
+uint8_t get_relative_apm(void) {
+    return (UINT8_MAX * current_apm + (APM_MAX_VAL)/2)/(APM_MAX_VAL);
+}
+
+void increment_apm(void) {
+    if (period_presses[current_period] < MAX_ACTIONS_PER_PERIOD) {
+        period_presses[current_period]++;
     }
 }
 
 void decay_apm(void) {
     uint32_t presses = period_presses[0];
-    for (int i = 1; i <= periods; i++) {
+    for (int i = 1; i < periods; i++) {
         presses += period_presses[i];
     }
 
@@ -72,7 +68,7 @@ void decay_apm(void) {
     uint32_t duration = (((periods)*APM_PERIOD_DURATION) + elapsed);
     uint32_t apm_now  = (60000 * presses) / duration;
 
-    if (apm_now > 1000) apm_now = 1000; // set some reasonable APM measurement limits
+    if (apm_now > APM_MAX_VAL) apm_now = APM_MAX_VAL; // set some reasonable APM measurement limits
 
     if (elapsed > APM_PERIOD_DURATION) {
         current_period                 = (current_period + 1) % APM_MAX_PERIODS;
@@ -82,12 +78,5 @@ void decay_apm(void) {
         apm_timer                      = timer_read32();
     }
 
-    uint32_t latency = timer_elapsed32(smoothing_timer);
-    if (latency > APM_LATENCY) {
-        smoothing_timer = timer_read32();
-        prev_apm        = current_apm;
-        next_apm        = apm_now;
-    }
-
-    current_apm = prev_apm + (latency * ((int)next_apm - (int)prev_apm) / APM_LATENCY);
+    current_apm = apm_now;
 }

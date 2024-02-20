@@ -1,15 +1,15 @@
 #pragma once
 
-typedef HSV (*heatmap_f)(uint8_t *buffer_val, uint8_t led_idx, bool decrease_heatmap_values, effect_params_t* params);
+typedef HSV (*heatmap_f)(uint8_t *buffer_val, bool decrease_heatmap_values, effect_params_t* params);
 
 // A timer to track the last time we decremented all heatmap values.
 static uint16_t heatmap_decrease_timer;
 // Whether we should decrement the heatmap values during the next update.
 static bool decrease_heatmap_values;
 
-bool effect_runner_heatmap(effect_params_t* params, heatmap_f effect_func) {
-    return effect_runner_heatmap_extra(params, effect_func, effect_func);
-}
+#ifndef RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS
+#    define RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS 25
+#endif
 
 bool effect_runner_heatmap_extra(effect_params_t* params, heatmap_f effect_func, heatmap_f extra_effect_func) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
@@ -39,7 +39,8 @@ bool effect_runner_heatmap_extra(effect_params_t* params, heatmap_f effect_func,
         for (uint8_t col = 0; col < MATRIX_COLS && count < RGB_MATRIX_LED_PROCESS_LIMIT; col++) {
             if (g_led_config.matrix_co[row][col] >= led_min && g_led_config.matrix_co[row][col] < led_max) {
                 count++;
-                RGB rgb = rgb_matrix_hsv_to_rgb(effect_func(&g_rgb_frame_buffer[row][col], g_led_config.matrix_co[row][col], decrease_heatmap_values, params));
+                if (!HAS_ANY_FLAGS(g_led_config.matrix_co[row][col], params->flags)) continue;
+                RGB rgb = rgb_matrix_hsv_to_rgb(effect_func(&g_rgb_frame_buffer[row][col], decrease_heatmap_values, params));
                 rgb_matrix_set_color(g_led_config.matrix_co[row][col], rgb.r, rgb.g, rgb.b);
             }
         }
@@ -50,10 +51,15 @@ bool effect_runner_heatmap_extra(effect_params_t* params, heatmap_f effect_func,
         // starting led, also used to keep a current led_idx
         uint8_t led_i = led_min < RGB_MATRIX_EXTRA_LED_START ? RGB_MATRIX_EXTRA_LED_START : led_min;
         for (uint8_t buf_i = led_i - RGB_MATRIX_EXTRA_LED_START; led_i < led_max; buf_i++, led_i++) {
-            RGB rgb = rgb_matrix_hsv_to_rgb(extra_effect_func(&g_rgb_frame_buffer_extra[buf_i], led_i, decrease_heatmap_values params));
+            if (!HAS_ANY_FLAGS(led_i, params->flags)) continue;
+            RGB rgb = rgb_matrix_hsv_to_rgb(extra_effect_func(&g_rgb_frame_buffer_extra[buf_i], decrease_heatmap_values, params));
             rgb_matrix_set_color(led_i, rgb.r, rgb.g, rgb.b);
         }
     }
 #endif // RGB_MATRIX_EXTRA_LED_COUNT > 0
     return rgb_matrix_check_finished_leds(led_max);
+}
+
+bool effect_runner_heatmap(effect_params_t* params, heatmap_f effect_func) {
+    return effect_runner_heatmap_extra(params, effect_func, effect_func);
 }

@@ -6,7 +6,10 @@
 // clang-format off
 
 // heatmap
-#if defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP) || defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON) || defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID)
+#if defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP) || \
+    defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON) || \
+    defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID) || \
+    defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM)
 // if any of the typing heatmaps are enabled, the process function should be called
 #    define RGB_MATRIX_PROCESS_HEATMAP
 #endif
@@ -18,6 +21,11 @@
 #    if defined(RGB_MATRIX_EXTRA_LED_START)
 #        define RGB_MATRIX_EXTRA_LED_COUNT (RGB_MATRIX_LED_COUNT - RGB_MATRIX_EXTRA_LED_START)
 #    endif
+#endif
+
+#if defined(ENABLE_RGB_MATRIX_APM)
+// if any of the typing heatmaps are enabled, the process function should be called
+#    define TRACK_APM
 #endif
 
 // reactive

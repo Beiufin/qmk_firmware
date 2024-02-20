@@ -207,8 +207,8 @@ extern layer_state_t layer_state;
 #    include "wpm.h"
 #endif
 
-#ifdef APM_ENABLE
-#    include "apm.h"
+#ifdef TRACK_APM
+#    include "process_apm.h"
 #endif
 
 #ifdef USBPD_ENABLE

@@ -296,7 +296,7 @@ bool process_record_quantum(keyrecord_t *record) {
     }
 #endif
 
-#ifdef APM_ENABLE
+#ifdef TRACK_APM
 if (record->event.pressed) {
         process_apm(keycode);
     }

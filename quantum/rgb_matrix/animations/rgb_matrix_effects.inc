@@ -30,6 +30,7 @@
 #include "pixel_rain_anim.h"
 #include "pixel_flow_anim.h"
 #include "pixel_fractal_anim.h"
+#include "apm_anim.h"
 #include "typing_heatmap_anim.h"
 #include "typing_heatmap_solid_anim.h"
 #include "typing_heatmap_ledon_anim.h"

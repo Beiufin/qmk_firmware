@@ -2,9 +2,8 @@
 RGB_MATRIX_EFFECT(TYPING_HEATMAP_LEDON)
 #    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
-HSV anim_heatmap_ledon(uint8_t *buffer_val, uint8_t led_idx, effect_params_t* params) {
+HSV anim_heatmap_ledon(uint8_t *buffer_val, bool decrease_heatmap_values, effect_params_t* params) {
     uint8_t val = *buffer_val;
-    if (!HAS_ANY_FLAGS(g_led_config.flags[led_idx], params->flags)) return;
 
     // Orig: {170 to 0, s, 0 + val*3}
     // HSV hsv = {170 - qsub8(val, 85), rgb_matrix_config.hsv.s, scale8((qadd8(170, val) - 170) * 3, rgb_matrix_config.hsv.v)};
