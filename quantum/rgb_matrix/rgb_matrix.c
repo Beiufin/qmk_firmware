@@ -213,7 +213,10 @@ void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
     if (pressed)
 #    endif // defined(RGB_MATRIX_KEYRELEASES)
     {
-        if (rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP || rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON || rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_SOLID) {
+        if (rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP ||
+            rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON ||
+            rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_SOLID ||
+            rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON_APM) {
             process_rgb_matrix_typing_heatmap(row, col);
         }
     }

@@ -34,6 +34,7 @@
 #include "typing_heatmap_anim.h"
 #include "typing_heatmap_solid_anim.h"
 #include "typing_heatmap_ledon_anim.h"
+#include "typing_heatmap_ledon_apm_anim.h"
 #include "digital_rain_anim.h"
 #include "solid_reactive_simple_anim.h"
 #include "solid_reactive_anim.h"

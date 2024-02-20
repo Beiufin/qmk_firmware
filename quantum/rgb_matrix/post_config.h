@@ -23,7 +23,7 @@
 #    endif
 #endif
 
-#if defined(ENABLE_RGB_MATRIX_APM)
+#if defined(ENABLE_RGB_MATRIX_APM) || defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM)
 // if any of the typing heatmaps are enabled, the process function should be called
 #    define TRACK_APM
 #endif

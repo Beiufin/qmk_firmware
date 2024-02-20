@@ -23,7 +23,7 @@ bool TYPING_HEATMAP_LEDON(effect_params_t* params) {
         rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
     }
 
-    return effect_runner_heatmap(params, anim_heatmap_ledon);
+    return effect_runner_heatmap(params, anim_heatmap_ledon, true);
 }
 
 #    endif  // RGB_MATRIX_CUSTOM_EFFECT_IMPLS

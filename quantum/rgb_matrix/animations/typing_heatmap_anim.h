@@ -20,7 +20,7 @@ bool TYPING_HEATMAP(effect_params_t* params) {
         rgb_matrix_set_color_all(0, 0, 0);
     }
 
-    return effect_runner_heatmap(params, anim_heatmap);
+    return effect_runner_heatmap(params, anim_heatmap, true);
 }
 
 #    endif // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
