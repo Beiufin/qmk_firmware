@@ -20,17 +20,25 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+// The window size used to calculate the APM
 #ifndef APM_SAMPLE_SECONDS
 #    define APM_SAMPLE_SECONDS 5
 #endif
-#ifndef APM_SAMPLE_PERIODS
-#    define APM_SAMPLE_PERIODS 25
+
+/**
+ * How frequently a new reading will be taken.
+ * Lower values make the average more volitile, but also
+ * more responsive.
+ */
+#ifndef APM_UPDATE_INTERVAL
+#    define APM_UPDATE_INTERVAL 50
 #endif
 
 #if APM_MAX_VAL > UINT16_MAX
 #    undef APM_MAX_VAL
 #endif
 
+// The max apm to allow.
 #ifndef APM_MAX_VAL
 #    define APM_MAX_VAL 500
 #endif
