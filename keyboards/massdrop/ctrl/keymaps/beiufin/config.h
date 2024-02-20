@@ -52,7 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS    // enables more advances RBG effects
 #define RGB_MATRIX_KEYPRESSES             // reacts to keypresses
 // #define RGB_MATRIX_KEYRELEASES         // reacts to keyreleases (instead of keypresses)
- #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_TYPING_HEATMAP_LEDON  // Sets the default mode, if none has been set
+#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_TYPING_HEATMAP_LEDON  // Sets the default mode, if none has been set
 // #define RGB_MATRIX_HUE_STEP 12         // Units to step when in/decreasing hue
 // #define RGB_MATRIX_SAT_STEP 25         // Units to step when in/decreasing saturation
 // #define RGB_MATRIX_VAL_STEP 12         // Units to step when in/decreasing value (brightness)
@@ -65,6 +65,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGB_MATRIX_DEFAULT_SAT 255 // Sets the default saturation value, if none has been set
 // #define RGB_MATRIX_DEFAULT_VAL RGB_MATRIX_MAXIMUM_BRIGHTNESS // Sets the default brightness value, if none has been set
 // #define RGB_MATRIX_DEFAULT_SPD 127 // Sets the default animation speed, if none has been set
+
+#define RGB_MATRIX_SECONDARY_DEFAULT_ON true     // enable two zones of leds.
 
 // Allows for leds outside of the g_led_config.matrix_co to be used in the framebuffer effects.
 #define RGB_MATRIX_EXTRA_LED_START 87       // The first led index of the "extra" leds
