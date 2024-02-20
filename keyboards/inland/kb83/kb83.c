@@ -55,7 +55,7 @@ const snled27351_led_t PROGMEM g_snled27351_leds[RGB_MATRIX_LED_COUNT] = {
     {0, A_13,  B_13,  C_13},
     {0, A_14,  B_14,  C_14},
     {1, D_1,   E_1,   F_1},
-    
+
     {0, D_1,   E_1,   F_1},
     {0, D_2,   E_2,   F_2},
     {0, D_3,   E_3,   F_3},
@@ -86,7 +86,7 @@ const snled27351_led_t PROGMEM g_snled27351_leds[RGB_MATRIX_LED_COUNT] = {
     {0, G_12,  H_12,  I_12},
     {0, G_13,  H_13,  I_13},
     {1, D_3,   E_3,   F_3},
- 
+
     {0, J_1,   K_1,   L_1},
     {0, J_2,   K_2,   L_2},
     {0, J_3,   K_3,   L_3},
@@ -120,7 +120,7 @@ const snled27351_led_t PROGMEM g_snled27351_leds[RGB_MATRIX_LED_COUNT] = {
     {1, G_3,   H_3,   I_3},
     {1, G_4,   H_4,   I_4},
     {1, G_5,   H_5,   I_5},
-   
+
     {1, J_1,   K_1,   L_1},
     {1, J_2,   K_2,   L_2},
     {1, J_3,   K_3,   L_3},
@@ -239,14 +239,14 @@ led_config_t g_led_config = {
         {224, 64}, //  82 LED 16
     },
     {
-		4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,       
-		4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4, 
-		4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4, 
-		4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,      4, 
-		4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,      4,  4, 
+		4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
+		4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
+		4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
+		4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,      4,
+		4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,      4,  4,
 		4,  4,  4,          4,              4,  4,  4,  4,  4,  4,
-        2,  2,  2,  2,  2, 
-        2,  2,  2,  2,  2,     
+        2,  2,  2,  2,  2,
+        2,  2,  2,  2,  2,
     }
 };
 
@@ -282,11 +282,11 @@ enum __layers {
     MAC_FN
 };
 
-enum colors { 
-    WHITE, 
-    RED, 
-    GREEN, 
-    BLUE 
+enum colors {
+    WHITE,
+    RED,
+    GREEN,
+    BLUE
 };
 enum colors led_color_status = WHITE;
 
@@ -398,7 +398,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
         case DF(WIN_B):
             if ((fn_make_flag && record->event.pressed) && (alarm_flag == 0)) {
                 alarm_flag = true;
-                rgb_matrix_toggle_noeeprom();
+                rgb_matrix_toggle_all_noeeprom();
                 current_time = timer_read();
                 set_single_persistent_default_layer(WIN_B);
                 return false;
@@ -407,7 +407,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
         case DF(MAC_B):
             if ((fn_make_flag && record->event.pressed) && (alarm_flag == 0)) {
                 alarm_flag = true;
-                rgb_matrix_toggle_noeeprom();
+                rgb_matrix_toggle_all_noeeprom();
                 current_time = timer_read();
                 set_single_persistent_default_layer(MAC_B);
                 return false;
@@ -496,7 +496,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                     } break;
                 }
             }
-            if (!rgb_matrix_is_enabled()) {
+            if (!rgb_matrix_any_is_enabled()) {
                 rgb_matrix_set_flags(LED_FLAG_ALL);
                 rgb_matrix_enable();
             }
@@ -549,12 +549,12 @@ void housekeeping_task_kb(void) {
         alarm_cnt--;
         if (alarm_cnt == 0) {
             alarm_flag = true;
-            rgb_matrix_toggle_noeeprom();
+            rgb_matrix_toggle_all_noeeprom();
             current_time = timer_read();
         }
     } else if (alarm_flag) {
         if ((timer_elapsed(current_time)) >= 200) {
-            rgb_matrix_toggle_noeeprom();
+            rgb_matrix_toggle_all_noeeprom();
             alarm_flag = 0;
         }
     }

@@ -28,7 +28,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case RM_TOGG:
       if (record->event.pressed)
-      {rgb_matrix_toggle();
+      {rgb_matrix_toggle_all();
       }
       return false;
     case RM_MOD:

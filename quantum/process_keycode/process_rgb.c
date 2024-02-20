@@ -79,7 +79,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 if (alt) {
                     rgb_matrix_secondary_toggle();
                 } else {
-                    rgb_matrix_toggle();
+                    rgb_matrix_toggle_all();
                 }
 #endif
                 return false;

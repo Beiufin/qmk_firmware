@@ -28,7 +28,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case RMT:
       if (record->event.pressed)
-      {rgb_matrix_toggle();
+      {rgb_matrix_toggle_all();
       }
       return false;
     case RMS:
@@ -102,4 +102,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 };
-

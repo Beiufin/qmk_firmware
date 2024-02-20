@@ -161,7 +161,7 @@ __attribute__((weak)) void via_set_device_indication(uint8_t value) {
     rgblight_toggle_noeeprom();
 #endif // RGBLIGHT_ENABLE
 #if defined(RGB_MATRIX_ENABLE)
-    rgb_matrix_toggle_noeeprom();
+    rgb_matrix_toggle_all_noeeprom();
 #endif // RGB_MATRIX_ENABLE
 #if defined(LED_MATRIX_ENABLE)
     led_matrix_toggle_noeeprom();
@@ -670,7 +670,7 @@ void via_qmk_rgb_matrix_get_value(uint8_t *data) {
             break;
         }
         case id_qmk_rgb_matrix_effect: {
-            value_data[0] = rgb_matrix_is_enabled() ? rgb_matrix_get_mode() : 0;
+            value_data[0] = rgb_matrix_any_is_enabled() ? rgb_matrix_get_mode() : 0;
             break;
         }
         case id_qmk_rgb_matrix_effect_speed: {

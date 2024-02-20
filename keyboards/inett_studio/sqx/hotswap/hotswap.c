@@ -169,7 +169,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
         switch(keycode) {
 #if defined(RGB_MATRIX_DISABLE_KEYCODES)
         case RGB_MATRIX_TOGGLE: // toggle rgb matrix
-            rgb_matrix_toggle();
+            rgb_matrix_toggle_all();
             return false;
         case RGB_MATRIX_STEP:
             rgb_matrix_step();

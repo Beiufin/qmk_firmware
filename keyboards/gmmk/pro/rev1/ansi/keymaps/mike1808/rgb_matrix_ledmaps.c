@@ -29,7 +29,7 @@ static bool enabled = true;
 bool rgb_matrix_indicators_user(void) { return rgb_matrix_indicators_keymap(); }
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 #ifdef RGB_MATRIX_LEDMAPS_ENABLED
-    if (rgb_matrix_is_enabled() && enabled) {
+    if (rgb_matrix_any_is_enabled() && enabled) {
         set_layer_rgb(led_min, led_max, get_highest_layer(layer_state | default_layer_state));
     }
 

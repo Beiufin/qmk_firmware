@@ -211,21 +211,21 @@ void rgb_matrix_reload_from_eeprom(void);
 // stuff that affects both primary and secondary
 void        rgb_matrix_set_suspend_state(bool state);
 bool        rgb_matrix_get_suspend_state(void);
-uint8_t     rgb_matrix_is_enabled(void);
-void        rgb_matrix_toggle(void);
-void        rgb_matrix_toggle_noeeprom(void);
+uint8_t     rgb_matrix_any_is_enabled(void);
+void        rgb_matrix_toggle_all(void);
+void        rgb_matrix_toggle_all_noeeprom(void);
 void        rgb_matrix_disable_all(void);
 void        rgb_matrix_disable_all_noeeprom(void);
 void        rgb_matrix_cycle_flags(led_flags_t flags);
 void        rgb_matrix_cycle_flags_noeeprom(led_flags_t flags);
 
-void        rgb_matrix_toggle_main(void);
-void        rgb_matrix_toggle_main_noeeprom(void);
+void        rgb_matrix_toggle(void);
+void        rgb_matrix_toggle_noeeprom(void);
 void        rgb_matrix_enable(void);
 void        rgb_matrix_enable_noeeprom(void);
 void        rgb_matrix_disable(void);
 void        rgb_matrix_disable_noeeprom(void);
-uint8_t     rgb_matrix_main_is_enabled(void);
+uint8_t     rgb_matrix_is_enabled(void);
 void        rgb_matrix_mode(uint8_t mode);
 void        rgb_matrix_mode_noeeprom(uint8_t mode);
 uint8_t     rgb_matrix_get_mode(void);
@@ -313,13 +313,13 @@ void        rgb_matrix_secondary_toggle_flags_noeeprom(led_flags_t flags);
 #ifndef RGBLIGHT_ENABLE
 #    define eeconfig_update_rgblight_current eeconfig_update_rgb_matrix
 #    define rgblight_reload_from_eeprom rgb_matrix_reload_from_eeprom
-#    define rgblight_toggle rgb_matrix_toggle
-#    define rgblight_toggle_noeeprom rgb_matrix_toggle_noeeprom
+#    define rgblight_toggle rgb_matrix_toggle_all
+#    define rgblight_toggle_noeeprom rgb_matrix_toggle_all_noeeprom
 #    define rgblight_enable rgb_matrix_enable
 #    define rgblight_enable_noeeprom rgb_matrix_enable_noeeprom
 #    define rgblight_disable rgb_matrix_disable
 #    define rgblight_disable_noeeprom rgb_matrix_disable_noeeprom
-#    define rgblight_is_enabled rgb_matrix_is_enabled
+#    define rgblight_is_enabled rgb_matrix_any_is_enabled
 #    define rgblight_mode rgb_matrix_mode
 #    define rgblight_mode_noeeprom rgb_matrix_mode_noeeprom
 #    define rgblight_get_mode rgb_matrix_get_mode

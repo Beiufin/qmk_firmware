@@ -248,7 +248,7 @@ void set_led_scale_indicator(uint8_t r, uint8_t g, uint8_t b) {
 bool rgb_matrix_indicators_user(void) {
     // uint32_t mode = rgblight_get_mode();
 
-    if (rgb_matrix_is_enabled()) {  // turn the lights on when it is enabled.
+    if (rgb_matrix_any_is_enabled()) {  // turn the lights on when it is enabled.
 
         // uint8_t max_scale_indicator_led_loop;
         uint8_t i;

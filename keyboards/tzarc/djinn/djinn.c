@@ -179,7 +179,7 @@ void housekeeping_task_kb(void) {
 #endif
 
         // If we've changed the current limit, toggle rgb off and on if it was on, to force a brightness update on all LEDs
-        if (is_keyboard_master() && rgb_matrix_is_enabled()) {
+        if (is_keyboard_master() && rgb_matrix_any_is_enabled()) {
             rgb_matrix_disable_noeeprom();
             rgb_matrix_enable_noeeprom();
         }
@@ -193,7 +193,7 @@ void housekeeping_task_kb(void) {
         // Turn on RGB
         writePinHigh(RGB_POWER_ENABLE_PIN);
         // Modify the RGB state if different to the LCD state
-        if (rgb_matrix_is_enabled() != peripherals_on) {
+        if (rgb_matrix_any_is_enabled() != peripherals_on) {
             // Wait for a small amount of time to allow the RGB capacitors to charge, before enabling RGB output
             wait_ms(10);
             // Enable RGB
@@ -203,7 +203,7 @@ void housekeeping_task_kb(void) {
         // Turn off RGB
         writePinLow(RGB_POWER_ENABLE_PIN);
         // Disable the PWM output for the RGB
-        if (rgb_matrix_is_enabled() != peripherals_on) {
+        if (rgb_matrix_any_is_enabled() != peripherals_on) {
             rgb_matrix_disable_noeeprom();
         }
     }

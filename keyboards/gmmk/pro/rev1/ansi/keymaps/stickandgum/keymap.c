@@ -118,7 +118,7 @@ void keyboard_post_init_user(void) {
       g_led_config.flags[mods[j]] = LED_FLAG_MODIFIER;
    }
 
-  if (!rgb_matrix_is_enabled()) {
+  if (!rgb_matrix_any_is_enabled()) {
       rgb_matrix_enable();
 #ifdef CONSOLE_ENABLE
       uprintf("ERROR! RGB Matrix Enabled and wrote to EEPROM! -How was the RGB Matrix Disabled?");
@@ -150,7 +150,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           default:
            uprintf("FLAG Other: %u ", rgb_matrix_get_flags());
       }
-      uprintf("Caps? %d Scroll? %d - MATRIX: %d\n", host_keyboard_led_state().caps_lock, host_keyboard_led_state().scroll_lock, rgb_matrix_is_enabled());
+      uprintf("Caps? %d Scroll? %d - MATRIX: %d\n", host_keyboard_led_state().caps_lock, host_keyboard_led_state().scroll_lock, rgb_matrix_any_is_enabled());
 #endif //CONSOLE_ENABLE
 
   switch (keycode) {

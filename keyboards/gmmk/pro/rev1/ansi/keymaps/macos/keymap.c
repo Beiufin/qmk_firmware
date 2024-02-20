@@ -160,7 +160,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         g_led_config.flags[mods[j]] = LED_FLAG_MODIFIER;
      }
 
-    if (!rgb_matrix_is_enabled()) {
+    if (!rgb_matrix_any_is_enabled()) {
         rgb_matrix_enable();
         #ifdef CONSOLE_ENABLE
           uprintf("ERROR! RGB Matrix Enabled and wrote to EEPROM! -How was the RGB Matrix Disabled?");
@@ -192,7 +192,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   bool led_update_user(led_t led_state) {
     if (led_state.caps_lock) {
-      if (!rgb_matrix_is_enabled()) {
+      if (!rgb_matrix_any_is_enabled()) {
         /* Turn ON the RGB Matrix for CAPS LOCK */
         rgb_matrix_set_flags(LED_FLAG_CAPS);
         rgb_matrix_enable();
@@ -314,7 +314,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // }
         // return false;
         if (record->event.pressed) {
-          if (rgb_matrix_is_enabled()) {
+          if (rgb_matrix_any_is_enabled()) {
             switch (rgb_matrix_get_flags()) {
               #if RGB_CONFIRMATION_BLINKING_TIME > 0
               case LED_FLAG_EFFECTS:
@@ -397,7 +397,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   #if RGB_CONFIRMATION_BLINKING_TIME > 0
   static void start_effects(void) {
     effect_started_time = sync_timer_read();
-    if (!rgb_matrix_is_enabled()) {
+    if (!rgb_matrix_any_is_enabled()) {
       /* Turn it ON, signal the cause (EFFECTS) */
       rgb_matrix_set_flags(LED_FLAG_EFFECTS);
       rgb_matrix_enable_noeeprom();

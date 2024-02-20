@@ -136,7 +136,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     #ifdef RGBLIGHT_ENABLE
         #ifdef RGB_MATRIX_ENABLE
         case KC_F13: // toggle rgb matrix
-            rgb_matrix_toggle();
+            rgb_matrix_toggle_all();
             return false;
         case KC_F14:
             rgb_matrix_step();
