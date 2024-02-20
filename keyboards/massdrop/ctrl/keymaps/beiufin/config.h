@@ -96,6 +96,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENABLE_RGB_MATRIX_RAINBOW_PINWHEELS         // Full dual gradients spinning two halfs of keyboard
 #define ENABLE_RGB_MATRIX_RAINDROPS                 // Randomly changes a single key's hue
 #define ENABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS       // Randomly changes a single key's hue and saturation
+#define ENABLE_RGB_MATRIX_APM                       // Leds with change color based on your Actions Per Minute
 // =================================================== Requires RGB_MATRIX_FRAMEBUFFER_EFFECTS =============================================================
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP            // How hot is your WPM!
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID      // Typing heatmap where the leds remain a solid color, brighten
