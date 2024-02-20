@@ -2,7 +2,7 @@
 RGB_MATRIX_EFFECT(TYPING_HEATMAP_LEDON)
 #    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
-static inline void anim_heatmap_ledon(uint8_t *buffer_val, uint8_t led_idx, effect_params_t* params) {
+HSV anim_heatmap_ledon(uint8_t *buffer_val, uint8_t led_idx, effect_params_t* params) {
     uint8_t val = *buffer_val;
     if (!HAS_ANY_FLAGS(g_led_config.flags[led_idx], params->flags)) return;
 
