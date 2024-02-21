@@ -1,35 +1,24 @@
-#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON)
-RGB_MATRIX_EFFECT(TYPING_HEATMAP_LEDON)
-#    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
+#pragma once
+
+typedef HSV (*heatmap_f)(uint8_t *buffer_val, bool decrease_heatmap_values, effect_params_t* params);
+
 // A timer to track the last time we decremented all heatmap values.
 static uint16_t heatmap_decrease_timer;
 // Whether we should decrement the heatmap values during the next update.
 static bool decrease_heatmap_values;
 
-static inline void anim_heatmap_ledon(uint8_t *buffer_val, uint8_t led_idx, effect_params_t* params) {
-    uint8_t val = *buffer_val;
-    if (!HAS_ANY_FLAGS(g_led_config.flags[led_idx], params->flags)) return;
+#ifndef RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS
+#    define RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS 25
+#endif
 
-    // Orig: {170 to 0, s, 0 + val*3}
-    // HSV hsv = {170 - qsub8(val, 85), rgb_matrix_config.hsv.s, scale8((qadd8(170, val) - 170) * 3, rgb_matrix_config.hsv.v)};
-    // {h to h-170, s, v}
-    HSV hsv = {rgb_matrix_config.hsv.h - qsub8(val, 85), rgb_matrix_config.hsv.s, rgb_matrix_config.hsv.v};
-    RGB rgb = rgb_matrix_hsv_to_rgb(hsv);
-    rgb_matrix_set_color(led_idx, rgb.r, rgb.g, rgb.b);
-
-    if (decrease_heatmap_values) {
-        *buffer_val = qsub8(val, 1);
-    }
-}
-
-bool TYPING_HEATMAP_LEDON(effect_params_t* params) {
+bool effect_runner_heatmap(effect_params_t* params, heatmap_f effect_func, bool include_extra_leds) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
 
     if (params->init) {
-        HSV hsv = {rgb_matrix_config.hsv.h, rgb_matrix_config.hsv.s, rgb_matrix_config.hsv.v};
-        RGB rgb = rgb_matrix_hsv_to_rgb(hsv);
-        rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
         memset(g_rgb_frame_buffer, 0, sizeof g_rgb_frame_buffer);
+#if RGB_MATRIX_EXTRA_LED_COUNT > 0
+        memset(g_rgb_frame_buffer_extra, 0, sizeof g_rgb_frame_buffer_extra);
+#endif
     }
 
     // The heatmap animation might run in several iterations depending on
@@ -50,22 +39,23 @@ bool TYPING_HEATMAP_LEDON(effect_params_t* params) {
         for (uint8_t col = 0; col < MATRIX_COLS && count < RGB_MATRIX_LED_PROCESS_LIMIT; col++) {
             if (g_led_config.matrix_co[row][col] >= led_min && g_led_config.matrix_co[row][col] < led_max) {
                 count++;
-                anim_heatmap_ledon(&g_rgb_frame_buffer[row][col], g_led_config.matrix_co[row][col], params);
+                if (!HAS_ANY_FLAGS(g_led_config.matrix_co[row][col], params->flags)) continue;
+                RGB rgb = rgb_matrix_hsv_to_rgb(effect_func(&g_rgb_frame_buffer[row][col], decrease_heatmap_values, params));
+                rgb_matrix_set_color(g_led_config.matrix_co[row][col], rgb.r, rgb.g, rgb.b);
             }
         }
     }
-#        if RGB_MATRIX_EXTRA_LED_COUNT > 0
+#if RGB_MATRIX_EXTRA_LED_COUNT > 0
     // This assumes extra leds always go from RGB_MATRIX_EXTRA_LED_START -> RGB_MATRIX_EXTRA_LED_COUNT
-    if (led_max > RGB_MATRIX_EXTRA_LED_START) {
+    if (include_extra_leds && led_max > RGB_MATRIX_EXTRA_LED_START && count < RGB_MATRIX_LED_PROCESS_LIMIT) {
         // starting led, also used to keep a current led_idx
         uint8_t led_i = led_min < RGB_MATRIX_EXTRA_LED_START ? RGB_MATRIX_EXTRA_LED_START : led_min;
         for (uint8_t buf_i = led_i - RGB_MATRIX_EXTRA_LED_START; led_i < led_max; buf_i++, led_i++) {
-            anim_heatmap_ledon(&g_rgb_frame_buffer_extra[buf_i], led_i, params);
+            if (!HAS_ANY_FLAGS(led_i, params->flags)) continue;
+            RGB rgb = rgb_matrix_hsv_to_rgb(effect_func(&g_rgb_frame_buffer_extra[buf_i], decrease_heatmap_values, params));
+            rgb_matrix_set_color(led_i, rgb.r, rgb.g, rgb.b);
         }
     }
-#        endif // RGB_MATRIX_EXTRA_LED_COUNT > 0
+#endif // RGB_MATRIX_EXTRA_LED_COUNT > 0
     return rgb_matrix_check_finished_leds(led_max);
 }
-
-#    endif  // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
-#endif      // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP)

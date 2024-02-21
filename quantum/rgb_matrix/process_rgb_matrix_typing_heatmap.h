@@ -5,10 +5,6 @@
 #            define RGB_MATRIX_TYPING_HEATMAP_INCREASE_STEP 32
 #        endif
 
-#        ifndef RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS
-#            define RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS 25
-#        endif
-
 #        ifndef RGB_MATRIX_TYPING_HEATMAP_SPREAD
 #            define RGB_MATRIX_TYPING_HEATMAP_SPREAD 40
 #        endif
