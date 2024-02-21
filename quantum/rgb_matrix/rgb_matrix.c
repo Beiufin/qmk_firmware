@@ -69,10 +69,8 @@ __attribute__((weak)) RGB rgb_matrix_hsv_to_rgb(HSV hsv) {
 rgb_config_t rgb_matrix_config; // TODO: would like to prefix this with g_ for global consistancy, do this in another pr
 uint32_t     g_rgb_timer;
 #ifdef RGB_MATRIX_FRAMEBUFFER_EFFECTS
-uint8_t g_rgb_frame_buffer[MATRIX_ROWS][MATRIX_COLS] = {{0}};
-#   if RGB_MATRIX_EXTRA_LED_COUNT > 0
-uint8_t g_rgb_frame_buffer_extra[RGB_MATRIX_EXTRA_LED_COUNT] = {0};
-#   endif
+uint8_t g_rgb_frame_buffer[RGB_MATRIX_LED_COUNT] = {0};
+
 #endif // RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #ifdef RGB_MATRIX_KEYREACTIVE_ENABLED
 last_hit_t g_last_hit_tracker;
@@ -213,10 +211,20 @@ void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
     if (pressed)
 #    endif // defined(RGB_MATRIX_KEYRELEASES)
     {
-        if (rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP ||
+        if (
+#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP
+            rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP ||
+#    endif
+#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON
             rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON ||
+#    endif
+#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID
             rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_SOLID ||
-            rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON_APM) {
+#    endif
+#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM
+            rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON_APM ||
+#    endif
+            false) {
             process_rgb_matrix_typing_heatmap(row, col);
         }
     }

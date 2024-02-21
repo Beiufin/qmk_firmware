@@ -16,9 +16,6 @@ bool effect_runner_heatmap(effect_params_t* params, heatmap_f effect_func, bool 
 
     if (params->init) {
         memset(g_rgb_frame_buffer, 0, sizeof g_rgb_frame_buffer);
-#if RGB_MATRIX_EXTRA_LED_COUNT > 0
-        memset(g_rgb_frame_buffer_extra, 0, sizeof g_rgb_frame_buffer_extra);
-#endif
     }
 
     // The heatmap animation might run in several iterations depending on
@@ -34,28 +31,11 @@ bool effect_runner_heatmap(effect_params_t* params, heatmap_f effect_func, bool 
     }
 
     // Render heatmap & decrease
-    uint8_t count = 0;
-    for (uint8_t row = 0; row < MATRIX_ROWS && count < RGB_MATRIX_LED_PROCESS_LIMIT; row++) {
-        for (uint8_t col = 0; col < MATRIX_COLS && count < RGB_MATRIX_LED_PROCESS_LIMIT; col++) {
-            if (g_led_config.matrix_co[row][col] >= led_min && g_led_config.matrix_co[row][col] < led_max) {
-                count++;
-                if (!HAS_ANY_FLAGS(g_led_config.matrix_co[row][col], params->flags)) continue;
-                RGB rgb = rgb_matrix_hsv_to_rgb(effect_func(&g_rgb_frame_buffer[row][col], decrease_heatmap_values, params));
-                rgb_matrix_set_color(g_led_config.matrix_co[row][col], rgb.r, rgb.g, rgb.b);
-            }
-        }
+    for (uint8_t i = led_min; i < led_max; i++) {
+        RGB_MATRIX_TEST_LED_FLAGS();
+        RGB rgb = rgb_matrix_hsv_to_rgb(effect_func(&g_rgb_frame_buffer[i], decrease_heatmap_values, params));
+        rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
     }
-#if RGB_MATRIX_EXTRA_LED_COUNT > 0
-    // This assumes extra leds always go from RGB_MATRIX_EXTRA_LED_START -> RGB_MATRIX_EXTRA_LED_COUNT
-    if (include_extra_leds && led_max > RGB_MATRIX_EXTRA_LED_START && count < RGB_MATRIX_LED_PROCESS_LIMIT) {
-        // starting led, also used to keep a current led_idx
-        uint8_t led_i = led_min < RGB_MATRIX_EXTRA_LED_START ? RGB_MATRIX_EXTRA_LED_START : led_min;
-        for (uint8_t buf_i = led_i - RGB_MATRIX_EXTRA_LED_START; led_i < led_max; buf_i++, led_i++) {
-            if (!HAS_ANY_FLAGS(led_i, params->flags)) continue;
-            RGB rgb = rgb_matrix_hsv_to_rgb(effect_func(&g_rgb_frame_buffer_extra[buf_i], decrease_heatmap_values, params));
-            rgb_matrix_set_color(led_i, rgb.r, rgb.g, rgb.b);
-        }
-    }
-#endif // RGB_MATRIX_EXTRA_LED_COUNT > 0
+
     return rgb_matrix_check_finished_leds(led_max);
 }
