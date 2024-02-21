@@ -27,4 +27,4 @@ bool TYPING_HEATMAP_LEDON(effect_params_t* params) {
 }
 
 #    endif  // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
-#endif      // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP)
+#endif      // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON)

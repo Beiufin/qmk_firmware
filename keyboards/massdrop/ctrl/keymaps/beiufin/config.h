@@ -66,9 +66,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define RGB_MATRIX_DEFAULT_VAL RGB_MATRIX_MAXIMUM_BRIGHTNESS // Sets the default brightness value, if none has been set
 // #define RGB_MATRIX_DEFAULT_SPD 127 // Sets the default animation speed, if none has been set
 
-// Allows for leds outside of the g_led_config.matrix_co to be used in the framebuffer effects.
-#define RGB_MATRIX_EXTRA_LED_START 87       // The first led index of the "extra" leds
-
 /* RGB Matrix Animation modes. Explicitly enabled */
 // For full list of effects, see:
 // https://docs.qmk.fm/#/feature_rgb_matrix?id=rgb-matrix-effects
@@ -96,12 +93,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENABLE_RGB_MATRIX_RAINBOW_PINWHEELS         // Full dual gradients spinning two halfs of keyboard
 #define ENABLE_RGB_MATRIX_RAINDROPS                 // Randomly changes a single key's hue
 #define ENABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS       // Randomly changes a single key's hue and saturation
-#define ENABLE_RGB_MATRIX_APM                       // Leds with change color based on your Actions Per Minute
+//#define ENABLE_RGB_MATRIX_APM                       // Leds with change color based on your Actions Per Minute
 // =================================================== Requires RGB_MATRIX_FRAMEBUFFER_EFFECTS =============================================================
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP            // How hot is your WPM!
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID      // Typing heatmap where the leds remain a solid color, brighten
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON      // Typing heatmap where the leds remain on and just shift color.
-#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM  // Same as above, but the "extra" leds will use ENABLE_RGB_MATRIX_APM.
+//#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM  // Same as above, but the "extra" leds will use ENABLE_RGB_MATRIX_APM.
 #define ENABLE_RGB_MATRIX_DIGITAL_RAIN              // That famous computer simulation
 // =================================================== RGB_MATRIX_KEYPRESSES OR RGB_MATRIX_KEYRELEASES =====================================================
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE            // Static single hue, pulses keys hit to shifted hue then fades to current hue
