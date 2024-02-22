@@ -131,9 +131,10 @@ bool rgb_matrix_indicators_kb(void) {
 	else {
 		rgb_matrix_set_color(30, 0x00, 0x00, 0x00);
 	}
-	if (!rgb_matrix_any_is_enabled()) {
+	if (!rgb_matrix_is_enabled()) {
 		rgb_matrix_driver.flush();
     }
     return true;
 }
 #endif
+

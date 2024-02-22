@@ -88,7 +88,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         switch (keycode) {
 #ifdef RGB_MATRIX_ENABLE
             case BL_TOG: // toggle rgb matrix
-                rgb_matrix_toggle_all();
+                rgb_matrix_toggle();
                 return false;
             case BL_EFFECT:
                 rgb_matrix_step();

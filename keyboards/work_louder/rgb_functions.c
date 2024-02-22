@@ -36,7 +36,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch(keycode) {
         case RGB_MATRIX_TOGGLE: // toggle rgb matrix
-            rgb_matrix_toggle_all();
+            rgb_matrix_toggle();
             return false;
         case RGB_MATRIX_MODE_INC:
             rgb_matrix_step();

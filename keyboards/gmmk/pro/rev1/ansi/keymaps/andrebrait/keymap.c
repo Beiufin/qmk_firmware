@@ -192,7 +192,7 @@ void eeconfig_init_user(void) { // EEPROM is getting reset!
 void keyboard_post_init_user(void) {
 #ifdef RGB_MATRIX_ENABLE
     // Enable the RGB matrix, if not enabled
-    if (!rgb_matrix_any_is_enabled()) {
+    if (!rgb_matrix_is_enabled()) {
         rgb_matrix_enable();
     }
     // Set the flags to ALL, if not already set

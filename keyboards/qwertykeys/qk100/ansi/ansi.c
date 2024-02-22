@@ -125,7 +125,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
     if (record->event.pressed) {
         switch (keycode) {
             case QK_KB_0:
-                rgb_matrix_toggle_all();
+                rgb_matrix_toggle();
                 break;
 
             case QK_KB_1:

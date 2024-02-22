@@ -212,7 +212,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
                 return false;
             #ifdef RGB_MATRIX_ENABLE
             case RGB_TOG:
-                if(rgb_matrix_any_is_enabled()) ap2_led_disable();
+                if(rgb_matrix_is_enabled()) ap2_led_disable();
                 else ap2_led_enable();
                 return true;
 

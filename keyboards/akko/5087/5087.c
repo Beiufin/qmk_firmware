@@ -125,13 +125,13 @@ const ckled2001_led PROGMEM g_ckled2001_leds[RGB_MATRIX_LED_COUNT] = {
 };
 #endif // RGB_MATRIX_ENABLE
 
-enum __layers {
-	WIN_B,
-	WIN_W,
-	WIN_FN,
-	MAC_B,
-	MAC_W,
-	MAC_FN,
+enum __layers { 
+	WIN_B, 
+	WIN_W, 
+	WIN_FN, 
+	MAC_B, 
+	MAC_W, 
+	MAC_FN, 
 };
 
 // clang-format on
@@ -179,7 +179,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
                     } break;
                 }
             }
-            if (!rgb_matrix_any_is_enabled()) {
+            if (!rgb_matrix_is_enabled()) {
                 rgb_matrix_set_flags(LED_FLAG_ALL);
                 rgb_matrix_enable();
             }

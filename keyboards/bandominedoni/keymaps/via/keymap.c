@@ -142,7 +142,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef RGB_MATRIX_ENABLE
 bool rgb_matrix_indicators_user(void) {
-    if (rgb_matrix_any_is_enabled()) {  // turn the lights on when it is enabled.
+    if (rgb_matrix_is_enabled()) {  // turn the lights on when it is enabled.
         uint8_t layer = get_highest_layer(layer_state);
         switch (layer) {
             case _CLOSE:

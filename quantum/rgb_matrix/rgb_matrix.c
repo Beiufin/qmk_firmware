@@ -564,18 +564,18 @@ bool rgb_matrix_get_suspend_state(void) {
     return suspend_state;
 }
 
-// todo, rename this to rgb_matrix_any_is_enabled and rename rgb_matrix_is_enabled to rgb_matrix_any_is_enabled
-uint8_t rgb_matrix_any_is_enabled(void) {
+// todo, rename this to rgb_matrix_any_is_enabled and rename rgb_matrix_main_is_enabled to rgb_matrix_is_enabled
+uint8_t rgb_matrix_is_enabled(void) {
     return rgb_matrix_config.enable || rgb_matrix_secondary_config.enable;
 }
 
-// todo, rename these to rgb_matrix_toggle_all and rename rgb_matrix_toggle* to rgb_matrix_toggle_all*
-void rgb_matrix_toggle_all_noeeprom(void) {
-    rgb_matrix_toggle_noeeprom();
+// todo, rename these to rgb_matrix_toggle_all and rename rgb_matrix_toggle_main* to rgb_matrix_toggle*
+void rgb_matrix_toggle_noeeprom(void) {
+    rgb_matrix_toggle_main_noeeprom();
     rgb_matrix_secondary_toggle_noeeprom();
 }
-void rgb_matrix_toggle_all(void) {
-    rgb_matrix_toggle();
+void rgb_matrix_toggle(void) {
+    rgb_matrix_toggle_main();
     rgb_matrix_secondary_toggle();
 }
 
@@ -632,10 +632,10 @@ void rgb_matrix_toggle_eeprom_helper(bool write_to_eeprom, bool rgb_secondary) {
     if (!rgb_secondary) eeconfig_flag_rgb_matrix(write_to_eeprom);
     dprintf("rgb matrix %s toggle [%s]: rgb_matrix_config.enable = %u\n", (rgb_secondary) ? "two" : "primary", (write_to_eeprom) ? "EEPROM" : "NOEEPROM", rgb_matrix_config.enable);
 }
-void rgb_matrix_toggle_noeeprom(void) {
+void rgb_matrix_toggle_main_noeeprom(void) {
     rgb_matrix_toggle_eeprom_helper(false, false);
 }
-void rgb_matrix_toggle(void) {
+void rgb_matrix_toggle_main(void) {
     rgb_matrix_toggle_eeprom_helper(true, false);
 }
 
@@ -663,7 +663,7 @@ void rgb_matrix_disable_noeeprom(void) {
     rgb_matrix_set_state_eeprom_helper(false, false, false);
 }
 
-uint8_t rgb_matrix_is_enabled(void) {
+uint8_t rgb_matrix_main_is_enabled(void) {
     return rgb_matrix_config.enable;
 }
 
