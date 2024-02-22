@@ -135,6 +135,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef WPM_ENABLE
 #    include "wpm.h"
 #endif
+#ifdef APM_ENABLE
+#    include "apm.h"
+#endif
 #ifdef TAP_REPEAT_ENABLE
 #    include "tap_repeat.h"
 #endif
@@ -615,6 +618,10 @@ void quantum_task(void) {
 
 #ifdef WPM_ENABLE
     decay_wpm();
+#endif
+
+#ifdef APM_ENABLE
+    decay_apm();
 #endif
 
 #ifdef DIP_SWITCH_ENABLE

@@ -70,25 +70,23 @@ rgb_config_t rgb_matrix_config; // TODO: would like to prefix this with g_ for g
 rgb_config_t rgb_matrix_secondary_config;
 uint32_t     g_rgb_timer;
 #ifdef RGB_MATRIX_FRAMEBUFFER_EFFECTS
-uint8_t g_rgb_frame_buffer[MATRIX_ROWS][MATRIX_COLS] = {{0}};
-#   if RGB_MATRIX_EXTRA_LED_COUNT > 0
-uint8_t g_rgb_frame_buffer_extra[RGB_MATRIX_EXTRA_LED_COUNT] = {0};
-#   endif
+uint8_t g_rgb_frame_buffer[RGB_MATRIX_LED_COUNT] = {0};
+
 #endif // RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #ifdef RGB_MATRIX_KEYREACTIVE_ENABLED
 last_hit_t g_last_hit_tracker;
 #endif // RGB_MATRIX_KEYREACTIVE_ENABLED
 
 // internals
-static bool            suspend_state                = false;
-static uint8_t         rgb_primary_last_enable      = UINT8_MAX;
-static uint8_t         rgb_secondary_last_enable    = UINT8_MAX;
-static uint8_t         rgb_primary_last_effect      = UINT8_MAX;
-static uint8_t         rgb_secondary_last_effect    = UINT8_MAX;
-static led_flags_t     rgb_primary_last_flags       = LED_FLAG_ALL;
-static led_flags_t     rgb_secondary_last_flags     = LED_FLAG_NONE;
-static effect_params_t rgb_effect_params            = {0, LED_FLAG_ALL, false, false};
-static rgb_task_states rgb_task_state               = SYNCING;
+static bool            suspend_state             = false;
+static uint8_t         rgb_primary_last_enable   = UINT8_MAX;
+static uint8_t         rgb_secondary_last_enable = UINT8_MAX;
+static uint8_t         rgb_primary_last_effect   = UINT8_MAX;
+static uint8_t         rgb_secondary_last_effect = UINT8_MAX;
+static led_flags_t     rgb_primary_last_flags    = LED_FLAG_ALL;
+static led_flags_t     rgb_secondary_last_flags  = LED_FLAG_NONE;
+static effect_params_t rgb_effect_params         = {0, LED_FLAG_ALL, false, false};
+static rgb_task_states rgb_task_state            = SYNCING;
 #if RGB_MATRIX_TIMEOUT > 0
 static uint32_t rgb_anykey_timer;
 #endif // RGB_MATRIX_TIMEOUT > 0
@@ -227,12 +225,20 @@ void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
     if (pressed)
 #    endif // defined(RGB_MATRIX_KEYRELEASES)
     {
-        if (rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP ||
+        if (
+#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP
+            rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP ||
+#    endif
+#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON
             rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON ||
+#    endif
+#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID
             rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_SOLID ||
-            rgb_matrix_secondary_config.mode == RGB_MATRIX_TYPING_HEATMAP ||
-            rgb_matrix_secondary_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON ||
-            rgb_matrix_secondary_config.mode == RGB_MATRIX_TYPING_HEATMAP_SOLID) {
+#    endif
+#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM
+            rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON_APM ||
+#    endif
+            false) {
             process_rgb_matrix_typing_heatmap(row, col);
         }
     }
@@ -307,8 +313,8 @@ static void rgb_task_sync(void) {
 
 static void rgb_task_start(void) {
     // reset iter
-    rgb_effect_params.iter = 0;
-    rgb_effect_params.flags = rgb_primary_last_flags;
+    rgb_effect_params.iter          = 0;
+    rgb_effect_params.flags         = rgb_primary_last_flags;
     rgb_effect_params.rgb_secondary = false;
 
     // update double buffers
@@ -322,21 +328,21 @@ static void rgb_task_start(void) {
 }
 
 static void rgb_task_render(uint8_t primary_effect, uint8_t secondary_effect) {
-    bool rendering         = false;
+    bool    rendering = false;
     uint8_t effect;
 
     if (!rgb_effect_params.rgb_secondary) {
-        effect = primary_effect;
+        effect                  = primary_effect;
         rgb_effect_params.flags = rgb_primary_last_flags;
-        rgb_effect_params.init = (effect != rgb_primary_last_effect) || (rgb_matrix_config.enable != rgb_primary_last_enable);
+        rgb_effect_params.init  = (effect != rgb_primary_last_effect) || (rgb_matrix_config.enable != rgb_primary_last_enable);
         if (rgb_effect_params.flags != rgb_matrix_config.flags) {
             rgb_effect_params.flags = rgb_matrix_config.flags;
             rgb_matrix_set_color_for_flags(LED_FLAG_ALL & ~(rgb_matrix_secondary_config.flags), 0, 0, 0);
         }
     } else {
         rgb_effect_params.flags = rgb_secondary_last_flags;
-        effect = secondary_effect;
-        rgb_effect_params.init = (effect != rgb_secondary_last_effect) || (rgb_matrix_secondary_config.enable != rgb_secondary_last_enable);
+        effect                  = secondary_effect;
+        rgb_effect_params.init  = (effect != rgb_secondary_last_effect) || (rgb_matrix_secondary_config.enable != rgb_secondary_last_enable);
         if (rgb_effect_params.flags != rgb_matrix_secondary_config.flags) {
             rgb_effect_params.flags = rgb_matrix_secondary_config.flags;
             rgb_matrix_set_color_for_flags(LED_FLAG_ALL & ~(rgb_matrix_config.flags), 0, 0, 0);
@@ -388,18 +394,18 @@ static void rgb_task_render(uint8_t primary_effect, uint8_t secondary_effect) {
     // after the first rgb rendering is done, switch to secondary and run again.
     if (!rendering && !rgb_effect_params.rgb_secondary) {
         rgb_effect_params.rgb_secondary = true;
-        rgb_effect_params.iter = 0;
-        rgb_primary_last_flags = rgb_effect_params.flags;
-        rgb_effect_params.flags = rgb_secondary_last_flags;
-        rendering = true;
+        rgb_effect_params.iter          = 0;
+        rgb_primary_last_flags          = rgb_effect_params.flags;
+        rgb_effect_params.flags         = rgb_secondary_last_flags;
+        rendering                       = true;
     }
 
     // next task
     if (!rendering) {
-        rgb_secondary_last_flags = rgb_effect_params.flags;
-        rgb_effect_params.flags = rgb_primary_last_flags;
+        rgb_secondary_last_flags        = rgb_effect_params.flags;
+        rgb_effect_params.flags         = rgb_primary_last_flags;
         rgb_effect_params.rgb_secondary = false;
-        rgb_task_state = FLUSHING;
+        rgb_task_state                  = FLUSHING;
         if (!rgb_effect_params.init && primary_effect == RGB_MATRIX_NONE && secondary_effect == RGB_MATRIX_NONE) {
             // We only need to flush once if we are RGB_MATRIX_NONE
             rgb_task_state = SYNCING;
@@ -412,9 +418,9 @@ static void rgb_task_render(uint8_t primary_effect, uint8_t secondary_effect) {
 
 static void rgb_task_flush(uint8_t primary_effect, uint8_t secondary_effect) {
     // update last trackers after the first full render so we can init over several frames
-    rgb_primary_last_effect = primary_effect;
+    rgb_primary_last_effect   = primary_effect;
     rgb_secondary_last_effect = secondary_effect;
-    rgb_primary_last_enable = rgb_matrix_config.enable;
+    rgb_primary_last_enable   = rgb_matrix_config.enable;
     rgb_secondary_last_enable = rgb_matrix_secondary_config.enable;
 
     // update pwm buffers
@@ -435,7 +441,7 @@ void rgb_matrix_task(void) {
 #endif // RGB_MATRIX_TIMEOUT > 0
                              false;
 
-    uint8_t primary_effect = suspend_backlight || !rgb_matrix_config.enable ? 0 : rgb_matrix_config.mode;
+    uint8_t primary_effect   = suspend_backlight || !rgb_matrix_config.enable ? 0 : rgb_matrix_config.mode;
     uint8_t secondary_effect = suspend_backlight || !rgb_matrix_secondary_config.enable ? 0 : rgb_matrix_secondary_config.mode;
 
     switch (rgb_task_state) {
@@ -479,8 +485,8 @@ struct rgb_matrix_limits_t rgb_matrix_get_limits(uint8_t iter) {
     limits.led_max_index = limits.led_min_index + RGB_MATRIX_LED_PROCESS_LIMIT;
     if (limits.led_max_index > RGB_MATRIX_LED_COUNT) limits.led_max_index = RGB_MATRIX_LED_COUNT;
 #else
-    limits.led_min_index                = 0;
-    limits.led_max_index                = RGB_MATRIX_LED_COUNT;
+    limits.led_min_index = 0;
+    limits.led_max_index = RGB_MATRIX_LED_COUNT;
 #endif
 #if defined(RGB_MATRIX_SPLIT)
     uint8_t k_rgb_matrix_split[2] = RGB_MATRIX_SPLIT;
@@ -547,8 +553,8 @@ void rgb_matrix_init(void) {
 void rgb_matrix_set_suspend_state(bool state) {
 #ifdef RGB_DISABLE_WHEN_USB_SUSPENDED
     if (state && !suspend_state) { // only run if turning off, and only once
-        rgb_task_render(0, 0);        // turn off all LEDs when suspending
-        rgb_task_flush(0, 0);         // and actually flash led state to LEDs
+        rgb_task_render(0, 0);     // turn off all LEDs when suspending
+        rgb_task_flush(0, 0);      // and actually flash led state to LEDs
     }
     suspend_state = state;
 #endif
@@ -612,10 +618,10 @@ void rgb_matrix_cycle_flags_helper(led_flags_t flags, bool write_to_eeprom) {
         rgb_matrix_toggle_flags_helper(flags, write_to_eeprom, false);
     }
 }
-void rgb_matrix_cycle_flags(led_flags_t flags){
+void rgb_matrix_cycle_flags(led_flags_t flags) {
     rgb_matrix_cycle_flags_helper(flags, true);
 }
-void rgb_matrix_cycle_flags_noeeprom(led_flags_t flags){
+void rgb_matrix_cycle_flags_noeeprom(led_flags_t flags) {
     rgb_matrix_cycle_flags_helper(flags, false);
 }
 
@@ -690,7 +696,7 @@ uint8_t rgb_matrix_get_mode(void) {
 
 void rgb_matrix_step_helper(bool write_to_eeprom, bool rgb_secondary) {
     rgb_config_t *config = rgb_secondary ? &rgb_matrix_secondary_config : &rgb_matrix_config;
-    uint8_t mode = config->mode + 1;
+    uint8_t       mode   = config->mode + 1;
     rgb_matrix_mode_eeprom_helper((mode < RGB_MATRIX_EFFECT_MAX) ? mode : 1, write_to_eeprom, rgb_secondary);
 }
 void rgb_matrix_step_noeeprom(void) {
@@ -702,7 +708,7 @@ void rgb_matrix_step(void) {
 
 void rgb_matrix_step_reverse_helper(bool write_to_eeprom, bool rgb_secondary) {
     rgb_config_t *config = rgb_secondary ? &rgb_matrix_secondary_config : &rgb_matrix_config;
-    uint8_t mode = config->mode - 1;
+    uint8_t       mode   = config->mode - 1;
     rgb_matrix_mode_eeprom_helper((mode < 1) ? RGB_MATRIX_EFFECT_MAX - 1 : mode, write_to_eeprom, rgb_secondary);
 }
 void rgb_matrix_step_reverse_noeeprom(void) {
@@ -811,7 +817,7 @@ void rgb_matrix_decrease_val(void) {
 
 void rgb_matrix_set_speed_eeprom_helper(uint8_t speed, bool write_to_eeprom, bool rgb_secondary) {
     rgb_config_t *config = rgb_secondary ? &rgb_matrix_secondary_config : &rgb_matrix_config;
-    config->speed = speed;
+    config->speed        = speed;
     if (!rgb_secondary) eeconfig_flag_rgb_matrix(write_to_eeprom);
     dprintf("rgb matrix %s set speed [%s]: %u\n", (rgb_secondary) ? "secondary" : "primary", (write_to_eeprom) ? "EEPROM" : "NOEEPROM", config->speed);
 }
@@ -860,10 +866,10 @@ void rgb_matrix_set_flags_noeeprom(led_flags_t flags) {
     rgb_matrix_set_flags_eeprom_helper(flags, false, false);
 }
 
-void rgb_matrix_toggle_flags(led_flags_t flags){
+void rgb_matrix_toggle_flags(led_flags_t flags) {
     rgb_matrix_toggle_flags_helper(flags, true, false);
 }
-void rgb_matrix_toggle_flags_noeeprom(led_flags_t flags){
+void rgb_matrix_toggle_flags_noeeprom(led_flags_t flags) {
     rgb_matrix_toggle_flags_helper(flags, false, false);
 }
 
@@ -1019,9 +1025,9 @@ void rgb_matrix_secondary_set_flags_noeeprom(led_flags_t flags) {
     rgb_matrix_set_flags_eeprom_helper(flags, false, true);
 }
 
-void rgb_matrix_secondary_toggle_flags(led_flags_t flags){
+void rgb_matrix_secondary_toggle_flags(led_flags_t flags) {
     rgb_matrix_toggle_flags_helper(flags, true, true);
 }
-void rgb_matrix_secondary_toggle_flags_noeeprom(led_flags_t flags){
+void rgb_matrix_secondary_toggle_flags_noeeprom(led_flags_t flags) {
     rgb_matrix_toggle_flags_helper(flags, false, true);
 }

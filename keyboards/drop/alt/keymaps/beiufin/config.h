@@ -28,9 +28,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID      // Typing heatmap where the leds remain a solid color, brighten
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON      // Typing heatmap where the leds remain on and just shift color.
 
-// Allows for leds outside of the g_led_config.matrix_co to be used in the framebuffer effects.
-#define RGB_MATRIX_EXTRA_LED_START 67       // The first led index of the "extra" leds
-
 #define LOCK_INDICATOR_INVERT_COLOR_ENABLE    // Comment out to disable custom indicator functionality for *Lock keys
 
 #define FORCE_NKRO                     // NKRO by default requires to be turned on, this forces it on during keyboard DEFAULT regardless of EEPROM setting. NKRO can still be turned off but will be turned on again if the keyboard reboots.

@@ -17,8 +17,10 @@ GRAVE_ESC_ENABLE ?= yes
 MAGIC_ENABLE ?= yes
 SEND_STRING_ENABLE ?= yes
 SPACE_CADET_ENABLE ?= yes
+APM_ENABLE ?= yes
 
 GENERIC_FEATURES = \
+    APM \
     AUTO_SHIFT \
     AUTOCORRECT \
     CAPS_WORD \
@@ -34,6 +36,7 @@ GENERIC_FEATURES = \
     GRAVE_ESC \
     HAPTIC \
     KEY_LOCK \
+    KEY_LOCK_TOGGLE \
     KEY_OVERRIDE \
     LEADER \
     MAGIC \
@@ -48,12 +51,11 @@ GENERIC_FEATURES = \
     SPACE_CADET \
     SWAP_HANDS \
     TAP_DANCE \
+    TAP_REPEAT \
     TRI_LAYER \
     VIA \
     VIRTSER \
-    WPM \
-	TAP_REPEAT \
-	KEY_LOCK_TOGGLE \
+    WPM
 
 define HANDLE_GENERIC_FEATURE
     # $$(info "Processing: $1_ENABLE $2.c")
