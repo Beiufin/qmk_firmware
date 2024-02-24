@@ -33,7 +33,8 @@
         "regex": "c",
         "system_error": "c",
         "xiosbase": "c",
-        "ostream": "c"
+        "ostream": "c",
+        "ios": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,

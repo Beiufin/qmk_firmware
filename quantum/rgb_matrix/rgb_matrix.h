@@ -137,6 +137,9 @@ struct rgb_matrix_limits_t rgb_matrix_get_limits(uint8_t iter);
 
 enum rgb_matrix_effects {
     RGB_MATRIX_NONE = 0,
+#ifdef DUAL_RGB_MATRIX_ENABLE
+    RGB_MATRIX_PARTIAL_NONE,
+#endif
 
 // --------------------------------------
 // -----Begin rgb effect enum macros-----
@@ -168,7 +171,6 @@ uint8_t rgb_matrix_map_row_column_to_led(uint8_t row, uint8_t column, uint8_t *l
 
 void rgb_matrix_set_color(int index, uint8_t red, uint8_t green, uint8_t blue);
 void rgb_matrix_set_color_all(uint8_t red, uint8_t green, uint8_t blue);
-void rgb_matrix_set_color_for_flags(led_flags_t flags, uint8_t red, uint8_t green, uint8_t blue);
 
 void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed);
 
