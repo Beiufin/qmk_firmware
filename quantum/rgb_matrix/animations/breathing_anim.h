@@ -2,11 +2,11 @@
 RGB_MATRIX_EFFECT(BREATHING)
 #    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
-bool BREATHING(effect_params_t* params) {
+bool BREATHING(effect_params_t* params, rgb_config_t* config) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
 
-    HSV      hsv  = rgb_matrix_config.hsv;
-    uint16_t time = scale16by8(g_rgb_timer, rgb_matrix_config.speed / 8);
+    HSV      hsv  = config->hsv;
+    uint16_t time = scale16by8(g_rgb_timer, config->speed / 8);
     hsv.v         = scale8(abs8(sin8(time) - 128) * 2, hsv.v);
     RGB rgb       = rgb_matrix_hsv_to_rgb(hsv);
     for (uint8_t i = led_min; i < led_max; i++) {

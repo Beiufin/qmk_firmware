@@ -3,12 +3,12 @@ RGB_MATRIX_EFFECT(ALPHAS_MODS)
 #    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
 // alphas = color1, mods = color2
-bool ALPHAS_MODS(effect_params_t* params) {
+bool ALPHAS_MODS(effect_params_t* params, rgb_config_t* config) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
 
-    HSV hsv  = rgb_matrix_config.hsv;
+    HSV hsv  = config->hsv;
     RGB rgb1 = rgb_matrix_hsv_to_rgb(hsv);
-    hsv.h += rgb_matrix_config.speed;
+    hsv.h += config->speed;
     RGB rgb2 = rgb_matrix_hsv_to_rgb(hsv);
 
     for (uint8_t i = led_min; i < led_max; i++) {

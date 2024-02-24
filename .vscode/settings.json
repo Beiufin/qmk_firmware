@@ -43,5 +43,8 @@
     "[json]": {
         "editor.formatOnSave": false
     },
-    "clangd.arguments": ["--header-insertion=never"]
+    "clangd.arguments": [
+        "--header-insertion=never"
+    ],
+    "cmake.sourceDirectory": "C:/Users/beiufin/qmk_clones/current/qmk_firmware/lib/pico-sdk/src/common/pico_bit_ops"
 }

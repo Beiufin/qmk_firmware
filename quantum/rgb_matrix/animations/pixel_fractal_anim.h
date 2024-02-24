@@ -6,7 +6,7 @@
 RGB_MATRIX_EFFECT(PIXEL_FRACTAL)
 #    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
-static bool PIXEL_FRACTAL(effect_params_t* params) {
+static bool PIXEL_FRACTAL(effect_params_t* params, rgb_config_t* config) {
 #        if MATRIX_COLS < 2
 #            define MID_COL 1
 #        else
@@ -16,7 +16,7 @@ static bool PIXEL_FRACTAL(effect_params_t* params) {
     static uint32_t wait_timer = 0;
 
     inline uint32_t interval(void) {
-        return 3000 / scale16by8(qadd8(rgb_matrix_config.speed, 16), 16);
+        return 3000 / scale16by8(qadd8(config->speed, 16), 16);
     }
 
     if (params->init) {
@@ -26,7 +26,7 @@ static bool PIXEL_FRACTAL(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
 
     if (g_rgb_timer > wait_timer) {
-        RGB rgb = rgb_matrix_hsv_to_rgb(rgb_matrix_config.hsv);
+        RGB rgb = rgb_matrix_hsv_to_rgb(config->hsv);
         for (uint8_t h = 0; h < MATRIX_ROWS; ++h) {
             // Light and copy columns outward
             for (uint8_t l = 0; l < MID_COL - 1; ++l) {

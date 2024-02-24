@@ -68,7 +68,6 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
 #if (defined(RGBLIGHT_ENABLE) && !defined(RGBLIGHT_DISABLE_KEYCODES)) || (defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES))
         uint8_t shifted = get_mods() & MOD_MASK_SHIFT;
         // holding alt will apply the change to the secondary matrix.
-        uint8_t alt = get_mods() & MOD_MASK_ALT;
 #endif
         switch (keycode) {
             case RGB_TOG:
@@ -76,11 +75,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 rgblight_toggle();
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
-                if (alt) {
-                    rgb_matrix_secondary_toggle();
-                } else {
-                    rgb_matrix_toggle();
-                }
+                rgb_matrix_toggle();
 #endif
                 return false;
             case RGB_MODE_FORWARD:
@@ -88,11 +83,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGB(shifted, rgblight_step, rgblight_step_reverse);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
-                if (alt) {
-                    handleKeycodeRGB(shifted, rgb_matrix_secondary_step, rgb_matrix_secondary_step_reverse);
-                } else {
-                    handleKeycodeRGB(shifted, rgb_matrix_step, rgb_matrix_step_reverse);
-                }
+                handleKeycodeRGB(shifted, rgb_matrix_step, rgb_matrix_step_reverse);
 #endif
                 return false;
             case RGB_MODE_REVERSE:
@@ -100,11 +91,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGB(shifted, rgblight_step_reverse, rgblight_step);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
-                if (alt) {
-                    handleKeycodeRGB(shifted, rgb_matrix_secondary_step_reverse, rgb_matrix_secondary_step);
-                } else {
-                    handleKeycodeRGB(shifted, rgb_matrix_step_reverse, rgb_matrix_step);
-                }
+                handleKeycodeRGB(shifted, rgb_matrix_step_reverse, rgb_matrix_step);
 #endif
                 return false;
             case RGB_HUI:
@@ -112,11 +99,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGB(shifted, rgblight_increase_hue, rgblight_decrease_hue);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
-                if (alt) {
-                    handleKeycodeRGB(shifted, rgb_matrix_secondary_increase_hue, rgb_matrix_secondary_decrease_hue);
-                } else {
-                    handleKeycodeRGB(shifted, rgb_matrix_increase_hue, rgb_matrix_decrease_hue);
-                }
+                handleKeycodeRGB(shifted, rgb_matrix_increase_hue, rgb_matrix_decrease_hue);
 #endif
                 return false;
             case RGB_HUD:
@@ -124,11 +107,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGB(shifted, rgblight_decrease_hue, rgblight_increase_hue);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
-                if (alt) {
-                    handleKeycodeRGB(shifted, rgb_matrix_secondary_decrease_hue, rgb_matrix_secondary_increase_hue);
-                } else {
-                    handleKeycodeRGB(shifted, rgb_matrix_decrease_hue, rgb_matrix_increase_hue);
-                }
+                handleKeycodeRGB(shifted, rgb_matrix_decrease_hue, rgb_matrix_increase_hue);
 #endif
                 return false;
             case RGB_SAI:
@@ -136,11 +115,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGB(shifted, rgblight_increase_sat, rgblight_decrease_sat);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
-                if (alt) {
-                    handleKeycodeRGB(shifted, rgb_matrix_secondary_increase_sat, rgb_matrix_secondary_decrease_sat);
-                } else {
-                    handleKeycodeRGB(shifted, rgb_matrix_increase_sat, rgb_matrix_decrease_sat);
-                }
+                handleKeycodeRGB(shifted, rgb_matrix_increase_sat, rgb_matrix_decrease_sat);
 #endif
                 return false;
             case RGB_SAD:
@@ -148,11 +123,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGB(shifted, rgblight_decrease_sat, rgblight_increase_sat);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
-                if (alt) {
-                    handleKeycodeRGB(shifted, rgb_matrix_secondary_decrease_sat, rgb_matrix_secondary_increase_sat);
-                } else {
-                    handleKeycodeRGB(shifted, rgb_matrix_decrease_sat, rgb_matrix_increase_sat);
-                }
+                handleKeycodeRGB(shifted, rgb_matrix_decrease_sat, rgb_matrix_increase_sat);
 #endif
                 return false;
             case RGB_VAI:
@@ -160,11 +131,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGB(shifted, rgblight_increase_val, rgblight_decrease_val);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
-                if (alt) {
-                    handleKeycodeRGB(shifted, rgb_matrix_secondary_increase_val, rgb_matrix_secondary_decrease_val);
-                } else {
-                    handleKeycodeRGB(shifted, rgb_matrix_increase_val, rgb_matrix_decrease_val);
-                }
+                handleKeycodeRGB(shifted, rgb_matrix_increase_val, rgb_matrix_decrease_val);
 #endif
                 return false;
             case RGB_VAD:
@@ -172,11 +139,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGB(shifted, rgblight_decrease_val, rgblight_increase_val);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
-                if (alt) {
-                    handleKeycodeRGB(shifted, rgb_matrix_secondary_decrease_val, rgb_matrix_secondary_increase_val);
-                } else {
-                    handleKeycodeRGB(shifted, rgb_matrix_decrease_val, rgb_matrix_increase_val);
-                }
+                handleKeycodeRGB(shifted, rgb_matrix_decrease_val, rgb_matrix_increase_val);
 #endif
                 return false;
             case RGB_SPI:
@@ -184,11 +147,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGB(shifted, rgblight_increase_speed, rgblight_decrease_speed);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
-                if (alt) {
-                    handleKeycodeRGB(shifted, rgb_matrix_secondary_increase_speed, rgb_matrix_secondary_decrease_speed);
-                } else {
-                    handleKeycodeRGB(shifted, rgb_matrix_increase_speed, rgb_matrix_decrease_speed);
-                }
+                handleKeycodeRGB(shifted, rgb_matrix_increase_speed, rgb_matrix_decrease_speed);
 #endif
                 return false;
             case RGB_SPD:
@@ -196,11 +155,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGB(shifted, rgblight_decrease_speed, rgblight_increase_speed);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
-                if (alt) {
-                    handleKeycodeRGB(shifted, rgb_matrix_secondary_decrease_speed, rgb_matrix_secondary_increase_speed);
-                } else {
-                    handleKeycodeRGB(shifted, rgb_matrix_decrease_speed, rgb_matrix_increase_speed);
-                }
+                handleKeycodeRGB(shifted, rgb_matrix_decrease_speed, rgb_matrix_increase_speed);
 #endif
                 return false;
             case RGB_MODE_PLAIN:
@@ -208,11 +163,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
-                if (alt) {
-                    rgb_matrix_secondary_mode(RGB_MATRIX_SOLID_COLOR);
-                } else {
-                    rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
-                }
+                rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
 #endif
                 return false;
             case RGB_MODE_BREATHE:
@@ -220,11 +171,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGBMode(RGBLIGHT_MODE_BREATHING, RGBLIGHT_MODE_BREATHING_end);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES) && defined(ENABLE_RGB_MATRIX_BREATHING)
-                if (alt) {
-                    rgb_matrix_secondary_mode(RGB_MATRIX_BREATHING);
-                } else {
-                    rgb_matrix_mode(RGB_MATRIX_BREATHING);
-                }
+                rgb_matrix_mode(RGB_MATRIX_BREATHING);
 #endif
                 return false;
             case RGB_MODE_RAINBOW:
@@ -232,11 +179,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGBMode(RGBLIGHT_MODE_RAINBOW_MOOD, RGBLIGHT_MODE_RAINBOW_MOOD_end);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES) && defined(ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT)
-                if (alt) {
-                    rgb_matrix_secondary_mode(RGB_MATRIX_CYCLE_LEFT_RIGHT);
-                } else {
-                    rgb_matrix_mode(RGB_MATRIX_CYCLE_LEFT_RIGHT);
-                }
+                rgb_matrix_mode(RGB_MATRIX_CYCLE_LEFT_RIGHT);
 #endif
                 return false;
             case RGB_MODE_SWIRL:
@@ -244,11 +187,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
                 handleKeycodeRGBMode(RGBLIGHT_MODE_RAINBOW_SWIRL, RGBLIGHT_MODE_RAINBOW_SWIRL_end);
 #endif
 #if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES) && defined(ENABLE_RGB_MATRIX_CYCLE_PINWHEEL)
-                if (alt) {
-                    rgb_matrix_secondary_mode(RGB_MATRIX_CYCLE_PINWHEEL);
-                } else {
-                    rgb_matrix_mode(RGB_MATRIX_CYCLE_PINWHEEL);
-                }
+                rgb_matrix_mode(RGB_MATRIX_CYCLE_PINWHEEL);
 #endif
                 return false;
             case RGB_MODE_SNAKE:

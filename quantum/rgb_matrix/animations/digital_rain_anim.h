@@ -7,12 +7,12 @@ RGB_MATRIX_EFFECT(DIGITAL_RAIN)
 #            define RGB_DIGITAL_RAIN_DROPS 24
 #        endif
 
-bool DIGITAL_RAIN(effect_params_t* params) {
+bool DIGITAL_RAIN(effect_params_t* params, rgb_config_t* config) {
     // algorithm ported from https://github.com/tremby/Kaleidoscope-LEDEffect-DigitalRain
     const uint8_t drop_ticks           = 28;
-    const uint8_t pure_green_intensity = (((uint16_t)rgb_matrix_config.hsv.v) * 3) >> 2;
-    const uint8_t max_brightness_boost = (((uint16_t)rgb_matrix_config.hsv.v) * 3) >> 2;
-    const uint8_t max_intensity        = rgb_matrix_config.hsv.v;
+    const uint8_t pure_green_intensity = (((uint16_t)config->hsv.v) * 3) >> 2;
+    const uint8_t max_brightness_boost = (((uint16_t)config->hsv.v) * 3) >> 2;
+    const uint8_t max_intensity        = config->hsv.v;
     const uint8_t decay_ticks          = 0xff / max_intensity;
 
     static uint8_t drop  = 0;

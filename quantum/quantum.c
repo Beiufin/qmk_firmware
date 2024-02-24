@@ -56,6 +56,10 @@
 #    include "process_rgb.h"
 #endif
 
+#if defined(DUAL_RGB_MATRIX_ENABLE)
+#    include "process_dual_rgb_matrix.h"
+#endif
+
 #ifdef SECURE_ENABLE
 #    include "process_secure.h"
 #endif
@@ -297,7 +301,7 @@ bool process_record_quantum(keyrecord_t *record) {
 #endif
 
 #ifdef TRACK_APM
-if (record->event.pressed) {
+    if (record->event.pressed) {
         process_apm(keycode);
     }
 #endif
@@ -384,6 +388,9 @@ if (record->event.pressed) {
 #endif
 #ifdef GRAVE_ESC_ENABLE
             process_grave_esc(keycode, record) &&
+#endif
+#ifdef DUAL_RGB_MATRIX_ENABLE
+            process_dual_rgb_matrix(keycode, record) &&
 #endif
 #if defined(RGBLIGHT_ENABLE) || defined(RGB_MATRIX_ENABLE)
             process_rgb(keycode, record) &&
