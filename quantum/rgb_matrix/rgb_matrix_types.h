@@ -40,7 +40,7 @@ typedef struct PACKED {
 } last_hit_t;
 #endif // RGB_MATRIX_KEYREACTIVE_ENABLED
 
-typedef enum rgb_task_states { STARTING, RENDERING, SECONDARY_RENDERING, FLUSHING, SYNCING } rgb_task_states;
+typedef enum rgb_task_states { STARTING, RENDERING, FLUSHING, SYNCING } rgb_task_states;
 
 typedef uint8_t led_flags_t;
 

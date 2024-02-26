@@ -77,15 +77,17 @@ last_hit_t g_last_hit_tracker;
 #endif // RGB_MATRIX_KEYREACTIVE_ENABLED
 
 // internals
-static bool            suspend_state          = false;
-static uint8_t         rgb_last_enable        = UINT8_MAX;
-static uint8_t         rgb_last_effect        = UINT8_MAX;
-static effect_params_t rgb_effect_params      = {0, LED_FLAG_ALL, false};
-static bool            needs_secondary_render = false;
+static bool            suspend_state      = false;
+static uint8_t         rgb_last_enable    = UINT8_MAX;
+static uint8_t         rgb_last_effect    = UINT8_MAX;
+static effect_params_t rgb_effect_params  = {0, LED_FLAG_ALL, false};
+static bool            rendering_complete = false;
 #ifdef DUAL_RGB_MATRIX_ENABLE
-static effect_params_t rgb_secondary_effect_params = {0, LED_FLAG_NONE, false};
-static uint8_t         rgb_secondary_last_enable   = UINT8_MAX;
-static uint8_t         rgb_secondary_last_effect   = UINT8_MAX;
+static bool            primary_rendering_complete   = false;
+static bool            secondary_rendering_complete = false;
+static effect_params_t rgb_secondary_effect_params  = {0, LED_FLAG_NONE, false};
+static uint8_t         rgb_secondary_last_enable    = UINT8_MAX;
+static uint8_t         rgb_secondary_last_effect    = UINT8_MAX;
 #endif
 static rgb_task_states rgb_task_state = SYNCING;
 #if RGB_MATRIX_TIMEOUT > 0
@@ -322,9 +324,11 @@ static void rgb_task_sync(void) {
 static void rgb_task_start(void) {
     // reset iter
     rgb_effect_params.iter = 0;
+    rendering_complete     = false;
 #ifdef DUAL_RGB_MATRIX_ENABLE
-    needs_secondary_render           = rgb_secondary_matrix_config.enable && rgb_secondary_matrix_config.flags != LED_FLAG_NONE;
     rgb_secondary_effect_params.iter = 0;
+    secondary_rendering_complete     = false;
+    primary_rendering_complete       = false;
 #endif
 
     // update double buffers
@@ -388,48 +392,50 @@ static bool rgb_task_render_effect(uint8_t effect, effect_params_t *effect_param
     return rendering;
 }
 
-static void rgb_task_render(uint8_t effect) {
+static void rgb_task_render(uint8_t primary_effect, uint8_t secondary_effect) {
     // this trusts that rgb_matrix_config will restart the rgb_task (rgb_task_state = STARTING)
     // if either enable or mode is changed.
-    rgb_effect_params.init = (effect != rgb_last_effect) || (rgb_matrix_config.enable != rgb_last_enable);
+    rgb_effect_params.init = (primary_effect != rgb_last_effect) || (rgb_matrix_config.enable != rgb_last_enable);
+#ifdef DUAL_RGB_MATRIX_ENABLE
+    rgb_secondary_effect_params.init = (secondary_effect != rgb_secondary_last_effect) || (rgb_secondary_matrix_config.enable != rgb_secondary_last_enable);
+    if (rgb_effect_params.flags != rgb_matrix_config.flags || rgb_secondary_effect_params.flags != rgb_secondary_matrix_config.flags) {
+        rgb_effect_params.flags           = rgb_matrix_config.flags;
+        rgb_secondary_effect_params.flags = rgb_secondary_matrix_config.flags;
+        // clear all leds
+        rgb_matrix_set_color_all(0, 0, 0);
+    }
+#else
     if (rgb_effect_params.flags != rgb_matrix_config.flags) {
         rgb_effect_params.flags = rgb_matrix_config.flags;
         rgb_matrix_set_color_all(0, 0, 0);
     }
+#endif
 
-    bool rendering = rgb_task_render_effect(effect, &rgb_effect_params, &rgb_matrix_config);
+#ifdef DUAL_RGB_MATRIX_ENABLE
+    if (!primary_rendering_complete) {
+        primary_rendering_complete = rgb_task_render_effect(primary_effect, &rgb_effect_params, &rgb_matrix_config);
+    }
+    if (!secondary_rendering_complete) {
+        secondary_rendering_complete = rgb_task_render_effect(secondary_effect, &rgb_secondary_effect_params, &rgb_secondary_matrix_config);
+    }
+    rendering_complete = primary_rendering_complete && secondary_rendering_complete;
+#else
+    rendering_complete = rgb_task_render_effect(primary_effect, &rgb_effect_params, &rgb_matrix_config);
+#endif
 
     // next task
-    if (!rendering) {
-        if (needs_secondary_render) {
-            rgb_task_state = SECONDARY_RENDERING;
-        } else {
-            rgb_task_state = FLUSHING;
-            if (!rgb_effect_params.init && effect == RGB_MATRIX_NONE) {
-                // We only need to flush once if we are RGB_MATRIX_NONE
-                rgb_task_state = SYNCING;
-            }
+    if (!rendering_complete) {
+        rgb_task_state = FLUSHING;
+#ifdef DUAL_RGB_MATRIX_ENABLE
+        if (!rgb_secondary_effect_params.init && !rgb_effect_params.init && primary_effect == RGB_MATRIX_NONE && secondary_effect == RGB_MATRIX_NONE) {
+#else
+        if (!rgb_effect_params.init && primary_effect == RGB_MATRIX_NONE) {
+#endif
+            // We only need to flush once if we are RGB_MATRIX_NONE
+            rgb_task_state = SYNCING;
         }
     }
 }
-
-#ifdef DUAL_RGB_MATRIX_ENABLE
-static void rgb_task_render_secondary(uint8_t effect) {
-    rgb_secondary_effect_params.init = (effect != rgb_secondary_last_effect) || (rgb_secondary_matrix_config.enable != rgb_secondary_last_enable);
-    if (rgb_secondary_effect_params.flags != rgb_secondary_matrix_config.flags) {
-        rgb_secondary_effect_params.flags = rgb_secondary_matrix_config.flags;
-        // clear all leds apart from those in the primary config flags
-        rgb_matrix_set_color_all(0, 0, 0);
-    }
-
-    bool rendering = rgb_task_render_effect(effect, &rgb_secondary_effect_params, &rgb_secondary_matrix_config);
-
-    // next task
-    if (!rendering) {
-        rgb_task_state = FLUSHING;
-    }
-}
-#endif
 
 static void rgb_task_flush(uint8_t primary_effect, uint8_t secondary_effect) {
     // update last trackers after the first full render so we can init over several frames
@@ -458,10 +464,10 @@ void rgb_matrix_task(void) {
 #endif // RGB_MATRIX_TIMEOUT > 0
                              false;
 
-    uint8_t effect = suspend_backlight || !rgb_matrix_config.enable ? RGB_MATRIX_NONE : rgb_matrix_config.mode;
+    uint8_t primary_effect = suspend_backlight || !rgb_matrix_config.enable ? RGB_MATRIX_NONE : rgb_matrix_config.mode;
 #ifdef DUAL_RGB_MATRIX_ENABLE
     uint8_t secondary_effect = suspend_backlight || !rgb_secondary_matrix_config.enable ? RGB_MATRIX_NONE : rgb_secondary_matrix_config.mode;
-    if (!secondary_effect && effect) {
+    if (!secondary_effect && primary_effect) {
         // if there is a primary effect and not a secondary effect, use RGB_MATRIX_PARTIAL_NONE for the secondary
         // so that it only clears leds for the secondary flags.
         secondary_effect = RGB_MATRIX_PARTIAL_NONE;
@@ -475,31 +481,17 @@ void rgb_matrix_task(void) {
             rgb_task_start();
             break;
         case RENDERING:
-            rgb_task_render(effect);
-            if (!needs_secondary_render) {
-                // if there is a secondary rendering, we will call these later.
-                if (effect) {
-                    if (rgb_task_state == FLUSHING) { // ensure we only draw basic indicators once rendering is finished
-                        rgb_matrix_indicators();
-                    }
-                    rgb_matrix_indicators_advanced(&rgb_effect_params);
-                }
-            }
-            break;
-        case SECONDARY_RENDERING:
-#ifdef DUAL_RGB_MATRIX_ENABLE
-            rgb_task_render_secondary(secondary_effect);
-            if (effect || secondary_effect) {
-                // It wasnt just an RGB_MATRIX_NONE render
+            rgb_task_render(primary_effect, secondary_effect);
+            // if there is a secondary rendering, we will call these later.
+            if (primary_effect || secondary_effect) {
                 if (rgb_task_state == FLUSHING) { // ensure we only draw basic indicators once rendering is finished
                     rgb_matrix_indicators();
                 }
-                rgb_matrix_indicators_advanced(&rgb_secondary_effect_params);
+                rgb_matrix_indicators_advanced(&rgb_effect_params);
             }
             break;
-#endif
         case FLUSHING:
-            rgb_task_flush(effect, secondary_effect);
+            rgb_task_flush(primary_effect, secondary_effect);
             break;
         case SYNCING:
             rgb_task_sync();
@@ -591,7 +583,7 @@ void rgb_matrix_init(void) {
 void rgb_matrix_set_suspend_state(bool state) {
 #ifdef RGB_DISABLE_WHEN_USB_SUSPENDED
     if (state && !suspend_state) { // only run if turning off, and only once
-        rgb_task_render(0);        // turn off all LEDs when suspending
+        rgb_task_render(0, 0);     // turn off all LEDs when suspending
         rgb_task_flush(0, 0);      // and actually flush led state to LEDs
     }
     suspend_state = state;
