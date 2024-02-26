@@ -413,18 +413,18 @@ static void rgb_task_render(uint8_t primary_effect, uint8_t secondary_effect) {
 
 #ifdef DUAL_RGB_MATRIX_ENABLE
     if (!primary_rendering_complete) {
-        primary_rendering_complete = rgb_task_render_effect(primary_effect, &rgb_effect_params, &rgb_matrix_config);
+        primary_rendering_complete = !rgb_task_render_effect(primary_effect, &rgb_effect_params, &rgb_matrix_config);
     }
     if (!secondary_rendering_complete) {
-        secondary_rendering_complete = rgb_task_render_effect(secondary_effect, &rgb_secondary_effect_params, &rgb_secondary_matrix_config);
+        secondary_rendering_complete = !rgb_task_render_effect(secondary_effect, &rgb_secondary_effect_params, &rgb_secondary_matrix_config);
     }
     rendering_complete = primary_rendering_complete && secondary_rendering_complete;
 #else
-    rendering_complete = rgb_task_render_effect(primary_effect, &rgb_effect_params, &rgb_matrix_config);
+    rendering_complete = !rgb_task_render_effect(primary_effect, &rgb_effect_params, &rgb_matrix_config);
 #endif
 
     // next task
-    if (!rendering_complete) {
+    if (rendering_complete) {
         rgb_task_state = FLUSHING;
 #ifdef DUAL_RGB_MATRIX_ENABLE
         if (!rgb_secondary_effect_params.init && !rgb_effect_params.init && primary_effect == RGB_MATRIX_NONE && secondary_effect == RGB_MATRIX_NONE) {
