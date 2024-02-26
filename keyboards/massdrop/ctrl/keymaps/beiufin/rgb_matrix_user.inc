@@ -1,6 +1,6 @@
 /*
 QMK Firmware Massdrop CTRL M-AS Keymap
-Copyright (C) 2020 matthewrobo
+Copyright (C) 2024 Beiufin
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,8 +36,8 @@ static HSV SOLID_REACTIVE_FADE_math(HSV hsv, uint16_t offset) {
     return hsv;
 }
 
-bool SOLID_REACTIVE_FADE(effect_params_t* params) {
-    return effect_runner_reactive(params, &SOLID_REACTIVE_FADE_math);
+bool SOLID_REACTIVE_FADE(effect_params_t* params, rgb_config_t* config) {
+    return effect_runner_reactive(params, config, &SOLID_REACTIVE_FADE_math);
 }
 
 static HSV SOLID_REACTIVE_WIDE_math2(HSV hsv, int16_t dx, int16_t dy, uint8_t dist, uint16_t tick, rgb_config_t* config) {
@@ -49,21 +49,21 @@ static HSV SOLID_REACTIVE_WIDE_math2(HSV hsv, int16_t dx, int16_t dy, uint8_t di
 static HSV SOLID_REACTIVE_NEXUS_math2(HSV hsv, int16_t dx, int16_t dy, uint8_t dist, uint16_t tick, rgb_config_t* config) {
     uint16_t effect = tick - dist > 255 || ((dx > 8 || dx < -8) && (dy > 8 || dy < -8)) ? 255 : tick - dist;
     hsv.v           = qadd8(hsv.v, 255 - effect);
-    hsv.h           = rgb_matrix_config.hsv.h + dy / 4;
+    hsv.h           = config->hsv.h + dy / 4;
     return hsv;
 }
 
-bool SOLID_REACTIVE_WIDE2(effect_params_t* params) {
-    return effect_runner_reactive_splash(qsub8(g_last_hit_tracker.count, 1), params, &SOLID_REACTIVE_WIDE_math2);
+bool SOLID_REACTIVE_WIDE2(effect_params_t* params, rgb_config_t* config) {
+    return effect_runner_reactive_splash(qsub8(g_last_hit_tracker.count, 1), params, config, &SOLID_REACTIVE_WIDE_math2);
 }
-bool SOLID_REACTIVE_MULTIWIDE2(effect_params_t* params) {
-    return effect_runner_reactive_splash(0, params, &SOLID_REACTIVE_WIDE_math2);
+bool SOLID_REACTIVE_MULTIWIDE2(effect_params_t* params, rgb_config_t* config) {
+    return effect_runner_reactive_splash(0, params, config, &SOLID_REACTIVE_WIDE_math2);
 }
-bool SOLID_REACTIVE_NEXUS2(effect_params_t* params) {
-    return effect_runner_reactive_splash(qsub8(g_last_hit_tracker.count, 1), params, &SOLID_REACTIVE_NEXUS_math2);
+bool SOLID_REACTIVE_NEXUS2(effect_params_t* params, rgb_config_t* config) {
+    return effect_runner_reactive_splash(qsub8(g_last_hit_tracker.count, 1), params, config, &SOLID_REACTIVE_NEXUS_math2);
 }
-bool SOLID_REACTIVE_MULTINEXUS2(effect_params_t* params) {
-    return effect_runner_reactive_splash(0, params, &SOLID_REACTIVE_NEXUS_math2);
+bool SOLID_REACTIVE_MULTINEXUS2(effect_params_t* params, rgb_config_t* config) {
+    return effect_runner_reactive_splash(0, params, config, &SOLID_REACTIVE_NEXUS_math2);
 }
 
 #endif // RGB_MATRIX_CUSTOM_EFFECT_IMPLS

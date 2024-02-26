@@ -50,7 +50,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define M9B59B5 {HSV_9B59B5}
 // clang-format on
 
-
 #if defined(TAP_REPEAT_RGB) && defined(TAP_REPEAT_ENABLE)
 #    include "tap_repeat.h"
 #endif
@@ -87,20 +86,20 @@ extern bool         g_suspend_state;
 extern rgb_config_t rgb_matrix_config;
 bool                disable_layer_color;
 
-bool rgb_enabled_flag;  // Current LED state flag. If false then LED is off.
+bool rgb_enabled_flag; // Current LED state flag. If false then LED is off.
 
 enum layout_names {
-    _KL = 0,  // Keys Layout: The main keyboard layout that has all the characters
-    _FL,      // Function Layout: The function key activated layout with default functions and some added ones
+    _KL = 0, // Keys Layout: The main keyboard layout that has all the characters
+    _FL,     // Function Layout: The function key activated layout with default functions and some added ones
 };
 
 enum ctrl_keycodes {
-    U_T_AUTO = SAFE_RANGE,  // USB Extra Port Toggle Auto Detect / Always Active
-    U_T_AGCR,               // USB Toggle Automatic GCR control
-    DBG_TOG,                // DEBUG Toggle On / Off
-    DBG_MTRX,               // DEBUG Toggle Matrix Prints
-    DBG_KBD,                // DEBUG Toggle Keyboard Prints
-    DBG_MOU,                // DEBUG Toggle Mouse Prints
+    U_T_AUTO = SAFE_RANGE, // USB Extra Port Toggle Auto Detect / Always Active
+    U_T_AGCR,              // USB Toggle Automatic GCR control
+    DBG_TOG,               // DEBUG Toggle On / Off
+    DBG_MTRX,              // DEBUG Toggle Matrix Prints
+    DBG_KBD,               // DEBUG Toggle Keyboard Prints
+    DBG_MOU,               // DEBUG Toggle Mouse Prints
     MAS_CRM,
     MAS_PRP,
     MAS_RED,
@@ -114,22 +113,8 @@ enum ctrl_keycodes {
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_KL] = LAYOUT(
-        KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,             KC_PSCR, KL_TOGG, KC_PAUS,
-        KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,   KC_INS,  KC_HOME, KC_PGUP,
-        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,   KC_DEL,  KC_END,  KC_PGDN,
-        KC_CAPS, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,                              KC_UP,
-        KC_LCTL, KC_LGUI, KC_LALT,                   KC_SPC,                             KC_RALT, MO(_FL), KC_APP,  KC_RCTL,            KC_LEFT, KC_DOWN, KC_RGHT
-    ),
-    [_FL] = LAYOUT(
-        RGB_TOG, RGB_C_M, RGB_C_U, RGB_C_K, RGB_C_I, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR,  _______,            KC_MUTE, KC_MSEL, _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_MSTP, KC_MPLY, KC_VOLU,
-        _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, MAS_MGT, MAS_BLU, MAS_WHT, RGB_RMOD,RGB_MOD, _______,   KC_MPRV, KC_MNXT, KC_VOLD,
-        BN_TRTG, RGB_RMOD,RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, MAS_RED, MAS_KEY, MAS_CYN, MAS_PRP, _______, _______,
-        _______, _______, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
-        _______, _______, _______,                   DBG_TOG,                            _______, _______, _______, _______,            RGB_SPD, RGB_VAD, RGB_SPI
-    ),
+    [_KL] = LAYOUT(KC_ESC, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_PSCR, KL_TOGG, KC_PAUS, KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC, KC_INS, KC_HOME, KC_PGUP, KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS, KC_DEL, KC_END, KC_PGDN, KC_CAPS, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, KC_ENT, KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, KC_UP, KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, KC_RALT, MO(_FL), KC_APP, KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT),
+    [_FL] = LAYOUT(RGB_TOG, RGB_C_M, RGB_C_U, RGB_C_K, RGB_C_I, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR, _______, KC_MUTE, KC_MSEL, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MSTP, KC_MPLY, KC_VOLU, _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, MAS_MGT, MAS_BLU, MAS_WHT, RGB_RMOD, RGB_MOD, _______, KC_MPRV, KC_MNXT, KC_VOLD, BN_TRTG, RGB_RMOD, RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, MAS_RED, MAS_KEY, MAS_CYN, MAS_PRP, _______, _______, _______, _______, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______, RGB_VAI, _______, _______, _______, DBG_TOG, _______, _______, _______, _______, RGB_SPD, RGB_VAD, RGB_SPI),
     /*
     [DEFAULT] = LAYOUT(
         KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,           KC_PSCR, KL_TOGG, KC_PAUS,
@@ -173,29 +158,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #undef _______
-#define _______ {0,0,0}
-
+#define _______ \
+    { 0, 0, 0 }
 
 // This is to denote that the led value is set programatically
 #ifndef CUSTHSV
-#   define CUSTHSV _______
+#    define CUSTHSV _______
 #endif
 
 #ifdef TAP_REPEAT_ENABLE
-#   define TRHSV RED
+#    define TRHSV RED
 #else
-#   define TRHSV _______
+#    define TRHSV _______
 #endif
 
 const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
-    [_FL] = {
-        RED,     RED,     RED,     RED,     RED,     _______, _______, _______, _______, RED,     RED,     RED,     _______,            RED,     GREEN,   _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   RED,     GREEN,   AZURE,
-        _______, GOLD,    CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, _______, MAGENT,  BLUE,    WHITE,   GOLD,    GOLD,    _______,   ORANGE,  ORANGE,  AZURE,
-        TRHSV,   GOLD,    CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, RED,     {1,0,0}, CYAN,    M9B59B5, _______, _______,
-        _______, _______, _______, _______, _______, RED,     PINK,    YELLOW,  GREEN,   CREAM,   _______, _______,                              CUSTHSV,
-        _______, _______, _______,                   _______,                            _______, WHITE,   _______, _______,            CUSTHSV, CUSTHSV, CUSTHSV
-    },
+    [_FL] = {RED, RED, RED, RED, RED, _______, _______, _______, _______, RED, RED, RED, _______, RED, GREEN, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RED, GREEN, AZURE, _______, GOLD, CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, _______, MAGENT, BLUE, WHITE, GOLD, GOLD, _______, ORANGE, ORANGE, AZURE, TRHSV, GOLD, CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, RED, {1, 0, 0}, CYAN, M9B59B5, _______, _______, _______, _______, _______, _______, _______, RED, PINK, YELLOW, GREEN, CREAM, _______, _______, CUSTHSV, _______, _______, _______, _______, _______, WHITE, _______, _______, CUSTHSV, CUSTHSV, CUSTHSV},
     /*
     [_FL] = LAYOUT(
         RGB_TOG, RGB_C_M, RGB_C_U, RGB_C_K, RGB_C_I, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR,  _______,            KC_MUTE, KC_MSEL, _______,
@@ -212,16 +190,16 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
-    rgb_enabled_flag = true;  // Initially, keyboard RGB is enabled. Change to false config.h initializes RGB disabled.
+    rgb_enabled_flag = true; // Initially, keyboard RGB is enabled. Change to false config.h initializes RGB disabled.
 };
 
 void keyboard_post_init_user(void) {
     rgb_matrix_enable();
 }
 
-#define MODS_SHIFT  (get_mods() & MOD_MASK_SHIFT)
-#define MODS_CTRL   (get_mods() & MOD_MASK_CTRL)
-#define MODS_ALT    (get_mods() & MOD_MASK_ALT)
+#define MODS_SHIFT (get_mods() & MOD_MASK_SHIFT)
+#define MODS_CTRL (get_mods() & MOD_MASK_CTRL)
+#define MODS_ALT (get_mods() & MOD_MASK_ALT)
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // The only custom processing is for non-standard keys. So avoid any extra processing
@@ -282,7 +260,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 rgb_matrix_sethsv(128, 0, 255);
                 return false;
             default:
-                return true;  // Process all other keycodes normally
+                return true; // Process all other keycodes normally
         }
     }
     return true;
@@ -368,26 +346,22 @@ bool set_layer_color(int layer) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    if (get_highest_layer(state) == _KL) rgb_matrix_set_color_all(0,0,0);
+    if (get_highest_layer(state) == _KL) rgb_matrix_set_color_all(0, 0, 0);
     return state;
 }
 
 bool rgb_matrix_indicators_user(void) {
-    if (disable_layer_color ||
-        rgb_matrix_get_flags() == LED_FLAG_NONE ||
-        rgb_matrix_get_flags() == LED_FLAG_UNDERGLOW
-    ) {
+    if (disable_layer_color || !rgb_matrix_is_enabled() || rgb_matrix_get_flags() == LED_FLAG_NONE || rgb_matrix_get_flags() == LED_FLAG_UNDERGLOW) {
         return false;
     }
     if (!(
 #if defined(KEY_LOCK_TOGGLE_RGB) && defined(KEY_LOCK_TOGGLE_ENABLE)
-        rgb_matrix_indicators_key_lock_toggle(14) &&
+            rgb_matrix_indicators_key_lock_toggle(14) &&
 #endif
 #if defined(TAP_REPEAT_RGB) && defined(TAP_REPEAT_ENABLE)
-        rgb_matrix_indicators_tap_repeat(50) &&
+            rgb_matrix_indicators_tap_repeat(50) &&
 #endif
-        set_layer_color(get_highest_layer(layer_state)))
-    ) {
+            set_layer_color(get_highest_layer(layer_state)))) {
         return false;
     }
     return true;
