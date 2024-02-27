@@ -4,6 +4,7 @@ RGB_MATRIX_EFFECT(TYPING_HEATMAP_LEDON_APM)
 #        include "apm.h"
 
 static uint8_t relative_apm;
+static uint8_t last_frame_id;
 
 static inline HSV anim_apm_underglow(uint8_t apm_val, effect_params_t* params, rgb_config_t* config) {
     HSV hsv = {config->hsv.h - qsub8(apm_val, 85), config->hsv.s, config->hsv.v};
@@ -33,7 +34,9 @@ bool TYPING_HEATMAP_LEDON_APM(effect_params_t* params, rgb_config_t* config) {
         rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
         memset(g_rgb_frame_buffer, 0, sizeof g_rgb_frame_buffer);
     }
-    if (params->iter == 0) {
+    if (params->frame_id != last_frame_id) {
+        last_frame_id = params->frame_id;
+        // setup for frame
         relative_apm            = get_relative_apm();
         decrease_heatmap_values = timer_elapsed(heatmap_decrease_timer) >= RGB_MATRIX_TYPING_HEATMAP_DECREASE_DELAY_MS;
 

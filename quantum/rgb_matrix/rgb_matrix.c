@@ -80,12 +80,13 @@ last_hit_t g_last_hit_tracker;
 static bool            suspend_state      = false;
 static uint8_t         rgb_last_enable    = UINT8_MAX;
 static uint8_t         rgb_last_effect    = UINT8_MAX;
-static effect_params_t rgb_effect_params  = {0, LED_FLAG_ALL, false};
+static effect_params_t rgb_effect_params  = {0, LED_FLAG_ALL, false, 0};
 static bool            rendering_complete = false;
+static uint8_t         frame_id           = 0;
 #ifdef DUAL_RGB_MATRIX_ENABLE
 static bool            primary_rendering_complete   = false;
 static bool            secondary_rendering_complete = false;
-static effect_params_t rgb_secondary_effect_params  = {0, LED_FLAG_NONE, false};
+static effect_params_t rgb_secondary_effect_params  = {0, LED_FLAG_NONE, false, 0};
 static uint8_t         rgb_secondary_last_enable    = UINT8_MAX;
 static uint8_t         rgb_secondary_last_effect    = UINT8_MAX;
 #endif
@@ -323,12 +324,14 @@ static void rgb_task_sync(void) {
 
 static void rgb_task_start(void) {
     // reset iter
-    rgb_effect_params.iter = 0;
-    rendering_complete     = false;
+    rgb_effect_params.iter     = 0;
+    rendering_complete         = false;
+    rgb_effect_params.frame_id = frame_id;
 #ifdef DUAL_RGB_MATRIX_ENABLE
-    rgb_secondary_effect_params.iter = 0;
-    secondary_rendering_complete     = false;
-    primary_rendering_complete       = false;
+    rgb_secondary_effect_params.iter     = 0;
+    secondary_rendering_complete         = false;
+    primary_rendering_complete           = false;
+    rgb_secondary_effect_params.frame_id = frame_id;
 #endif
 
     // update double buffers
@@ -441,6 +444,7 @@ static void rgb_task_flush(uint8_t primary_effect, uint8_t secondary_effect) {
     // update last trackers after the first full render so we can init over several frames
     rgb_last_effect = primary_effect;
     rgb_last_enable = rgb_matrix_config.enable;
+    frame_id++;
 #ifdef DUAL_RGB_MATRIX_ENABLE
     rgb_secondary_last_effect = secondary_effect;
     rgb_secondary_last_enable = rgb_secondary_matrix_config.enable;

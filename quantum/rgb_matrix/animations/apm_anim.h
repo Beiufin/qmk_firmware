@@ -4,6 +4,7 @@ RGB_MATRIX_EFFECT(APM)
 #        include "apm.h"
 
 static uint8_t relative_apm;
+static uint8_t last_frame_id;
 
 static inline HSV anim_apm(uint8_t apm_val, effect_params_t* params, rgb_config_t* config) {
     HSV hsv = {config->hsv.h - qsub8(apm_val, 85), config->hsv.s, config->hsv.v};
@@ -13,7 +14,9 @@ static inline HSV anim_apm(uint8_t apm_val, effect_params_t* params, rgb_config_
 // changes led based on APM
 bool APM(effect_params_t* params, rgb_config_t* config) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
-    if (params->iter == 0) {
+    if (params->frame_id != last_frame_id) {
+        last_frame_id = params->frame_id;
+        // setup for frame
         relative_apm = get_relative_apm();
     }
 
