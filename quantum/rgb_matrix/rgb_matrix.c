@@ -233,6 +233,20 @@ void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
 #    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM
             rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON_APM ||
 #    endif
+#    ifdef DUAL_RGB_MATRIX_ENABLE
+#        ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP
+            rgb_secondary_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP ||
+#        endif
+#        ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON
+            rgb_secondary_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON ||
+#        endif
+#        ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID
+            rgb_secondary_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_SOLID ||
+#        endif
+#        ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM
+            rgb_secondary_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON_APM ||
+#        endif
+#    endif
             false) {
             process_rgb_matrix_typing_heatmap(row, col);
         }
