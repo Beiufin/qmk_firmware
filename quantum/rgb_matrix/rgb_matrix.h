@@ -111,6 +111,14 @@
 #    define RGB_MATRIX_LED_PROCESS_LIMIT ((RGB_MATRIX_LED_COUNT + 4) / 5)
 #endif
 
+#if defined(DUAL_RGB_MATRIX_ENABLE) && defined(RGB_MATRIX_LED_PROCESS_LIMIT)
+// For dual matrix, it currently processes each led twice, so divide the limit in half
+#    define DUAL_RGB_MATRIX_LED_PROCESS_LIMIT ((RGB_MATRIX_LED_PROCESS_LIMIT_TEMP + 1) / 2)
+#    undef RGB_MATRIX_LED_PROCESS_LIMIT
+#    define RGB_MATRIX_LED_PROCESS_LIMIT DUAL_RGB_MATRIX_LED_PROCESS_LIMIT
+#    undef DUAL_RGB_MATRIX_LED_PROCESS_LIMIT
+#endif
+
 struct rgb_matrix_limits_t {
     uint8_t led_min_index;
     uint8_t led_max_index;
