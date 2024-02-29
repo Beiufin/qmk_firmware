@@ -67,6 +67,7 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
 #endif
 #if (defined(RGBLIGHT_ENABLE) && !defined(RGBLIGHT_DISABLE_KEYCODES)) || (defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES))
         uint8_t shifted = get_mods() & MOD_MASK_SHIFT;
+        // holding alt will apply the change to the secondary matrix.
 #endif
         switch (keycode) {
             case RGB_TOG:
@@ -217,6 +218,26 @@ bool process_rgb(const uint16_t keycode, const keyrecord_t *record) {
             case RGB_MODE_TWINKLE:
 #if defined(RGBLIGHT_ENABLE) && !defined(RGBLIGHT_DISABLE_KEYCODES) && defined(RGBLIGHT_EFFECT_TWINKLE)
                 handleKeycodeRGBMode(RGBLIGHT_MODE_TWINKLE, RGBLIGHT_MODE_TWINKLE_end);
+#endif
+                return false;
+            case RGB_CYCLE_MODIFIERS:
+#if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
+                rgb_matrix_cycle_flags(LED_FLAG_MODIFIER);
+#endif
+                return false;
+            case RGB_CYCLE_UNDERGLOW:
+#if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
+                rgb_matrix_cycle_flags(LED_FLAG_UNDERGLOW);
+#endif
+                return false;
+            case RGB_CYCLE_KEYLIGHTS:
+#if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
+                rgb_matrix_cycle_flags(LED_FLAG_KEYLIGHT);
+#endif
+                return false;
+            case RGB_CYCLE_INDICATORS:
+#if defined(RGB_MATRIX_ENABLE) && !defined(RGB_MATRIX_DISABLE_KEYCODES)
+                rgb_matrix_cycle_flags(LED_FLAG_INDICATOR);
 #endif
                 return false;
         }

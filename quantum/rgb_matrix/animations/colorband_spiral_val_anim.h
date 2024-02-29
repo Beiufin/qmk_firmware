@@ -7,8 +7,8 @@ static HSV BAND_SPIRAL_VAL_math(HSV hsv, int16_t dx, int16_t dy, uint8_t dist, u
     return hsv;
 }
 
-bool BAND_SPIRAL_VAL(effect_params_t* params) {
-    return effect_runner_dx_dy_dist(params, &BAND_SPIRAL_VAL_math);
+bool BAND_SPIRAL_VAL(effect_params_t* params, rgb_config_t* config) {
+    return effect_runner_dx_dy_dist(params, config, &BAND_SPIRAL_VAL_math);
 }
 
 #    endif // RGB_MATRIX_CUSTOM_EFFECT_IMPLS

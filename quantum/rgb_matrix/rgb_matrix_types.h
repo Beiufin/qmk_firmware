@@ -46,8 +46,10 @@ typedef uint8_t led_flags_t;
 
 typedef struct PACKED {
     uint8_t     iter;
+    uint8_t     effect;
     led_flags_t flags;
     bool        init;
+    uint8_t     frame_id;
 } effect_params_t;
 
 typedef struct PACKED {
@@ -58,12 +60,12 @@ typedef struct PACKED {
 #define HAS_FLAGS(bits, flags) ((bits & flags) == flags)
 #define HAS_ANY_FLAGS(bits, flags) ((bits & flags) != 0x00)
 
-#define LED_FLAG_ALL 0xFF
 #define LED_FLAG_NONE 0x00
 #define LED_FLAG_MODIFIER 0x01
 #define LED_FLAG_UNDERGLOW 0x02
 #define LED_FLAG_KEYLIGHT 0x04
 #define LED_FLAG_INDICATOR 0x08
+#define LED_FLAG_ALL (LED_FLAG_MODIFIER | LED_FLAG_UNDERGLOW | LED_FLAG_KEYLIGHT | LED_FLAG_INDICATOR)
 
 #define NO_LED 255
 

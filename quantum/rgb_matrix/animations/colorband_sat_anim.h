@@ -8,8 +8,8 @@ static HSV BAND_SAT_math(HSV hsv, uint8_t i, uint8_t time) {
     return hsv;
 }
 
-bool BAND_SAT(effect_params_t* params) {
-    return effect_runner_i(params, &BAND_SAT_math);
+bool BAND_SAT(effect_params_t* params, rgb_config_t* config) {
+    return effect_runner_i(params, config, &BAND_SAT_math);
 }
 
 #    endif // RGB_MATRIX_CUSTOM_EFFECT_IMPLS

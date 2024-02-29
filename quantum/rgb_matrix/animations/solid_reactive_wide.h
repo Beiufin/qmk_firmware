@@ -11,25 +11,25 @@ RGB_MATRIX_EFFECT(SOLID_REACTIVE_MULTIWIDE)
 
 #        ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
-static HSV SOLID_REACTIVE_WIDE_math(HSV hsv, int16_t dx, int16_t dy, uint8_t dist, uint16_t tick) {
+static HSV SOLID_REACTIVE_WIDE_math(HSV hsv, int16_t dx, int16_t dy, uint8_t dist, uint16_t tick, rgb_config_t* config) {
     uint16_t effect = tick + dist * 5;
     if (effect > 255) effect = 255;
 #            ifdef RGB_MATRIX_SOLID_REACTIVE_GRADIENT_MODE
-    hsv.h = scale16by8(g_rgb_timer, qadd8(rgb_matrix_config.speed, 8) >> 4);
+    hsv.h = scale16by8(g_rgb_timer, qadd8(config->speed, 8) >> 4);
 #            endif
     hsv.v = qadd8(hsv.v, 255 - effect);
     return hsv;
 }
 
 #            ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_WIDE
-bool SOLID_REACTIVE_WIDE(effect_params_t* params) {
-    return effect_runner_reactive_splash(qsub8(g_last_hit_tracker.count, 1), params, &SOLID_REACTIVE_WIDE_math);
+bool SOLID_REACTIVE_WIDE(effect_params_t* params, rgb_config_t* config) {
+    return effect_runner_reactive_splash(qsub8(g_last_hit_tracker.count, 1), params, config, &SOLID_REACTIVE_WIDE_math);
 }
 #            endif
 
 #            ifdef ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTIWIDE
-bool SOLID_REACTIVE_MULTIWIDE(effect_params_t* params) {
-    return effect_runner_reactive_splash(0, params, &SOLID_REACTIVE_WIDE_math);
+bool SOLID_REACTIVE_MULTIWIDE(effect_params_t* params, rgb_config_t* config) {
+    return effect_runner_reactive_splash(0, params, config, &SOLID_REACTIVE_WIDE_math);
 }
 #            endif
 

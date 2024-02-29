@@ -439,6 +439,7 @@ RGB_MATRIX_DRIVER := snled27351
 endif
 
 RGB_MATRIX_ENABLE ?= no
+DUAL_RGB_MATRIX_ENABLE ?= no
 
 VALID_RGB_MATRIX_TYPES := aw20216s is31fl3218 is31fl3731 is31fl3733 is31fl3736 is31fl3737 is31fl3741 is31fl3742a is31fl3743a is31fl3745 is31fl3746a snled27351 ws2812 custom
 ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
@@ -549,6 +550,12 @@ ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
 
     ifeq ($(strip $(RGB_MATRIX_CUSTOM_USER)), yes)
         OPT_DEFS += -DRGB_MATRIX_CUSTOM_USER
+    endif
+
+	ifeq ($(strip $(DUAL_RGB_MATRIX_ENABLE)), yes)
+		SRC += $(QUANTUM_DIR)/rgb_matrix/dual_rgb_matrix.c
+		SRC += $(QUANTUM_DIR)/process_keycode/process_dual_rgb_matrix.c
+        OPT_DEFS += -DDUAL_RGB_MATRIX_ENABLE
     endif
 endif
 

@@ -7,8 +7,8 @@ static HSV RAINBOW_BEACON_math(HSV hsv, int8_t sin, int8_t cos, uint8_t i, uint8
     return hsv;
 }
 
-bool RAINBOW_BEACON(effect_params_t* params) {
-    return effect_runner_sin_cos_i(params, &RAINBOW_BEACON_math);
+bool RAINBOW_BEACON(effect_params_t* params, rgb_config_t* config) {
+    return effect_runner_sin_cos_i(params, config, &RAINBOW_BEACON_math);
 }
 
 #    endif // RGB_MATRIX_CUSTOM_EFFECT_IMPLS

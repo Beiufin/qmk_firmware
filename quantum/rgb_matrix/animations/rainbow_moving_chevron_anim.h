@@ -7,8 +7,8 @@ static HSV RAINBOW_MOVING_CHEVRON_math(HSV hsv, uint8_t i, uint8_t time) {
     return hsv;
 }
 
-bool RAINBOW_MOVING_CHEVRON(effect_params_t* params) {
-    return effect_runner_i(params, &RAINBOW_MOVING_CHEVRON_math);
+bool RAINBOW_MOVING_CHEVRON(effect_params_t* params, rgb_config_t* config) {
+    return effect_runner_i(params, config, &RAINBOW_MOVING_CHEVRON_math);
 }
 
 #    endif // RGB_MATRIX_CUSTOM_EFFECT_IMPLS

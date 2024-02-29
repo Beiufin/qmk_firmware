@@ -50,7 +50,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define M9B59B5 {HSV_9B59B5}
 // clang-format on
 
-
 #if defined(TAP_REPEAT_RGB) && defined(TAP_REPEAT_ENABLE)
 #    include "tap_repeat.h"
 #endif
@@ -87,20 +86,20 @@ extern bool         g_suspend_state;
 extern rgb_config_t rgb_matrix_config;
 bool                disable_layer_color;
 
-bool rgb_enabled_flag;  // Current LED state flag. If false then LED is off.
+bool rgb_enabled_flag; // Current LED state flag. If false then LED is off.
 
 enum layout_names {
-    _KL = 0,  // Keys Layout: The main keyboard layout that has all the characters
-    _FL,      // Function Layout: The function key activated layout with default functions and some added ones
+    _KL = 0, // Keys Layout: The main keyboard layout that has all the characters
+    _FL,     // Function Layout: The function key activated layout with default functions and some added ones
 };
 
 enum ctrl_keycodes {
-    U_T_AUTO = SAFE_RANGE,  // USB Extra Port Toggle Auto Detect / Always Active
-    U_T_AGCR,               // USB Toggle Automatic GCR control
-    DBG_TOG,                // DEBUG Toggle On / Off
-    DBG_MTRX,               // DEBUG Toggle Matrix Prints
-    DBG_KBD,                // DEBUG Toggle Keyboard Prints
-    DBG_MOU,                // DEBUG Toggle Mouse Prints
+    U_T_AUTO = SAFE_RANGE, // USB Extra Port Toggle Auto Detect / Always Active
+    U_T_AGCR,              // USB Toggle Automatic GCR control
+    DBG_TOG,               // DEBUG Toggle On / Off
+    DBG_MTRX,              // DEBUG Toggle Matrix Prints
+    DBG_KBD,               // DEBUG Toggle Keyboard Prints
+    DBG_MOU,               // DEBUG Toggle Mouse Prints
     MAS_CRM,
     MAS_PRP,
     MAS_RED,
@@ -113,6 +112,7 @@ enum ctrl_keycodes {
     MAS_WHT,
 };
 
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_KL] = LAYOUT(
         KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,             KC_PSCR, KL_TOGG, KC_PAUS,
@@ -123,11 +123,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LGUI, KC_LALT,                   KC_SPC,                             KC_RALT, MO(_FL), KC_APP,  KC_RCTL,            KC_LEFT, KC_DOWN, KC_RGHT
     ),
     [_FL] = LAYOUT(
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR,  _______,            KC_MUTE, KC_MSEL, _______,
+        RGB_TOG, RGB_C_M, RGB_C_U, RGB_C_K, _______, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR,  _______,            KC_MUTE, KC_MSEL, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_MSTP, KC_MPLY, KC_VOLU,
         _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, MAS_MGT, MAS_BLU, MAS_WHT, RGB_RMOD,RGB_MOD, _______,   KC_MPRV, KC_MNXT, KC_VOLD,
         BN_TRTG, RGB_RMOD,RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, MAS_RED, MAS_KEY, MAS_CYN, MAS_PRP, _______, _______,
-        _______, RGB_TOG, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
+        _______, _______, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
         _______, _______, _______,                   DBG_TOG,                            _______, _______, _______, _______,            RGB_SPD, RGB_VAD, RGB_SPI
     ),
     /*
@@ -178,51 +178,61 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // This is to denote that the led value is set programatically
 #ifndef CUSTHSV
-#   define CUSTHSV _______
+#    define CUSTHSV _______
 #endif
 
 #ifdef TAP_REPEAT_ENABLE
-#   define TRHSV RED
+#    define TRHSV RED
 #else
-#   define TRHSV _______
+#    define TRHSV _______
 #endif
 
 const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     [_FL] = {
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, RED,     RED,     RED,     _______,            RED,     GREEN,   _______,
+        RED,     RED,     RED,     RED,     _______, _______, _______, _______, _______, RED,     RED,     RED,     _______,            RED,     GREEN,   _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   RED,     GREEN,   AZURE,
         _______, GOLD,    CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, _______, MAGENT,  BLUE,    WHITE,   GOLD,    GOLD,    _______,   ORANGE,  ORANGE,  AZURE,
         TRHSV,   GOLD,    CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, RED,     {1,0,0}, CYAN,    M9B59B5, _______, _______,
-        _______, RED,     _______, _______, _______, RED,     PINK,    YELLOW,  GREEN,   CREAM,   _______, _______,                              CUSTHSV,
+        _______, _______, _______, _______, _______, RED,     PINK,    YELLOW,  GREEN,   CREAM,   _______, _______,                              CUSTHSV,
         _______, _______, _______,                   _______,                            _______, WHITE,   _______, _______,            CUSTHSV, CUSTHSV, CUSTHSV
     },
     /*
     [_FL] = LAYOUT(
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR,  _______,            KC_MUTE, KC_MSEL, _______,
+        RGB_TOG, RGB_C_M, RGB_C_U, RGB_C_K, _______, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR,  _______,            KC_MUTE, KC_MSEL, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_MSTP, KC_MPLY, KC_VOLU,
         _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, MAS_MGT, MAS_BLU, MAS_WHT, RGB_RMOD,RGB_MOD, _______,   KC_MPRV, KC_MNXT, KC_VOLD,
         BN_TRTG, RGB_RMOD,RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, MAS_RED, MAS_KEY, MAS_CYN, MAS_PRP, _______, _______,
-        _______, RGB_TOG, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
+        _______, _______, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
         _______, _______, _______,                   _______,                            _______, _LAYER_, _______, _______,            RGB_SPD, RGB_VAD, RGB_SPI
     ),
     */
 };
 #undef _______
 #define _______ KC_TRNS
+// clang-format on
 
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
-    rgb_enabled_flag = true;  // Initially, keyboard RGB is enabled. Change to false config.h initializes RGB disabled.
+    rgb_enabled_flag = true; // Initially, keyboard RGB is enabled. Change to false config.h initializes RGB disabled.
 };
 
 void keyboard_post_init_user(void) {
     rgb_matrix_enable();
 }
 
-#define MODS_SHIFT  (get_mods() & MOD_MASK_SHIFT)
-#define MODS_CTRL   (get_mods() & MOD_MASK_CTRL)
-#define MODS_ALT    (get_mods() & MOD_MASK_ALT)
-
+#define MODS_SHIFT (get_mods() & MOD_MASK_SHIFT)
+#define MODS_CTRL (get_mods() & MOD_MASK_CTRL)
+#define MODS_ALT (get_mods() & MOD_MASK_ALT)
+#ifdef DUAL_RGB_MATRIX_ENABLE
+#    define DUAL_AWARE_RGB_FUNC(name, ...)            \
+        if (!MODS_ALT) {                              \
+            rgb_matrix_##name(__VA_ARGS__);           \
+        } else {                                      \
+            rgb_secondary_matrix_##name(__VA_ARGS__); \
+        }
+#else
+#    define DUAL_AWARE_RGB_FUNC(name, ...) rgb_matrix_##name(__VA_ARGS__);
+#endif
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // The only custom processing is for non-standard keys. So avoid any extra processing
     // for codes in the standard/basic range.
@@ -250,69 +260,55 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             case DBG_MOU:
                 TOGGLE_FLAG_AND_PRINT(debug_mouse, "Debug mouse");
                 return false;
-            case RGB_TOG:
-                switch (rgb_matrix_get_flags()) {
-                    case LED_FLAG_ALL: {
-                        rgb_matrix_set_flags(LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER);
-                        rgb_matrix_set_color_all(0, 0, 0);
-                    } break;
-                    case LED_FLAG_KEYLIGHT | LED_FLAG_MODIFIER: {
-                        rgb_matrix_set_flags(LED_FLAG_UNDERGLOW);
-                        rgb_matrix_set_color_all(0, 0, 0);
-                    } break;
-                    case LED_FLAG_UNDERGLOW: {
-                        // This line is for LED idle timer. It disables the toggle so you can turn off LED completely if you like
-                        rgb_matrix_set_flags(LED_FLAG_NONE);
-                        rgb_matrix_disable_noeeprom();
-                    } break;
-                    default: {
-                        rgb_matrix_set_flags(LED_FLAG_ALL);
-                        rgb_matrix_enable_noeeprom();
-                    } break;
-                }
-                return false;
             // ======================================================== CUSTOM KEYCOADS BELOW ========================================================
             case MAS_CRM:
-                rgb_matrix_sethsv(HSV_CREAM);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_CREAM)
                 return false;
             case MAS_PRP:
-                rgb_matrix_sethsv(HSV_9B59B5);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_9B59B5)
                 return false;
             case MAS_RED:
-                rgb_matrix_sethsv(HSV_RED);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_RED)
                 return false;
             case MAS_GRN:
-                rgb_matrix_sethsv(HSV_GREEN);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_GREEN)
                 return false;
             case MAS_BLU:
-                rgb_matrix_sethsv(HSV_BLUE);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_BLUE)
                 return false;
             case MAS_CYN:
-                rgb_matrix_sethsv(HSV_CYAN);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_CYAN)
                 return false;
             case MAS_MGT:
-                rgb_matrix_sethsv(HSV_MAGENTA);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_MAGENTA)
                 return false;
             case MAS_YEL:
-                rgb_matrix_sethsv(HSV_YELLOW);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_YELLOW)
                 return false;
             case MAS_KEY:
-                rgb_matrix_sethsv(0, 0, 0);
+                DUAL_AWARE_RGB_FUNC(sethsv, 0, 0, 0)
                 return false;
             case MAS_WHT:
-                rgb_matrix_sethsv(128, 0, 255);
+                DUAL_AWARE_RGB_FUNC(sethsv, 128, 0, 255)
                 return false;
             default:
-                return true;  // Process all other keycodes normally
+                return true; // Process all other keycodes normally
         }
     }
     return true;
 }
+#undef DUAL_AWARE_RGB_FUNC
 
 bool set_layer_color(int layer) {
     if (layer == _KL) {
         return true;
     }
+    rgb_config_t *config = &rgb_matrix_config;
+#ifdef DUAL_RGB_MATRIX_ENABLE
+    if (MODS_ALT) {
+        config = &rgb_secondary_matrix_config;
+    }
+#endif
     for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
         HSV hsv = {
             .h = pgm_read_byte(&ledmap[layer][i][0]),
@@ -321,10 +317,10 @@ bool set_layer_color(int layer) {
         };
         if (hsv.h || hsv.s || hsv.v) {
             RGB   rgb = hsv_to_rgb(hsv);
-            float f   = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
+            float f   = (float)config->hsv.v / UINT8_MAX;
             rgb_matrix_set_color(i, f * rgb.r, f * rgb.g, f * rgb.b);
         } else if (layer == _FL) {
-            HSV hsv2   = {rgb_matrix_config.hsv.h, rgb_matrix_config.hsv.s, RGB_MATRIX_MAXIMUM_BRIGHTNESS};
+            HSV hsv2   = {config->hsv.h, config->hsv.s, RGB_MATRIX_MAXIMUM_BRIGHTNESS};
             HSV hui    = hsv2;
             HSV hud    = hsv2;
             HSV sai    = hsv2;
@@ -337,10 +333,10 @@ bool set_layer_color(int layer) {
             hud.h      = hsv2.h - RGB_MATRIX_HUE_STEP;
             sai.s      = qadd8(hsv2.s, RGB_MATRIX_SAT_STEP);
             sad.s      = qsub8(hsv2.s, RGB_MATRIX_SAT_STEP);
-            vai.v      = hsv2.v + RGB_MATRIX_VAL_STEP > RGB_MATRIX_MAXIMUM_BRIGHTNESS ? RGB_MATRIX_MAXIMUM_BRIGHTNESS : rgb_matrix_config.hsv.v + RGB_MATRIX_VAL_STEP;
+            vai.v      = hsv2.v + RGB_MATRIX_VAL_STEP > RGB_MATRIX_MAXIMUM_BRIGHTNESS ? RGB_MATRIX_MAXIMUM_BRIGHTNESS : config->hsv.v + RGB_MATRIX_VAL_STEP;
             vad.v      = qsub8(hsv2.v, RGB_MATRIX_VAL_STEP);
-            spd.h      = scale8(255 - qsub8(rgb_matrix_config.speed, RGB_MATRIX_SPD_STEP), 92);
-            spi.h      = scale8(255 - qadd8(rgb_matrix_config.speed, RGB_MATRIX_SPD_STEP), 92);
+            spd.h      = scale8(255 - qsub8(config->speed, RGB_MATRIX_SPD_STEP), 92);
+            spi.h      = scale8(255 - qadd8(config->speed, RGB_MATRIX_SPD_STEP), 92);
             RGB rgbHUI = hsv_to_rgb(hui);
             RGB rgbHUD = hsv_to_rgb(hud);
             RGB rgbSAI = hsv_to_rgb(sai);
@@ -388,22 +384,23 @@ bool set_layer_color(int layer) {
     return false;
 }
 
+layer_state_t layer_state_set_user(layer_state_t state) {
+    if (get_highest_layer(state) == _KL) rgb_matrix_set_color_all(0, 0, 0);
+    return state;
+}
+
 bool rgb_matrix_indicators_user(void) {
-    if (disable_layer_color ||
-        rgb_matrix_get_flags() == LED_FLAG_NONE ||
-        rgb_matrix_get_flags() == LED_FLAG_UNDERGLOW
-    ) {
+    if (disable_layer_color || !rgb_matrix_is_enabled() || rgb_matrix_get_flags() == LED_FLAG_NONE || rgb_matrix_get_flags() == LED_FLAG_UNDERGLOW) {
         return false;
     }
     if (!(
 #if defined(KEY_LOCK_TOGGLE_RGB) && defined(KEY_LOCK_TOGGLE_ENABLE)
-        rgb_matrix_indicators_key_lock_toggle(14) &&
+            rgb_matrix_indicators_key_lock_toggle(14) &&
 #endif
 #if defined(TAP_REPEAT_RGB) && defined(TAP_REPEAT_ENABLE)
-        rgb_matrix_indicators_tap_repeat(50) &&
+            rgb_matrix_indicators_tap_repeat(50) &&
 #endif
-        set_layer_color(get_highest_layer(layer_state)))
-    ) {
+            set_layer_color(get_highest_layer(layer_state)))) {
         return false;
     }
     return true;
