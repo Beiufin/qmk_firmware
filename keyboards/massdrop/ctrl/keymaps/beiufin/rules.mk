@@ -25,7 +25,7 @@ RAW_ENABLE = no             	# Raw device
 AUTO_SHIFT_ENABLE = no      	# Auto Shift
 TAP_REPEAT_ENABLE = no      	# Tap Repeat
 KEY_LOCK_TOGGLE_ENABLE = no 	# Key Lock Toggle
-DUAL_RGB_MATRIX_ENABLE = no   	# Dual RGB Matrix effects
+DUAL_RGB_MATRIX_ENABLE = yes   	# Dual RGB Matrix effects
 
 # Custom RGB matrix handling
 RGB_MATRIX_ENABLE = yes

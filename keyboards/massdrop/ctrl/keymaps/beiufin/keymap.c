@@ -112,9 +112,24 @@ enum ctrl_keycodes {
     MAS_WHT,
 };
 
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_KL] = LAYOUT(KC_ESC, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_PSCR, KL_TOGG, KC_PAUS, KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC, KC_INS, KC_HOME, KC_PGUP, KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS, KC_DEL, KC_END, KC_PGDN, KC_CAPS, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, KC_ENT, KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, KC_UP, KC_LCTL, KC_LGUI, KC_LALT, KC_SPC, KC_RALT, MO(_FL), KC_APP, KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT),
-    [_FL] = LAYOUT(RGB_TOG, RGB_C_M, RGB_C_U, RGB_C_K, RGB_C_I, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR, _______, KC_MUTE, KC_MSEL, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MSTP, KC_MPLY, KC_VOLU, _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, MAS_MGT, MAS_BLU, MAS_WHT, RGB_RMOD, RGB_MOD, _______, KC_MPRV, KC_MNXT, KC_VOLD, BN_TRTG, RGB_RMOD, RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, MAS_RED, MAS_KEY, MAS_CYN, MAS_PRP, _______, _______, _______, _______, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______, RGB_VAI, _______, _______, _______, DBG_TOG, _______, _______, _______, _______, RGB_SPD, RGB_VAD, RGB_SPI),
+    [_KL] = LAYOUT(
+        KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,             KC_PSCR, KL_TOGG, KC_PAUS,
+        KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,   KC_INS,  KC_HOME, KC_PGUP,
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,   KC_DEL,  KC_END,  KC_PGDN,
+        KC_CAPS, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,                              KC_UP,
+        KC_LCTL, KC_LGUI, KC_LALT,                   KC_SPC,                             KC_RALT, MO(_FL), KC_APP,  KC_RCTL,            KC_LEFT, KC_DOWN, KC_RGHT
+    ),
+    [_FL] = LAYOUT(
+        RGB_TOG, RGB_C_M, RGB_C_U, RGB_C_K, _______, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR,  _______,            KC_MUTE, KC_MSEL, _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_MSTP, KC_MPLY, KC_VOLU,
+        _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, MAS_MGT, MAS_BLU, MAS_WHT, RGB_RMOD,RGB_MOD, _______,   KC_MPRV, KC_MNXT, KC_VOLD,
+        BN_TRTG, RGB_RMOD,RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, MAS_RED, MAS_KEY, MAS_CYN, MAS_PRP, _______, _______,
+        _______, _______, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
+        _______, _______, _______,                   DBG_TOG,                            _______, _______, _______, _______,            RGB_SPD, RGB_VAD, RGB_SPI
+    ),
     /*
     [DEFAULT] = LAYOUT(
         KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,           KC_PSCR, KL_TOGG, KC_PAUS,
@@ -158,8 +173,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #undef _______
-#define _______ \
-    { 0, 0, 0 }
+#define _______ {0,0,0}
+
 
 // This is to denote that the led value is set programatically
 #ifndef CUSTHSV
@@ -173,20 +188,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #endif
 
 const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
-    [_FL] = {RED, RED, RED, RED, RED, _______, _______, _______, _______, RED, RED, RED, _______, RED, GREEN, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RED, GREEN, AZURE, _______, GOLD, CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, _______, MAGENT, BLUE, WHITE, GOLD, GOLD, _______, ORANGE, ORANGE, AZURE, TRHSV, GOLD, CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, RED, {1, 0, 0}, CYAN, M9B59B5, _______, _______, _______, _______, _______, _______, _______, RED, PINK, YELLOW, GREEN, CREAM, _______, _______, CUSTHSV, _______, _______, _______, _______, _______, WHITE, _______, _______, CUSTHSV, CUSTHSV, CUSTHSV},
+    [_FL] = {
+        RED,     RED,     RED,     RED,     _______, _______, _______, _______, _______, RED,     RED,     RED,     _______,            RED,     GREEN,   _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   RED,     GREEN,   AZURE,
+        _______, GOLD,    CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, _______, MAGENT,  BLUE,    WHITE,   GOLD,    GOLD,    _______,   ORANGE,  ORANGE,  AZURE,
+        TRHSV,   GOLD,    CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, RED,     {1,0,0}, CYAN,    M9B59B5, _______, _______,
+        _______, _______, _______, _______, _______, RED,     PINK,    YELLOW,  GREEN,   CREAM,   _______, _______,                              CUSTHSV,
+        _______, _______, _______,                   _______,                            _______, WHITE,   _______, _______,            CUSTHSV, CUSTHSV, CUSTHSV
+    },
     /*
     [_FL] = LAYOUT(
-        RGB_TOG, RGB_C_M, RGB_C_U, RGB_C_K, RGB_C_I, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR,  _______,            KC_MUTE, KC_MSEL, _______,
+        RGB_TOG, RGB_C_M, RGB_C_U, RGB_C_K, _______, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR,  _______,            KC_MUTE, KC_MSEL, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_MSTP, KC_MPLY, KC_VOLU,
         _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, MAS_MGT, MAS_BLU, MAS_WHT, RGB_RMOD,RGB_MOD, _______,   KC_MPRV, KC_MNXT, KC_VOLD,
         BN_TRTG, RGB_RMOD,RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, MAS_RED, MAS_KEY, MAS_CYN, MAS_PRP, _______, _______,
-        _______, RGB_TOG, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
+        _______, _______, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
         _______, _______, _______,                   _______,                            _______, _LAYER_, _______, _______,            RGB_SPD, RGB_VAD, RGB_SPI
     ),
     */
 };
 #undef _______
 #define _______ KC_TRNS
+// clang-format on
 
 // Runs just one time when the keyboard initializes.
 void matrix_init_user(void) {
@@ -200,7 +223,16 @@ void keyboard_post_init_user(void) {
 #define MODS_SHIFT (get_mods() & MOD_MASK_SHIFT)
 #define MODS_CTRL (get_mods() & MOD_MASK_CTRL)
 #define MODS_ALT (get_mods() & MOD_MASK_ALT)
-
+#ifdef DUAL_RGB_MATRIX_ENABLE
+#    define DUAL_AWARE_RGB_FUNC(name, ...)            \
+        if (!MODS_ALT) {                              \
+            rgb_matrix_##name(__VA_ARGS__);           \
+        } else {                                      \
+            rgb_secondary_matrix_##name(__VA_ARGS__); \
+        }
+#else
+#    define DUAL_AWARE_RGB_FUNC(name, ...) rgb_matrix_##name(__VA_ARGS__);
+#endif
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // The only custom processing is for non-standard keys. So avoid any extra processing
     // for codes in the standard/basic range.
@@ -230,34 +262,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             // ======================================================== CUSTOM KEYCOADS BELOW ========================================================
             case MAS_CRM:
-                rgb_matrix_sethsv(HSV_CREAM);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_CREAM)
                 return false;
             case MAS_PRP:
-                rgb_matrix_sethsv(HSV_9B59B5);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_9B59B5)
                 return false;
             case MAS_RED:
-                rgb_matrix_sethsv(HSV_RED);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_RED)
                 return false;
             case MAS_GRN:
-                rgb_matrix_sethsv(HSV_GREEN);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_GREEN)
                 return false;
             case MAS_BLU:
-                rgb_matrix_sethsv(HSV_BLUE);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_BLUE)
                 return false;
             case MAS_CYN:
-                rgb_matrix_sethsv(HSV_CYAN);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_CYAN)
                 return false;
             case MAS_MGT:
-                rgb_matrix_sethsv(HSV_MAGENTA);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_MAGENTA)
                 return false;
             case MAS_YEL:
-                rgb_matrix_sethsv(HSV_YELLOW);
+                DUAL_AWARE_RGB_FUNC(sethsv, HSV_YELLOW)
                 return false;
             case MAS_KEY:
-                rgb_matrix_sethsv(0, 0, 0);
+                DUAL_AWARE_RGB_FUNC(sethsv, 0, 0, 0)
                 return false;
             case MAS_WHT:
-                rgb_matrix_sethsv(128, 0, 255);
+                DUAL_AWARE_RGB_FUNC(sethsv, 128, 0, 255)
                 return false;
             default:
                 return true; // Process all other keycodes normally
@@ -265,11 +297,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
+#undef DUAL_AWARE_RGB_FUNC
 
 bool set_layer_color(int layer) {
     if (layer == _KL) {
         return true;
     }
+    rgb_config_t *config = &rgb_matrix_config;
+#ifdef DUAL_RGB_MATRIX_ENABLE
+    if (MODS_ALT) {
+        config = &rgb_secondary_matrix_config;
+    }
+#endif
     for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
         HSV hsv = {
             .h = pgm_read_byte(&ledmap[layer][i][0]),
@@ -278,10 +317,10 @@ bool set_layer_color(int layer) {
         };
         if (hsv.h || hsv.s || hsv.v) {
             RGB   rgb = hsv_to_rgb(hsv);
-            float f   = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
+            float f   = (float)config->hsv.v / UINT8_MAX;
             rgb_matrix_set_color(i, f * rgb.r, f * rgb.g, f * rgb.b);
         } else if (layer == _FL) {
-            HSV hsv2   = {rgb_matrix_config.hsv.h, rgb_matrix_config.hsv.s, RGB_MATRIX_MAXIMUM_BRIGHTNESS};
+            HSV hsv2   = {config->hsv.h, config->hsv.s, RGB_MATRIX_MAXIMUM_BRIGHTNESS};
             HSV hui    = hsv2;
             HSV hud    = hsv2;
             HSV sai    = hsv2;
@@ -294,10 +333,10 @@ bool set_layer_color(int layer) {
             hud.h      = hsv2.h - RGB_MATRIX_HUE_STEP;
             sai.s      = qadd8(hsv2.s, RGB_MATRIX_SAT_STEP);
             sad.s      = qsub8(hsv2.s, RGB_MATRIX_SAT_STEP);
-            vai.v      = hsv2.v + RGB_MATRIX_VAL_STEP > RGB_MATRIX_MAXIMUM_BRIGHTNESS ? RGB_MATRIX_MAXIMUM_BRIGHTNESS : rgb_matrix_config.hsv.v + RGB_MATRIX_VAL_STEP;
+            vai.v      = hsv2.v + RGB_MATRIX_VAL_STEP > RGB_MATRIX_MAXIMUM_BRIGHTNESS ? RGB_MATRIX_MAXIMUM_BRIGHTNESS : config->hsv.v + RGB_MATRIX_VAL_STEP;
             vad.v      = qsub8(hsv2.v, RGB_MATRIX_VAL_STEP);
-            spd.h      = scale8(255 - qsub8(rgb_matrix_config.speed, RGB_MATRIX_SPD_STEP), 92);
-            spi.h      = scale8(255 - qadd8(rgb_matrix_config.speed, RGB_MATRIX_SPD_STEP), 92);
+            spd.h      = scale8(255 - qsub8(config->speed, RGB_MATRIX_SPD_STEP), 92);
+            spi.h      = scale8(255 - qadd8(config->speed, RGB_MATRIX_SPD_STEP), 92);
             RGB rgbHUI = hsv_to_rgb(hui);
             RGB rgbHUD = hsv_to_rgb(hud);
             RGB rgbSAI = hsv_to_rgb(sai);
