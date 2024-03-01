@@ -12,4 +12,4 @@ MOUSEKEY_ENABLE = no        	# Mouse keys
 NKRO_ENABLE = yes           	# Enable N-Key Rollover
 TAP_REPEAT_ENABLE = no      	# Tap Repeat
 KEY_LOCK_TOGGLE_ENABLE = no 	# Key Lock Toggle
-DUAL_RGB_MATRIX_ENABLE = no   	# Dual RGB Matrix effects
+DUAL_RGB_MATRIX_ENABLE = yes   	# Dual RGB Matrix effects
