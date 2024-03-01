@@ -79,6 +79,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 #undef DUAL_AWARE_RGB_FUNC
 
+#define RGB_KEYCODE_DYANMIC_COLOR(RGB_VAR, REVERESED_RGB_VAR)                                   \
+    if (!MODS_SHIFT) {                                                                          \
+        rgb_matrix_set_color(i, RGB_VAR.r, RGB_VAR.g, RGB_VAR.b);                               \
+    } else {                                                                                    \
+        rgb_matrix_set_color(i, REVERESED_RGB_VAR.r, REVERESED_RGB_VAR.g, REVERESED_RGB_VAR.b); \
+    }
+
 bool set_layer_color(int layer) {
     if (layer == _KL) {
         return true;
@@ -127,37 +134,37 @@ bool set_layer_color(int layer) {
             rgb_matrix_set_color(i, f * rgb.r, f * rgb.g, f * rgb.b);
         } else if (layer == _FL) {
             switch (i) {
-#define BEIUFIN_LED_RGB_HUI(LED_IDX)                           \
-    case LED_IDX:                                              \
-        rgb_matrix_set_color(i, rgbHUI.r, rgbHUI.g, rgbHUI.b); \
+#define BEIUFIN_LED_RGB_HUI(LED_IDX)              \
+    case LED_IDX:                                 \
+        RGB_KEYCODE_DYANMIC_COLOR(rgbHUI, rgbHUD) \
         break;
-#define BEIUFIN_LED_RGB_HUD(LED_IDX)                           \
-    case LED_IDX:                                              \
-        rgb_matrix_set_color(i, rgbHUD.r, rgbHUD.g, rgbHUD.b); \
+#define BEIUFIN_LED_RGB_HUD(LED_IDX)              \
+    case LED_IDX:                                 \
+        RGB_KEYCODE_DYANMIC_COLOR(rgbHUD, rgbHUI) \
         break;
-#define BEIUFIN_LED_RGB_SAI(LED_IDX)                           \
-    case LED_IDX:                                              \
-        rgb_matrix_set_color(i, rgbSAI.r, rgbSAI.g, rgbSAI.b); \
+#define BEIUFIN_LED_RGB_SAI(LED_IDX)              \
+    case LED_IDX:                                 \
+        RGB_KEYCODE_DYANMIC_COLOR(rgbSAI, rgbSAD) \
         break;
-#define BEIUFIN_LED_RGB_SAD(LED_IDX)                           \
-    case LED_IDX:                                              \
-        rgb_matrix_set_color(i, rgbSAD.r, rgbSAD.g, rgbSAD.b); \
+#define BEIUFIN_LED_RGB_SAD(LED_IDX)              \
+    case LED_IDX:                                 \
+        RGB_KEYCODE_DYANMIC_COLOR(rgbSAD, rgbSAI) \
         break;
-#define BEIUFIN_LED_RGB_VAI(LED_IDX)                           \
-    case LED_IDX:                                              \
-        rgb_matrix_set_color(i, rgbVAI.r, rgbVAI.g, rgbVAI.b); \
+#define BEIUFIN_LED_RGB_VAI(LED_IDX)              \
+    case LED_IDX:                                 \
+        RGB_KEYCODE_DYANMIC_COLOR(rgbVAI, rgbVAD) \
         break;
-#define BEIUFIN_LED_RGB_VAD(LED_IDX)                           \
-    case LED_IDX:                                              \
-        rgb_matrix_set_color(i, rgbVAD.r, rgbVAD.g, rgbVAD.b); \
+#define BEIUFIN_LED_RGB_VAD(LED_IDX)              \
+    case LED_IDX:                                 \
+        RGB_KEYCODE_DYANMIC_COLOR(rgbVAD, rgbVAI) \
         break;
-#define BEIUFIN_LED_RGB_SPI(LED_IDX)                           \
-    case LED_IDX:                                              \
-        rgb_matrix_set_color(i, rgbSPI.r, rgbSPI.g, rgbSPI.b); \
+#define BEIUFIN_LED_RGB_SPI(LED_IDX)              \
+    case LED_IDX:                                 \
+        RGB_KEYCODE_DYANMIC_COLOR(rgbSPI, rgbSPD) \
         break;
-#define BEIUFIN_LED_RGB_SPD(LED_IDX)                           \
-    case LED_IDX:                                              \
-        rgb_matrix_set_color(i, rgbSPD.r, rgbSPD.g, rgbSPD.b); \
+#define BEIUFIN_LED_RGB_SPD(LED_IDX)              \
+    case LED_IDX:                                 \
+        RGB_KEYCODE_DYANMIC_COLOR(rgbSPD, rgbSPI) \
         break;
 #include "beiufin_led_codes.h"
 #undef BEIUFIN_LED_RGB_HUI
@@ -176,6 +183,7 @@ bool set_layer_color(int layer) {
     }
     return false;
 }
+#undef RGB_KEYCODE_DYANMIC_COLOR
 
 __attribute__((weak)) layer_state_t layer_state_set_keymap(layer_state_t state) {
     return state;
