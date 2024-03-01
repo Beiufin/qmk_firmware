@@ -1,5 +1,4 @@
-# project specific files
-SRC += config_led.c
+USER_NAME := beiufin
 
 #For platform and packs
 ARM_ATSAM = SAMD51J18A
@@ -26,9 +25,6 @@ AUTO_SHIFT_ENABLE = no      	# Auto Shift
 TAP_REPEAT_ENABLE = no      	# Tap Repeat
 KEY_LOCK_TOGGLE_ENABLE = no 	# Key Lock Toggle
 DUAL_RGB_MATRIX_ENABLE = yes   	# Dual RGB Matrix effects
-
-# Custom RGB matrix handling
-RGB_MATRIX_ENABLE = yes
 
 # Custom RGB effects
 RGB_MATRIX_CUSTOM_USER = yes

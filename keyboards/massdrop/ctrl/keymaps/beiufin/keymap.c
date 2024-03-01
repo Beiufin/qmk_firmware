@@ -1,6 +1,6 @@
 /*
-QMK Firmware Massdrop CTRL M-AS Keymap
-Copyright (C) 2020 matthewrobo
+QMK Firmware Massdrop CTRL Beiufin Keymap
+Copyright (C) 2020 Beiufin
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,99 +17,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
-#include <lib/lib8tion/lib8tion.h>
-
-// HID has not yet been implemented for this keyboard
-// #include "raw_hid.h"
-
-#define MILLISECONDS_IN_SECOND 1000
-
-// These are just to make it neater to use builtin HSV values in the keymap
-// clang-format off
-#define WHITE {HSV_WHITE}
-#define RED {HSV_RED}
-#define CORAL {HSV_CORAL}
-#define ORANGE {HSV_ORANGE}
-#define GOLDEN {HSV_GOLDENROD}
-#define GOLD {HSV_GOLD}
-#define YELLOW {HSV_YELLOW}
-#define CHART {HSV_CHARTREUSE}
-#define GREEN {HSV_GREEN}
-#define SPRING {HSV_SPRINGGREEN}
-#define TURQ {HSV_TURQUOISE}
-#define TEAL {HSV_TEAL}
-#define CYAN {HSV_CYAN}
-#define AZURE {HSV_AZURE}
-#define BLUE {HSV_BLUE}
-#define PURPLE {HSV_PURPLE}
-#define MAGENT {HSV_MAGENTA}
-#define PINK {HSV_PINK}
-#define HSV_CREAM 24, 240, 255
-#define CREAM {HSV_CREAM}
-#define HSV_9B59B5 208, 192, 255
-#define M9B59B5 {HSV_9B59B5}
-// clang-format on
-
-#if defined(TAP_REPEAT_RGB) && defined(TAP_REPEAT_ENABLE)
-#    include "tap_repeat.h"
-#endif
-
-#if defined(KEY_LOCK_TOGGLE_RGB) && defined(KEY_LOCK_TOGGLE_ENABLE)
-#    include "key_lock_toggle.h"
-#endif
+#include "beiufin.h"
 
 #define _LAYER_ KC_TRNS
 
-#if !defined(RGB_MATRIX_MAXIMUM_BRIGHTNESS) || RGB_MATRIX_MAXIMUM_BRIGHTNESS > UINT8_MAX
-#    undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
-#    define RGB_MATRIX_MAXIMUM_BRIGHTNESS UINT8_MAX
-#endif
-
-#if !defined(RGB_MATRIX_HUE_STEP)
-#    define RGB_MATRIX_HUE_STEP 8
-#endif
-
-#if !defined(RGB_MATRIX_SAT_STEP)
-#    define RGB_MATRIX_SAT_STEP 16
-#endif
-
-#if !defined(RGB_MATRIX_VAL_STEP)
-#    define RGB_MATRIX_VAL_STEP 16
-#endif
-
-#if !defined(RGB_MATRIX_SPD_STEP)
-#    define RGB_MATRIX_SPD_STEP 16
-#endif
-
 //========================================================== CONFIGURABLE DEFAULTS ==========================================================
-extern bool         g_suspend_state;
-extern rgb_config_t rgb_matrix_config;
-bool                disable_layer_color;
+extern bool g_suspend_state;
 
 bool rgb_enabled_flag; // Current LED state flag. If false then LED is off.
 
-enum layout_names {
-    _KL = 0, // Keys Layout: The main keyboard layout that has all the characters
-    _FL,     // Function Layout: The function key activated layout with default functions and some added ones
-};
-
 enum ctrl_keycodes {
-    U_T_AUTO = SAFE_RANGE, // USB Extra Port Toggle Auto Detect / Always Active
-    U_T_AGCR,              // USB Toggle Automatic GCR control
-    DBG_TOG,               // DEBUG Toggle On / Off
-    DBG_MTRX,              // DEBUG Toggle Matrix Prints
-    DBG_KBD,               // DEBUG Toggle Keyboard Prints
-    DBG_MOU,               // DEBUG Toggle Mouse Prints
-    MAS_CRM,
-    MAS_PRP,
-    MAS_RED,
-    MAS_GRN,
-    MAS_BLU,
-    MAS_CYN,
-    MAS_MGT,
-    MAS_YEL,
-    MAS_KEY,
-    MAS_WHT,
+    U_T_AUTO = NEW_SAFE_RANGE, // USB Extra Port Toggle Auto Detect / Always Active
+    U_T_AGCR,                  // USB Toggle Automatic GCR control
+    DBG_TOG,                   // DEBUG Toggle On / Off
+    DBG_MTRX,                  // DEBUG Toggle Matrix Prints
+    DBG_KBD,                   // DEBUG Toggle Keyboard Prints
+    DBG_MOU,                   // DEBUG Toggle Mouse Prints
 };
 
 // clang-format off
@@ -125,9 +48,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_FL] = LAYOUT(
         RGB_TOG, RGB_C_M, RGB_C_U, RGB_C_K, _______, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR,  _______,            KC_MUTE, KC_MSEL, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_MSTP, KC_MPLY, KC_VOLU,
-        _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, MAS_MGT, MAS_BLU, MAS_WHT, RGB_RMOD,RGB_MOD, _______,   KC_MPRV, KC_MNXT, KC_VOLD,
-        BN_TRTG, RGB_RMOD,RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, MAS_RED, MAS_KEY, MAS_CYN, MAS_PRP, _______, _______,
-        _______, _______, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
+        _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, BEI_MGT, BEI_BLU, BEI_WHT, RGB_RMOD,RGB_MOD, _______,   KC_MPRV, KC_MNXT, KC_VOLD,
+        BN_TRTG, RGB_RMOD,RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, BEI_RED, BEI_KEY, BEI_CYN, BEI_PRP, _______, _______,
+        _______, _______, _______, _______, _______, QK_BOOT, NK_TOGG, BEI_YEL, BEI_GRN, BEI_CRM, _______, _______,                              RGB_VAI,
         _______, _______, _______,                   DBG_TOG,                            _______, _______, _______, _______,            RGB_SPD, RGB_VAD, RGB_SPI
     ),
     /*
@@ -200,9 +123,9 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     [_FL] = LAYOUT(
         RGB_TOG, RGB_C_M, RGB_C_U, RGB_C_K, _______, _______, _______, _______, _______, DBG_TOG, DBG_KBD, EE_CLR,  _______,            KC_MUTE, KC_MSEL, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_MSTP, KC_MPLY, KC_VOLU,
-        _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, MAS_MGT, MAS_BLU, MAS_WHT, RGB_RMOD,RGB_MOD, _______,   KC_MPRV, KC_MNXT, KC_VOLD,
-        BN_TRTG, RGB_RMOD,RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, MAS_RED, MAS_KEY, MAS_CYN, MAS_PRP, _______, _______,
-        _______, _______, _______, _______, _______, QK_BOOT, NK_TOGG, MAS_YEL, MAS_GRN, MAS_CRM, _______, _______,                              RGB_VAI,
+        _______, RGB_MOD, RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______, BEI_MGT, BEI_BLU, BEI_WHT, RGB_RMOD,RGB_MOD, _______,   KC_MPRV, KC_MNXT, KC_VOLD,
+        BN_TRTG, RGB_RMOD,RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, _______, BEI_RED, BEI_KEY, BEI_CYN, BEI_PRP, _______, _______,
+        _______, _______, _______, _______, _______, QK_BOOT, NK_TOGG, BEI_YEL, BEI_GRN, BEI_CRM, _______, _______,                              RGB_VAI,
         _______, _______, _______,                   _______,                            _______, _LAYER_, _______, _______,            RGB_SPD, RGB_VAD, RGB_SPI
     ),
     */
@@ -220,20 +143,7 @@ void keyboard_post_init_user(void) {
     rgb_matrix_enable();
 }
 
-#define MODS_SHIFT (get_mods() & MOD_MASK_SHIFT)
-#define MODS_CTRL (get_mods() & MOD_MASK_CTRL)
-#define MODS_ALT (get_mods() & MOD_MASK_ALT)
-#ifdef DUAL_RGB_MATRIX_ENABLE
-#    define DUAL_AWARE_RGB_FUNC(name, ...)            \
-        if (!MODS_ALT) {                              \
-            rgb_matrix_##name(__VA_ARGS__);           \
-        } else {                                      \
-            rgb_secondary_matrix_##name(__VA_ARGS__); \
-        }
-#else
-#    define DUAL_AWARE_RGB_FUNC(name, ...) rgb_matrix_##name(__VA_ARGS__);
-#endif
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
     // The only custom processing is for non-standard keys. So avoid any extra processing
     // for codes in the standard/basic range.
     if (record->event.pressed && keycode > QK_BASIC_MAX) {
@@ -260,148 +170,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             case DBG_MOU:
                 TOGGLE_FLAG_AND_PRINT(debug_mouse, "Debug mouse");
                 return false;
-            // ======================================================== CUSTOM KEYCOADS BELOW ========================================================
-            case MAS_CRM:
-                DUAL_AWARE_RGB_FUNC(sethsv, HSV_CREAM)
-                return false;
-            case MAS_PRP:
-                DUAL_AWARE_RGB_FUNC(sethsv, HSV_9B59B5)
-                return false;
-            case MAS_RED:
-                DUAL_AWARE_RGB_FUNC(sethsv, HSV_RED)
-                return false;
-            case MAS_GRN:
-                DUAL_AWARE_RGB_FUNC(sethsv, HSV_GREEN)
-                return false;
-            case MAS_BLU:
-                DUAL_AWARE_RGB_FUNC(sethsv, HSV_BLUE)
-                return false;
-            case MAS_CYN:
-                DUAL_AWARE_RGB_FUNC(sethsv, HSV_CYAN)
-                return false;
-            case MAS_MGT:
-                DUAL_AWARE_RGB_FUNC(sethsv, HSV_MAGENTA)
-                return false;
-            case MAS_YEL:
-                DUAL_AWARE_RGB_FUNC(sethsv, HSV_YELLOW)
-                return false;
-            case MAS_KEY:
-                DUAL_AWARE_RGB_FUNC(sethsv, 0, 0, 0)
-                return false;
-            case MAS_WHT:
-                DUAL_AWARE_RGB_FUNC(sethsv, 128, 0, 255)
-                return false;
             default:
                 return true; // Process all other keycodes normally
         }
-    }
-    return true;
-}
-#undef DUAL_AWARE_RGB_FUNC
-
-bool set_layer_color(int layer) {
-    if (layer == _KL) {
-        return true;
-    }
-    rgb_config_t *config = &rgb_matrix_config;
-#ifdef DUAL_RGB_MATRIX_ENABLE
-    if (MODS_ALT) {
-        config = &rgb_secondary_matrix_config;
-    }
-#endif
-    for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
-        HSV hsv = {
-            .h = pgm_read_byte(&ledmap[layer][i][0]),
-            .s = pgm_read_byte(&ledmap[layer][i][1]),
-            .v = pgm_read_byte(&ledmap[layer][i][2]),
-        };
-        if (hsv.h || hsv.s || hsv.v) {
-            RGB   rgb = hsv_to_rgb(hsv);
-            float f   = (float)config->hsv.v / UINT8_MAX;
-            rgb_matrix_set_color(i, f * rgb.r, f * rgb.g, f * rgb.b);
-        } else if (layer == _FL) {
-            HSV hsv2   = {config->hsv.h, config->hsv.s, RGB_MATRIX_MAXIMUM_BRIGHTNESS};
-            HSV hui    = hsv2;
-            HSV hud    = hsv2;
-            HSV sai    = hsv2;
-            HSV sad    = hsv2;
-            HSV vai    = hsv2;
-            HSV vad    = hsv2;
-            HSV spd    = hsv2;
-            HSV spi    = hsv2;
-            hui.h      = hsv2.h + RGB_MATRIX_HUE_STEP;
-            hud.h      = hsv2.h - RGB_MATRIX_HUE_STEP;
-            sai.s      = qadd8(hsv2.s, RGB_MATRIX_SAT_STEP);
-            sad.s      = qsub8(hsv2.s, RGB_MATRIX_SAT_STEP);
-            vai.v      = hsv2.v + RGB_MATRIX_VAL_STEP > RGB_MATRIX_MAXIMUM_BRIGHTNESS ? RGB_MATRIX_MAXIMUM_BRIGHTNESS : config->hsv.v + RGB_MATRIX_VAL_STEP;
-            vad.v      = qsub8(hsv2.v, RGB_MATRIX_VAL_STEP);
-            spd.h      = scale8(255 - qsub8(config->speed, RGB_MATRIX_SPD_STEP), 92);
-            spi.h      = scale8(255 - qadd8(config->speed, RGB_MATRIX_SPD_STEP), 92);
-            RGB rgbHUI = hsv_to_rgb(hui);
-            RGB rgbHUD = hsv_to_rgb(hud);
-            RGB rgbSAI = hsv_to_rgb(sai);
-            RGB rgbSAD = hsv_to_rgb(sad);
-            RGB rgbVAI = hsv_to_rgb(vai);
-            RGB rgbVAD = hsv_to_rgb(vad);
-            RGB rgbSPD = hsv_to_rgb(spd);
-            RGB rgbSPI = hsv_to_rgb(spi);
-
-            switch (i) {
-                case 36:
-                    rgb_matrix_set_color(i, rgbHUI.r, rgbHUI.g, rgbHUI.b);
-                    break;
-                case 53:
-                    rgb_matrix_set_color(i, rgbHUD.r, rgbHUD.g, rgbHUD.b);
-                    break;
-                case 54:
-                    rgb_matrix_set_color(i, rgbSAI.r, rgbSAI.g, rgbSAI.b);
-                    break;
-                case 37:
-                    rgb_matrix_set_color(i, rgbSAD.r, rgbSAD.g, rgbSAD.b);
-                    break;
-                case 75:
-                case 38:
-                    rgb_matrix_set_color(i, rgbVAI.r, rgbVAI.g, rgbVAI.b);
-                    break;
-                case 85:
-                case 55:
-                    rgb_matrix_set_color(i, rgbVAD.r, rgbVAD.g, rgbVAD.b);
-                    break;
-                case 84:
-                case 52:
-                    rgb_matrix_set_color(i, rgbSPD.r, rgbSPD.g, rgbSPD.b);
-                    break;
-                case 86:
-                case 35:
-                    rgb_matrix_set_color(i, rgbSPI.r, rgbSPI.g, rgbSPI.b);
-                    break;
-                default:
-                    rgb_matrix_set_color(i, 0, 0, 0);
-                    break;
-            }
-        }
-    }
-    return false;
-}
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-    if (get_highest_layer(state) == _KL) rgb_matrix_set_color_all(0, 0, 0);
-    return state;
-}
-
-bool rgb_matrix_indicators_user(void) {
-    if (disable_layer_color || !rgb_matrix_is_enabled() || rgb_matrix_get_flags() == LED_FLAG_NONE || rgb_matrix_get_flags() == LED_FLAG_UNDERGLOW) {
-        return false;
-    }
-    if (!(
-#if defined(KEY_LOCK_TOGGLE_RGB) && defined(KEY_LOCK_TOGGLE_ENABLE)
-            rgb_matrix_indicators_key_lock_toggle(14) &&
-#endif
-#if defined(TAP_REPEAT_RGB) && defined(TAP_REPEAT_ENABLE)
-            rgb_matrix_indicators_tap_repeat(50) &&
-#endif
-            set_layer_color(get_highest_layer(layer_state)))) {
-        return false;
     }
     return true;
 }
