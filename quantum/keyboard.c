@@ -641,9 +641,8 @@ void quantum_task(void) {
 #endif
 
 #ifdef TAP_REPEAT_ENABLE
-        tap_repeat_task();
+    tap_repeat_task();
 #endif // TAP_REPEAT_ENABLE
-
 }
 
 /** \brief Main task that is repeatedly called as fast as possible. */

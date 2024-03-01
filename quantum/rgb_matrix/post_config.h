@@ -20,9 +20,9 @@
 #    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #endif
 
-#if defined(ENABLE_RGB_MATRIX_APM) || defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM)
+#if defined(APM_ENABLE) && (defined(ENABLE_RGB_MATRIX_APM) || defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM))
 // if any of the typing heatmaps are enabled, the process function should be called
-#    define TRACK_APM
+#    define RGB_MATRIX_TRACK_APM
 #endif
 
 // reactive

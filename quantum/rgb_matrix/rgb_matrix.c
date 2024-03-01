@@ -39,6 +39,15 @@ __attribute__((weak)) RGB rgb_matrix_hsv_to_rgb(HSV hsv) {
     return hsv_to_rgb(hsv);
 }
 
+#ifdef RGB_MATRIX_PROCESS_HEATMAP
+// if any heatmaps are enabled, this is used to process them
+#    include "process_rgb_matrix_typing_heatmap.h"
+#endif
+
+#ifdef RGB_MATRIX_TRACK_APM
+#    include "process_rgb_matrix_apm.h"
+#endif
+
 // Generic effect runners
 #include "rgb_matrix_runners.inc"
 
@@ -46,11 +55,6 @@ __attribute__((weak)) RGB rgb_matrix_hsv_to_rgb(HSV hsv) {
 // -----Begin rgb effect includes macros-----
 #define RGB_MATRIX_EFFECT(name)
 #define RGB_MATRIX_CUSTOM_EFFECT_IMPLS
-
-#ifdef RGB_MATRIX_PROCESS_HEATMAP
-// if any heatmaps are enabled, this is used to process them
-#    include "process_rgb_matrix_typing_heatmap.h"
-#endif
 
 #include "rgb_matrix_effects.inc"
 #ifdef RGB_MATRIX_CUSTOM_KB
@@ -174,6 +178,12 @@ void rgb_matrix_set_color_all(uint8_t red, uint8_t green, uint8_t blue) {
 #endif
 }
 
+#ifdef DUAL_RGB_MATRIX_ENABLE
+#    define RGB_MATRIX_IS_MODE(MODE) (rgb_matrix_config.mode == MODE || rgb_secondary_matrix_config.mode == MODE)
+#else
+#    define RGB_MATRIX_IS_MODE(MODE) (rgb_matrix_config.mode == MODE)
+#endif
+
 void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
 #ifndef RGB_MATRIX_SPLIT
     if (!is_keyboard_master()) return;
@@ -222,37 +232,29 @@ void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
     {
         if (
 #    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP
-            rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP ||
+            RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP) ||
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON
-            rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON ||
+            RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP_LEDON) ||
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID
-            rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_SOLID ||
+            RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP_SOLID) ||
 #    endif
 #    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM
-            rgb_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON_APM ||
-#    endif
-#    ifdef DUAL_RGB_MATRIX_ENABLE
-#        ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP
-            rgb_secondary_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP ||
-#        endif
-#        ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON
-            rgb_secondary_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON ||
-#        endif
-#        ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID
-            rgb_secondary_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_SOLID ||
-#        endif
-#        ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM
-            rgb_secondary_matrix_config.mode == RGB_MATRIX_TYPING_HEATMAP_LEDON_APM ||
-#        endif
+            RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP_LEDON_APM) ||
 #    endif
             false) {
             process_rgb_matrix_typing_heatmap(row, col);
         }
     }
 #endif // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(RGB_MATRIX_PROCESS_HEATMAP)
+#ifdef RGB_MATRIX_TRACK_APM
+    if (pressed && (RGB_MATRIX_IS_MODE(RGB_MATRIX_APM) || RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP_LEDON_APM))) {
+        process_rgb_matrix_apm();
+    }
+#endif
 }
+#undef RGB_MATRIX_IS_MODE
 
 void rgb_matrix_test(void) {
     // Mask out bits 4 and 5
