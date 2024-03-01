@@ -40,7 +40,7 @@
       "c": "#ffd500",
       "a": 0
     },
-    "RGB Mode\n\n\n\nQ",
+    "RGB Mode\n-\n\n\nQ",
     {
       "c": "#2b2b2b",
       "t": "#ffffff"
@@ -48,14 +48,12 @@
     "RGB Bright\n+\n\n\nW",
     {
       "c": "#ffd500",
-      "t": "#000000",
-      "a": 3
+      "t": "#000000"
     },
-    "\n\n\n\nE",
+    "RGB Mode\n+\n\n\nE",
     {
       "c": "#2b2b2b",
-      "t": "#ffffff",
-      "a": 0
+      "t": "#ffffff"
     },
     "RGB Hue\n+\n\n\nR",
     "RGB Sat\n+\n\n\nT",
@@ -228,7 +226,7 @@
       "c": "#00ff00",
       "a": 0
     },
-    "Media Play/Pause\n\n\n\n↑",
+    "Media Play/ Pause\n\n\n\n↑",
     {
       "c": "#99f5ff"
     },
