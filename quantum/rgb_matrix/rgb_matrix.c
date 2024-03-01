@@ -240,16 +240,13 @@ void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
 #    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID
             RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP_SOLID) ||
 #    endif
-#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM
-            RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP_LEDON_APM) ||
-#    endif
             false) {
             process_rgb_matrix_typing_heatmap(row, col);
         }
     }
 #endif // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(RGB_MATRIX_PROCESS_HEATMAP)
 #ifdef RGB_MATRIX_TRACK_APM
-    if (pressed && (RGB_MATRIX_IS_MODE(RGB_MATRIX_APM) || RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP_LEDON_APM))) {
+    if (pressed && (RGB_MATRIX_IS_MODE(RGB_MATRIX_APM))) {
         process_rgb_matrix_apm();
     }
 #endif
