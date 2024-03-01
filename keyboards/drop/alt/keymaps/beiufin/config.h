@@ -42,8 +42,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID // Typing heatmap where the leds remain a solid color, brighten
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON // Typing heatmap where the leds remain on and just shift color.
 //  =================================================== Requires APM_ENABLE =============================================================
-// #define ENABLE_RGB_MATRIX_APM                       // Leds with change color based on your Actions Per Minute
-// #define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM  // Same as ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON, but the "extra" leds will use ENABLE_RGB_MATRIX_APM.
+#define ENABLE_RGB_MATRIX_APM // Leds with change color based on your Actions Per Minute
 //  ================================================================================================================
 
 /* Key Lock Settings */
