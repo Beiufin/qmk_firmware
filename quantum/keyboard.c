@@ -621,7 +621,7 @@ void quantum_task(void) {
 #endif
 
 #ifdef APM_ENABLE
-    decay_apm();
+    apm_task();
 #endif
 
 #ifdef DIP_SWITCH_ENABLE

@@ -25,14 +25,14 @@
 // APM Stuff
 static uint16_t current_apm = 0;
 static uint32_t apm_timer   = 0;
-static uint16_t presses = 0;
+static uint16_t presses     = 0;
 
 uint16_t get_current_apm(void) {
     return current_apm;
 }
 
 uint8_t get_relative_apm(void) {
-    return (UINT8_MAX * current_apm + (APM_MAX_VAL)/2)/(APM_MAX_VAL);
+    return (UINT8_MAX * current_apm + (APM_MAX_VAL) / 2) / (APM_MAX_VAL);
 }
 
 void increment_apm(void) {
@@ -41,19 +41,19 @@ void increment_apm(void) {
     }
 }
 
-void decay_apm(void) {
-    uint32_t elapsed  = timer_elapsed32(apm_timer);
+void apm_task(void) {
+    uint32_t elapsed = timer_elapsed32(apm_timer);
     if (elapsed < APM_UPDATE_INTERVAL) {
         return;
     }
     // calc apm for this reading
-    uint32_t apm_now  = (60000 * presses) / elapsed;
+    uint32_t apm_now = (60000 * presses) / elapsed;
 
     // reset
     apm_timer = timer_read32();
-    presses = 0;
+    presses   = 0;
 
     // update rolling avg
-    current_apm = (current_apm * (APM_MAX_SAMPLES-1) + apm_now)/ APM_MAX_SAMPLES;
+    current_apm = (current_apm * (APM_MAX_SAMPLES - 1) + apm_now) / APM_MAX_SAMPLES;
     if (current_apm > APM_MAX_VAL) current_apm = APM_MAX_VAL; // set some reasonable APM measurement limits
 }
