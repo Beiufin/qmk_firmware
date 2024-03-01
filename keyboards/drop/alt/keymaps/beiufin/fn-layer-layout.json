@@ -1,0 +1,290 @@
+[
+  [
+    {
+      "a": 0
+    },
+    "`\n\n~\n\nEsc",
+    "F1\n\n\n\n1\n!",
+    "F2\n\n\n\n2\n\"",
+    "F3\n\n\n\n3\n£",
+    "F4\n\n\n\n4\n$",
+    "F5\n\n\n\n5\n%",
+    "F6\n\n\n\n6\n^",
+    "F7\n\n\n\n7\n&",
+    "F8\n\n\n\n8\n*",
+    "F9\n\n\n\n9\n(",
+    "F10\n\n\n\n0\n)",
+    "F11\n\n\n\n-\n_",
+    "F12\n\n\n\n=\n+",
+    {
+      "a": 3,
+      "w": 2,
+      "d": true
+    },
+    "\n\n\n\nBackspace",
+    {
+      "c": "#99f5ff",
+      "a": 0
+    },
+    "Mute\n\n\n\nDel"
+  ],
+  [
+    {
+      "c": "#cccccc",
+      "a": 3,
+      "w": 1.5,
+      "d": true
+    },
+    "\n\n\n\nTab",
+    {
+      "c": "#ffd500",
+      "a": 0
+    },
+    "RGB Mode\n\n\n\nQ",
+    {
+      "c": "#2b2b2b",
+      "t": "#ffffff"
+    },
+    "RGB Bright\n+\n\n\nW",
+    {
+      "c": "#ffd500",
+      "t": "#000000",
+      "a": 3
+    },
+    "\n\n\n\nE",
+    {
+      "c": "#2b2b2b",
+      "t": "#ffffff",
+      "a": 0
+    },
+    "RGB Hue\n+\n\n\nR",
+    "RGB Sat\n+\n\n\nT",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 3,
+      "d": true
+    },
+    "\n\n\n\nY",
+    {
+      "c": "#ff00ff",
+      "a": 0
+    },
+    "Mage-nta\n\n\n\nU",
+    {
+      "c": "#0000ff",
+      "t": "#ffffff"
+    },
+    "Blue\n\n\n\nI",
+    {
+      "c": "#ffffff",
+      "t": "#000000"
+    },
+    "White\n\n\n\nO",
+    {
+      "c": "#00ff00"
+    },
+    "PrtSc\n\n\n\nP",
+    {
+      "c": "#0000ff",
+      "t": "#ffffff"
+    },
+    "Scrlk\n\n\n\n[\n{",
+    {
+      "c": "#ffaa00",
+      "t": "#000000"
+    },
+    "Pause\n\n\n\n]\n}",
+    {
+      "c": "#cccccc",
+      "a": 3,
+      "w": 1.5,
+      "d": true
+    },
+    "\n\n\n\n\\\n|",
+    {
+      "c": "#ffaa00",
+      "a": 0
+    },
+    "End\n\n\n\nHome"
+  ],
+  [
+    {
+      "c": "#cccccc",
+      "a": 3,
+      "w": 1.75,
+      "d": true
+    },
+    "\n\n\n\nCaps Lock",
+    {
+      "c": "#2b2b2b",
+      "t": "#ffffff",
+      "a": 0
+    },
+    "RGB Speed\n-\n\n\nA",
+    "RGB Bright\n-\n\n\nS",
+    "RGB Speed\n+\n\n\nD",
+    "RGB Hue\n-\n\n\nF",
+    "RGB Sat\n-\n\n\nG",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 3,
+      "d": true
+    },
+    "\n\n\n\nH",
+    {
+      "c": "#ff0000",
+      "t": "#ffffff",
+      "a": 0
+    },
+    "Red\n\n\n\nJ",
+    {
+      "c": "#99f5ff",
+      "t": "#000000"
+    },
+    "Cyan\n\n\n\nK",
+    {
+      "c": "#8000ff",
+      "t": "#ffffff"
+    },
+    "Purp\n\n\n\nL",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 3,
+      "d": true
+    },
+    "\n\n\n\n;\n:",
+    {
+      "d": true
+    },
+    "\n\n\n\n'\n\"",
+    {
+      "x": 0.25,
+      "w": 2,
+      "d": true
+    },
+    "\n\n\n\nEnter",
+    {
+      "c": "#99f5ff",
+      "a": 0
+    },
+    "Vol +\n\n\n\nPgUp"
+  ],
+  [
+    {
+      "c": "#cccccc",
+      "a": 3,
+      "w": 2.25,
+      "d": true
+    },
+    "\n\n\n\nShift",
+    {
+      "c": "#008080",
+      "a": 0
+    },
+    "Toggle LEDs\n\n\n\nZ",
+    "Cycle Mod LEDs\n\n\n\nX",
+    "Cycle Under LEDs\n\n\n\nC",
+    "Cycle Key LEDs\n\n\n\nV",
+    {
+      "c": "#ff0000",
+      "t": "#ffffff"
+    },
+    "Boot\n\n\n\nB",
+    {
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 3,
+      "d": true
+    },
+    "\n\n\n\nN",
+    {
+      "c": "#ffff00",
+      "a": 0
+    },
+    "Yellow\n\n\n\nM",
+    {
+      "c": "#00ff00"
+    },
+    "Green\n\n\n\n,\n<",
+    {
+      "c": "#ffbc63"
+    },
+    "Cream\n\n\n\n.\n>",
+    {
+      "c": "#cccccc",
+      "a": 3,
+      "d": true
+    },
+    "\n\n\n\n/\n?",
+    {
+      "w": 1.75,
+      "d": true
+    },
+    "\n\n\n\nShift",
+    {
+      "c": "#00ff00",
+      "a": 0
+    },
+    "Media Play/Pause\n\n\n\n↑",
+    {
+      "c": "#99f5ff"
+    },
+    "Vol -\n\n\n\nPgDn"
+  ],
+  [
+    {
+      "c": "#cccccc",
+      "a": 3,
+      "w": 1.25,
+      "d": true
+    },
+    "\n\n\n\nCtrl",
+    {
+      "w": 1.25,
+      "d": true
+    },
+    "\n\n\n\nWin",
+    {
+      "w": 1.25,
+      "d": true
+    },
+    "\n\n\n\nAlt",
+    {
+      "a": 7,
+      "w": 6.25,
+      "d": true
+    },
+    "",
+    {
+      "a": 3,
+      "w": 1.25,
+      "d": true
+    },
+    "\n\n\n\nAlt",
+    {
+      "c": "#ffffff",
+      "f": 2
+    },
+    "\n\n\n\nFn",
+    {
+      "x": 0.75,
+      "c": "#ffff00",
+      "a": 0,
+      "f": 3
+    },
+    "Media Prev Track\n\n\n\n←",
+    {
+      "c": "#ff0000",
+      "t": "#ffffff"
+    },
+    "Media Stop Track\n\n\n\n↓",
+    {
+      "c": "#ffff00",
+      "t": "#000000"
+    },
+    "Media Next Traclk\n\n\n\n→"
+  ]
+]

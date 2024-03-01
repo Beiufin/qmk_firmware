@@ -1,0 +1,135 @@
+[
+  [
+    {
+      "a": 3
+    },
+    "\n\n\n\nEsc",
+    "\n\n\n\n1\n!",
+    "\n\n\n\n2\n\"",
+    "\n\n\n\n3\n£",
+    "\n\n\n\n4\n$",
+    "\n\n\n\n5\n%",
+    "\n\n\n\n6\n^",
+    "\n\n\n\n7\n&",
+    "\n\n\n\n8\n*",
+    "\n\n\n\n9\n(",
+    "\n\n\n\n0\n)",
+    "\n\n\n\n-\n_",
+    "\n\n\n\n=\n+",
+    {
+      "w": 2
+    },
+    "\n\n\n\nBackspace",
+    "\n\n\n\nDel"
+  ],
+  [
+    {
+      "w": 1.5
+    },
+    "\n\n\n\nTab",
+    "\n\n\n\nQ",
+    "\n\n\n\nW",
+    "\n\n\n\nE",
+    "\n\n\n\nR",
+    "\n\n\n\nT",
+    "\n\n\n\nY",
+    "\n\n\n\nU",
+    "\n\n\n\nI",
+    "\n\n\n\nO",
+    "\n\n\n\nP",
+    "\n\n\n\n[\n{",
+    "\n\n\n\n]\n}",
+    {
+      "w": 1.5
+    },
+    "\n\n\n\n\\\n|",
+    "\n\n\n\nHome"
+  ],
+  [
+    {
+      "w": 1.75
+    },
+    "\n\n\n\nCaps Lock",
+    "\n\n\n\nA",
+    "\n\n\n\nS",
+    "\n\n\n\nD",
+    "\n\n\n\nF",
+    "\n\n\n\nG",
+    "\n\n\n\nH",
+    "\n\n\n\nJ",
+    "\n\n\n\nK",
+    "\n\n\n\nL",
+    "\n\n\n\n;\n:",
+    "\n\n\n\n'\n\"",
+    {
+      "x": 0.25,
+      "w": 2,
+      "x2": -0.25
+    },
+    "\n\n\n\nEnter",
+    "\n\n\n\nPgUp"
+  ],
+  [
+    {
+      "w": 2.25
+    },
+    "\n\n\n\nShift",
+    "\n\n\n\nZ",
+    "\n\n\n\nX",
+    "\n\n\n\nC",
+    "\n\n\n\nV",
+    "\n\n\n\nB",
+    "\n\n\n\nN",
+    "\n\n\n\nM",
+    "\n\n\n\n,\n<",
+    "\n\n\n\n.\n>",
+    "\n\n\n\n/\n?",
+    {
+      "w": 1.75
+    },
+    "\n\n\n\nShift",
+    "\n\n\n\n↑",
+    "\n\n\n\nPgDn"
+  ],
+  [
+    {
+      "w": 1.25
+    },
+    "\n\n\n\nCtrl",
+    {
+      "w": 1.25
+    },
+    "\n\n\n\nWin",
+    {
+      "w": 1.25
+    },
+    "\n\n\n\nAlt",
+    {
+      "a": 7,
+      "w": 6.25
+    },
+    "",
+    {
+      "a": 3,
+      "w": 1.25
+    },
+    "\n\n\n\nAlt",
+    {
+      "c": "#3d3d3d",
+      "t": "#f07575",
+      "a": 0,
+      "f": 2
+    },
+    "Function Layer\n\n\n\nFn",
+    {
+      "x": 0.75,
+      "c": "#cccccc",
+      "t": "#000000",
+      "a": 3,
+      "f": 3
+    },
+    "\n\n\n\n←",
+    "\n\n\n\n↓",
+    "\n\n\n\n→"
+  ]
+]

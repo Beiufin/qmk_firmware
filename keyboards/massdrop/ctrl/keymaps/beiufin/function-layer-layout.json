@@ -1,29 +1,28 @@
 [
   [
     {
-      "a": 5,
-      "d": true
+      "c": "#ff0000",
+      "t": "#ffffff\n#000000",
+      "f": 2
     },
-    "Esc",
+    "\nToggle LEDs\n\n\n\n\n\n\nEsc",
     {
       "x": 1,
-      "d": true
+      "t": "#fffffff\n#000000"
     },
-    "F1",
+    "\nCycle Mod\n\n\n\n\n\n\nF1",
+    "\nCycle Under\n\n\n\n\n\n\nF2",
+    "\nCycle Keylight\n\n\n\n\n\n\nF3",
     {
-      "d": true
-    },
-    "F2",
-    {
-      "d": true
-    },
-    "F3",
-    {
+      "t": "#000000",
+      "a": 5,
+      "f": 3,
       "d": true
     },
     "F4",
     {
       "x": 0.5,
+      "c": "#cccccc",
       "d": true
     },
     "F5",
@@ -309,16 +308,11 @@
     "Shift",
     {
       "c": "#ff0000",
-      "t": "#ffffff\n#000000",
-      "a": 4,
-      "f": 2
+      "d": true
     },
-    "\nToggle LEDs\n\n\n\n\n\n\nZ",
+    "Z",
     {
       "c": "#cccccc",
-      "t": "#000000",
-      "a": 5,
-      "f": 3,
       "d": true
     },
     "X",

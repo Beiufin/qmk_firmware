@@ -37,6 +37,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * To set a key, press TR_LOCK (fn+CapsLock) then press the key you want to have repeat.
  * To disable that repeating key, repeat the process.
  */
-// #define ENABLE_TAP_REPEAT        // Enable Tap Repeat.
 // #define TAP_REPEAT_INTERVAL 200  // Frequency of taps. Default 200
 // #define TAP_REPEAT_MAX 16        // Max keys to allow tap repeating at once. Default 16. More requires more memory and processing time.
