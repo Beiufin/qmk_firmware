@@ -8,4 +8,4 @@
 
 ### Function Layer
 
-![Function Layer](./function-layer-layout.json)
+![Function Layer](./function-layer-layout.png)

@@ -1,3 +1,5 @@
+USER_NAME := beiufin
+
 # Build Options
 #   change yes to no to disable
 #
@@ -8,5 +10,7 @@ EXTRAKEY_ENABLE = yes       	# Audio control and System control
 KEY_LOCK_TOGGLE_ENABLE = no     # Key Lock Toggle
 MOUSEKEY_ENABLE = no        	# Mouse keys
 NKRO_ENABLE = yes           	# Enable N-Key Rollover
-RGB_MATRIX_ENABLE = yes         # RGB Matrix
-TAP_REPEAT_ENABLE = no          # Tap Repeat
+APM_ENABLE = no                 # APM tracking. Needed for APM animations
+TAP_REPEAT_ENABLE = no      	# Tap Repeat
+KEY_LOCK_TOGGLE_ENABLE = no 	# Key Lock Toggle
+DUAL_RGB_MATRIX_ENABLE = yes   	# Dual RGB Matrix effects

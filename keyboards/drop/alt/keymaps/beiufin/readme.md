@@ -4,11 +4,11 @@
 
 ### Base Layer
 
-![Base Layer](./default-layout.png)
+![Base Layer](./default-layer-layout.png)
 
 ### Function Layer
 
-![Function Layer](./fn-layout.png)
+![Function Layer](./fn-layer-layout.png)
 
 ## RGB effect
 
