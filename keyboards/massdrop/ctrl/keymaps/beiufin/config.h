@@ -65,13 +65,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENABLE_RGB_MATRIX_RAINBOW_PINWHEELS      // Full dual gradients spinning two halfs of keyboard
 #define ENABLE_RGB_MATRIX_RAINDROPS              // Randomly changes a single key's hue
 #define ENABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS    // Randomly changes a single key's hue and saturation
+//  =================================================== Requires APM_ENABLE =============================================================
 // #define ENABLE_RGB_MATRIX_APM                       // Leds with change color based on your Actions Per Minute
+// #define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM  // Same as ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON, but the "extra" leds will use ENABLE_RGB_MATRIX_APM.
 //  =================================================== Requires RGB_MATRIX_FRAMEBUFFER_EFFECTS =============================================================
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP       // How hot is your WPM!
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID // Typing heatmap where the leds remain a solid color, brighten
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON // Typing heatmap where the leds remain on and just shift color.
-// #define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM  // Same as above, but the "extra" leds will use ENABLE_RGB_MATRIX_APM.
-#define ENABLE_RGB_MATRIX_DIGITAL_RAIN // That famous computer simulation
+#define ENABLE_RGB_MATRIX_DIGITAL_RAIN         // That famous computer simulation
 // =================================================== RGB_MATRIX_KEYPRESSES OR RGB_MATRIX_KEYRELEASES =====================================================
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE            // Static single hue, pulses keys hit to shifted hue then fades to current hue
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE     // Pulses keys hit to hue & value then fades value out
