@@ -8,8 +8,7 @@
 // heatmap
 #if defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP) || \
     defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON) || \
-    defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID) || \
-    defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM)
+    defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID)
 // if any of the typing heatmaps are enabled, the process function should be called
 #    define RGB_MATRIX_PROCESS_HEATMAP
 #endif
@@ -20,9 +19,9 @@
 #    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #endif
 
-#if defined(ENABLE_RGB_MATRIX_APM) || defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON_APM)
+#if defined(APM_ENABLE) && defined(ENABLE_RGB_MATRIX_APM)
 // if any of the typing heatmaps are enabled, the process function should be called
-#    define TRACK_APM
+#    define RGB_MATRIX_TRACK_APM
 #endif
 
 // reactive

@@ -140,7 +140,7 @@ extern layer_state_t layer_state;
 #endif
 
 #ifdef TAP_REPEAT_ENABLE
-#   include "process_tap_repeat.h"
+#    include "process_tap_repeat.h"
 #endif
 
 #ifdef SPACE_CADET_ENABLE
@@ -205,10 +205,6 @@ extern layer_state_t layer_state;
 
 #ifdef WPM_ENABLE
 #    include "wpm.h"
-#endif
-
-#ifdef TRACK_APM
-#    include "process_apm.h"
 #endif
 
 #ifdef USBPD_ENABLE

@@ -300,12 +300,6 @@ bool process_record_quantum(keyrecord_t *record) {
     }
 #endif
 
-#ifdef TRACK_APM
-    if (record->event.pressed) {
-        process_apm(keycode);
-    }
-#endif
-
     if (!(
 #if defined(KEY_LOCK_ENABLE)
             // Must run first to be able to mask key_up events.

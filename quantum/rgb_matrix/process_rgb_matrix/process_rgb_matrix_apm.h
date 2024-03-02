@@ -1,3 +1,4 @@
+#ifdef RGB_MATRIX_TRACK_APM
 /*
  * Copyright 2024 Beiufin (Beiufin@gmail.com)
  *
@@ -14,10 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#    pragma once
 
-#include "process_apm.h"
-#include "apm.h"
+#    include "apm.h"
 
-void process_apm(uint16_t keycode) {
+void process_rgb_matrix_apm(void) {
     increment_apm();
 }
+#endif // RGB_MATRIX_TRACK_APM

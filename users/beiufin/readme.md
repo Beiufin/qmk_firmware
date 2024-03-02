@@ -21,6 +21,9 @@ When creating keymaps in the beiufin userspace, there are some unique behaviors.
 
 To have leds be set per layer based on an led map, initialize an ledmap in the keymap as follows `const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3]`. The first dimension is the layer, is the led index and the third is the HSV for the led.
 
+Index 0 of this is never used as it is the base layer.  
+**TODO**: adjust this so there isn't an unused RGB_MATRIX_LED_COUNT*3 bytes being taken up by index 0.
+
 ## User functions
 
 When using the beiufin userspace, the `*_user` functions in the keymaps should be replaced with `*_keymap` function.

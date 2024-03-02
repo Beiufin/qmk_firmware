@@ -452,6 +452,7 @@ ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
     COMMON_VPATH += $(QUANTUM_DIR)/rgb_matrix
     COMMON_VPATH += $(QUANTUM_DIR)/rgb_matrix/animations
     COMMON_VPATH += $(QUANTUM_DIR)/rgb_matrix/animations/runners
+    COMMON_VPATH += $(QUANTUM_PATH)/rgb_matrix/process_rgb_matrix
     POST_CONFIG_H += $(QUANTUM_DIR)/rgb_matrix/post_config.h
     SRC += $(QUANTUM_DIR)/color.c
     SRC += $(QUANTUM_DIR)/rgb_matrix/rgb_matrix.c

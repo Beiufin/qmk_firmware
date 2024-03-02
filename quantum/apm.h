@@ -47,4 +47,4 @@ uint16_t get_current_apm(void);
 uint8_t  get_relative_apm(void);
 void     increment_apm(void);
 
-void decay_apm(void);
+void apm_task(void);
