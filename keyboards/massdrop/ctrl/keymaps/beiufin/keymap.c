@@ -98,7 +98,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #undef _______
 #define _______ {0,0,0}
 
-
 // This is to denote that the led value is set programatically
 #ifndef CUSTHSV
 #    define CUSTHSV _______

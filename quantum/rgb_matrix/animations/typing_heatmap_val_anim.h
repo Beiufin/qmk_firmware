@@ -1,8 +1,8 @@
-#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID)
-RGB_MATRIX_EFFECT(TYPING_HEATMAP_SOLID)
+#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_VAL)
+RGB_MATRIX_EFFECT(TYPING_HEATMAP_VAL)
 #    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
-HSV anim_heatmap_solid(uint8_t* buffer_val, bool decrease_heatmap_values, effect_params_t* params, rgb_config_t* config) {
+HSV anim_heatmap_val(uint8_t* buffer_val, bool decrease_heatmap_values, effect_params_t* params, rgb_config_t* config) {
     uint8_t val   = *buffer_val;
     uint8_t v_min = config->speed;
 
@@ -14,7 +14,7 @@ HSV anim_heatmap_solid(uint8_t* buffer_val, bool decrease_heatmap_values, effect
     return hsv;
 }
 
-bool TYPING_HEATMAP_SOLID(effect_params_t* params, rgb_config_t* config) {
+bool TYPING_HEATMAP_VAL(effect_params_t* params, rgb_config_t* config) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
 
     if (params->init) {
@@ -23,8 +23,8 @@ bool TYPING_HEATMAP_SOLID(effect_params_t* params, rgb_config_t* config) {
         rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
     }
 
-    return effect_runner_heatmap(params, config, anim_heatmap_solid, true);
+    return effect_runner_heatmap(params, config, anim_heatmap_val, true);
 }
 
 #    endif // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
-#endif     // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID)
+#endif     // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_VAL)

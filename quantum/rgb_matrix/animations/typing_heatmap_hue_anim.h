@@ -1,8 +1,8 @@
-#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON)
-RGB_MATRIX_EFFECT(TYPING_HEATMAP_LEDON)
+#if defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_HUE)
+RGB_MATRIX_EFFECT(TYPING_HEATMAP_HUE)
 #    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
-HSV anim_heatmap_ledon(uint8_t* buffer_val, bool decrease_heatmap_values, effect_params_t* params, rgb_config_t* config) {
+HSV anim_heatmap_hue(uint8_t* buffer_val, bool decrease_heatmap_values, effect_params_t* params, rgb_config_t* config) {
     uint8_t val = *buffer_val;
 
     // Orig: {170 to 0, s, 0 + val*3}
@@ -16,15 +16,15 @@ HSV anim_heatmap_ledon(uint8_t* buffer_val, bool decrease_heatmap_values, effect
     return hsv;
 }
 
-bool TYPING_HEATMAP_LEDON(effect_params_t* params, rgb_config_t* config) {
+bool TYPING_HEATMAP_HUE(effect_params_t* params, rgb_config_t* config) {
     if (params->init) {
         HSV hsv = {config->hsv.h, config->hsv.s, config->hsv.v};
         RGB rgb = rgb_matrix_hsv_to_rgb(hsv);
         rgb_matrix_set_color_all(rgb.r, rgb.g, rgb.b);
     }
 
-    return effect_runner_heatmap(params, config, anim_heatmap_ledon, true);
+    return effect_runner_heatmap(params, config, anim_heatmap_hue, true);
 }
 
 #    endif // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
-#endif     // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON)
+#endif     // defined(RGB_MATRIX_FRAMEBUFFER_EFFECTS) && defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_HUE)

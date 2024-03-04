@@ -10,9 +10,20 @@
 
 ![Function Layer](./fn-layer-layout.png)
 
+## Dual RGB
+
+When the [Dual RGB Matrix](/docs/feature_dual_rgb_matrix.md) feature is enabled, there will be two RGB systems. I will refer to these as "primary" and "secondary"
+Within the function layer, all the keys that affect the primary RGB can also affect the secondary RGB by holding "Alt" when pressing them.  
+This includes all the colors, the keys labeled RGB..., and the "Toggle LEDs" key.
+
+The "Cycle ... LEDs" keys will cycle sets of LEDs between the primary RGB, then secondary RGB, then neither.  
+For example, if the underglow LEDs are current in the primary RGB system, pressing "Cycle Under(glow) LEDs" will switch them to the secondary RGB system. Pressing it again will switch them to off (meaning they arent in the primary or secondary RGB systems). Pressing it a third time will switch them back to the primary RGB system.
+
 ## RGB effect
 
-As defined by info.json The order of RGB effects is currently as follows:
+Descriptions (and order) of all RGB effects can be found [here](/docs/feature_rgb_matrix.md?rgb-matrix-effects-idrgb-matrix-effects).
+
+The following RGB effects/animations are enabled (in order):
 
 -   solid_color
 -   alphas_mods
@@ -28,9 +39,9 @@ As defined by info.json The order of RGB effects is currently as follows:
 -   cycle_all
 -   cycle_left_right
 -   cycle_up_down
+-   rainbow_moving_chevron
 -   cycle_out_in
 -   cycle_out_in_dual
--   rainbow_moving_chevron
 -   cycle_pinwheel
 -   cycle_spiral
 -   dual_beacon
@@ -44,9 +55,10 @@ As defined by info.json The order of RGB effects is currently as follows:
 -   pixel_fractal
 -   pixel_flow
 -   pixel_rain
+-   apm
 -   typing_heatmap
--   **typing_heatmap_ledon** (default)
--   typing_heatmap_solid
+-   typing_heatmap_val
+-   **typing_heatmap_hue** (default)
 -   digital_rain
 -   solid_reactive_simple
 -   solid_reactive
@@ -60,3 +72,7 @@ As defined by info.json The order of RGB effects is currently as follows:
 -   multisplash
 -   solid_splash
 -   solid_multisplash
+-   starlight
+-   starlight_dual_sat
+-   starlight_dual_hue
+-   riverflow

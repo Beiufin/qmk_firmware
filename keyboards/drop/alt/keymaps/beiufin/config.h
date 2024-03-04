@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define TAP_REPEAT_MAX 16        // Max keys to allow tap repeating at once. Default 16. More requires more memory and processing time.
 
 /* RGB Matrix Settings*/
-#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_TYPING_HEATMAP_LEDON // Sets the default mode, if none has been set
+#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_TYPING_HEATMAP_HUE // Sets the default mode, if none has been set
 #define RGB_MATRIX_DEFAULT_SPD 127
 #define RGB_MATRIX_SPD_STEP 8
 #define RGB_MATRIX_DEFAULT_HUE 112
@@ -39,8 +39,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * Additional Animations
  * these will be added to the ones in info.json
  */
-#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID // Typing heatmap where the leds remain a solid color, brighten
-#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON // Typing heatmap where the leds remain on and just shift color.
+#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_VAL // Typing heatmap where the leds remain a solid color, brighten
+#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_HUE // Typing heatmap where the leds remain on and just shift color.
 //  =================================================== Requires APM_ENABLE =============================================================
 #define ENABLE_RGB_MATRIX_APM // Leds with change color based on your Actions Per Minute
 //  ================================================================================================================

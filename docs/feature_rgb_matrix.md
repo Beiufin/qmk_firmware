@@ -675,7 +675,10 @@ enum rgb_matrix_effects {
     RGB_MATRIX_PIXEL_FRACTAL,       // Single hue fractal filled keys pulsing horizontally out to edges
     RGB_MATRIX_PIXEL_FLOW,          // Pulsing RGB flow along LED wiring with random hues
     RGB_MATRIX_PIXEL_RAIN,          // Randomly light keys with random hues
+    RGB_MATRIX_APM,                 // Hue changes based on your Actions Per Minute
     RGB_MATRIX_TYPING_HEATMAP,      // How hot is your WPM!
+    RGB_MATRIX_TYPING_HEATMAP_VAL   // Typing heatmap where the leds start dim and brighten. Speed controls the starting brightness.
+    RGB_MATRIX_TYPING_HEATMAP_HUE   // Typing heatmap where the leds shift hue.
     RGB_MATRIX_DIGITAL_RAIN,        // That famous computer simulation
     RGB_MATRIX_SOLID_REACTIVE_SIMPLE,   // Pulses keys hit to hue & value then fades value out
     RGB_MATRIX_SOLID_REACTIVE,      // Static single hue, pulses keys hit to shifted hue then fades to current hue
