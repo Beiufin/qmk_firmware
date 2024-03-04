@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS // enables more advances RBG effects
 #define RGB_MATRIX_KEYPRESSES          // reacts to keypresses
 // #define RGB_MATRIX_KEYRELEASES         // reacts to keyreleases (instead of keypresses)
-#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_TYPING_HEATMAP_LEDON // Sets the default mode, if none has been set
+#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_TYPING_HEATMAP_HUE // Sets the default mode, if none has been set
 // #define RGB_MATRIX_HUE_STEP 12         // Units to step when in/decreasing hue
 // #define RGB_MATRIX_SAT_STEP 25         // Units to step when in/decreasing saturation
 // #define RGB_MATRIX_VAL_STEP 12         // Units to step when in/decreasing value (brightness)
@@ -68,10 +68,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //  =================================================== Requires APM_ENABLE =============================================================
 #define ENABLE_RGB_MATRIX_APM // Leds with change color based on your Actions Per Minute
 //  =================================================== Requires RGB_MATRIX_FRAMEBUFFER_EFFECTS =============================================================
-#define ENABLE_RGB_MATRIX_TYPING_HEATMAP       // How hot is your WPM!
-#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID // Typing heatmap where the leds remain a solid color, brighten
-#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON // Typing heatmap where the leds remain on and just shift color.
-#define ENABLE_RGB_MATRIX_DIGITAL_RAIN         // That famous computer simulation
+#define ENABLE_RGB_MATRIX_TYPING_HEATMAP     // How hot is your WPM!
+#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_VAL // Typing heatmap where the leds remain a solid color, brighten
+#define ENABLE_RGB_MATRIX_TYPING_HEATMAP_HUE // Typing heatmap where the leds remain on and just shift color.
+#define ENABLE_RGB_MATRIX_DIGITAL_RAIN       // That famous computer simulation
 // =================================================== RGB_MATRIX_KEYPRESSES OR RGB_MATRIX_KEYRELEASES =====================================================
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE            // Static single hue, pulses keys hit to shifted hue then fades to current hue
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE     // Pulses keys hit to hue & value then fades value out
@@ -85,3 +85,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENABLE_RGB_MATRIX_MULTISPLASH               // Full gradient & value pulse away from multiple key hits then fades value out
 #define ENABLE_RGB_MATRIX_SOLID_SPLASH              // Hue & value pulse away from a single key hit then fades value out
 #define ENABLE_RGB_MATRIX_SOLID_MULTISPLASH         // Hue & value pulse away from multiple key hits then fades value out
+#define ENABLE_RGB_MATRIX_STARLIGHT
+#define ENABLE_RGB_MATRIX_STARLIGHT_DUAL_SAT
+#define ENABLE_RGB_MATRIX_STARLIGHT_DUAL_HUE
+#define ENABLE_RGB_MATRIX_RIVERFLOW

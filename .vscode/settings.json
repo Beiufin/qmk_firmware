@@ -34,7 +34,8 @@
         "system_error": "c",
         "xiosbase": "c",
         "ostream": "c",
-        "ios": "c"
+        "ios": "c",
+        "ctime": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,

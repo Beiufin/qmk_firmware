@@ -234,11 +234,11 @@ void process_rgb_matrix(uint8_t row, uint8_t col, bool pressed) {
 #    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP
             RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP) ||
 #    endif
-#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON
-            RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP_LEDON) ||
+#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_HUE
+            RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP_HUE) ||
 #    endif
-#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID
-            RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP_SOLID) ||
+#    ifdef ENABLE_RGB_MATRIX_TYPING_HEATMAP_VAL
+            RGB_MATRIX_IS_MODE(RGB_MATRIX_TYPING_HEATMAP_VAL) ||
 #    endif
             false) {
             process_rgb_matrix_typing_heatmap(row, col);

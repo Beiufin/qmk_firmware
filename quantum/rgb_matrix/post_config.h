@@ -7,8 +7,8 @@
 
 // heatmap
 #if defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP) || \
-    defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_LEDON) || \
-    defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_SOLID)
+    defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_HUE) || \
+    defined(ENABLE_RGB_MATRIX_TYPING_HEATMAP_VAL)
 // if any of the typing heatmaps are enabled, the process function should be called
 #    define RGB_MATRIX_PROCESS_HEATMAP
 #endif
