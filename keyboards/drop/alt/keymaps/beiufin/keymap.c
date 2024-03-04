@@ -112,7 +112,7 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
         WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   WHITE,   _______, AZURE,
         _______, GOLD,    CUSTHSV, GOLD,    CUSTHSV, CUSTHSV, _______, MAGENT,  BLUE,    WHITE,   GREEN,   BLUE,    ORANGE,  _______, ORANGE,
         TRHSV,   CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, CUSTHSV, _______, RED,     CYAN,    PURPLE,  _______, _______,          KLHSV,   AZURE,
-        _______, TEAL,    _______, _______, _______, RED,     _______, YELLOW,  GREEN,   CREAM,   _______, _______,          GREEN,   AZURE,
+        _______, TEAL,    TEAL,    TEAL,    TEAL,    RED,     _______, YELLOW,  GREEN,   CREAM,   _______, _______,          GREEN,   AZURE,
         _______, _______, _______,                            _______,                            _______, _______, YELLOW,  RED,     YELLOW,
         // UnderGlow
         CHART,   CHART,   CHART,   CHART,   CHART,   CHART,   CHART,   CHART,   CHART,   CHART,   CHART,   CHART,   CHART,   CHART,   CHART,
